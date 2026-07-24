@@ -40,6 +40,7 @@
 #define PROGNAME_SIZE 320
 #endif
 
+#ifdef USE_FEATURED_IMAGE
 static GtkWidget *_get_logo()
 {
   // get the darktable logo, including seasonal variants as
@@ -68,6 +69,7 @@ static GtkWidget *_get_logo()
   gtk_widget_set_name(GTK_WIDGET(logo), "splashscreen-logo");
   return logo;
 }
+#endif
 
 static GtkWidget *_get_program_name()
 {
@@ -131,13 +133,13 @@ void dt_splash_screen_create(const gboolean force)
   GtkWidget *copyright = GTK_WIDGET(gtk_label_new(years));
   g_free(years);
   gtk_widget_set_name(copyright, "splashscreen-copyright");
-  GtkWidget *logo = _get_logo();
   GtkWidget *program_name = _get_program_name();
   GtkBox *content = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 0));
 
 #ifdef USE_FEATURED_IMAGE
   // make a random selection of featured image based on the current
   // time
+  GtkWidget *logo = _get_logo();
   const int imgnum = (int)(1 + (clock()%MAX_IMAGES));
   //FIXME: if user overrides --datadir, we won't find the image...
   gchar *image_file = g_strdup_printf("%s/pixmaps/splashscreen-%02d.jpg",
@@ -155,7 +157,6 @@ void dt_splash_screen_create(const gboolean force)
                  dt_gui_hbox(dt_gui_vbox(logo, version, program_name, program_desc),
                              image));
 #else
-  gtk_image_set_pixel_size(GTK_IMAGE(logo), ICON_SIZE);
   gtk_label_set_justify(GTK_LABEL(version), GTK_JUSTIFY_LEFT);
 
   GtkWidget *program_desc = GTK_WIDGET(gtk_label_new(_("Photography workflow application\nand RAW developer")));
@@ -170,21 +171,16 @@ void dt_splash_screen_create(const gboolean force)
   GtkWidget *title_col = dt_gui_vbox(program_name);
   gtk_box_set_spacing(GTK_BOX(title_col), 4);
   dt_gui_box_add(GTK_BOX(title_col), version);
+  dt_gui_box_add(GTK_BOX(title_col), copyright);
   gtk_widget_set_halign(program_name, GTK_ALIGN_START);
   gtk_widget_set_halign(version, GTK_ALIGN_START);
   gtk_label_set_xalign(GTK_LABEL(version), 0.0);
+  gtk_widget_set_halign(copyright, GTK_ALIGN_START);
   gtk_widget_set_halign(title_col, GTK_ALIGN_START);
   gtk_widget_set_valign(title_col, GTK_ALIGN_CENTER);
-  gtk_widget_set_valign(logo, GTK_ALIGN_CENTER);
-
-  GtkWidget *logo_col = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
-  gtk_box_pack_start(GTK_BOX(logo_col), logo, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(logo_col), copyright, FALSE, FALSE, 0);
-  gtk_widget_set_halign(logo_col, GTK_ALIGN_START);
-  gtk_widget_set_valign(logo_col, GTK_ALIGN_CENTER);
 
   dt_gui_box_add(content,
-                 dt_gui_vbox(dt_gui_hbox(logo_col, title_col),
+                 dt_gui_vbox(title_col,
                              program_desc, sep, darktable.splash.progress_text));
 #endif
 

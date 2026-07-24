@@ -137,8 +137,6 @@ static GtkWidget *_ui_init_panel_container_center(GtkWidget *container, gboolean
 static GtkWidget *_ui_init_panel_container_bottom(GtkWidget *container);
 /* initialize the top container of panel */
 static void _ui_init_panel_top(dt_ui_t *ui, GtkWidget *container);
-/* initialize the center top panel */
-static void _ui_init_panel_center_top(dt_ui_t *ui, GtkWidget *container);
 /* initialize the center bottom panel */
 static void _ui_init_panel_center_bottom(dt_ui_t *ui, GtkWidget *container);
 /* initialize the bottom panel */
@@ -2026,8 +2024,7 @@ static void _init_main_table(GtkWidget *container)
   gtk_widget_set_vexpand(GTK_WIDGET(widget), TRUE);
   gtk_grid_attach(GTK_GRID(container), widget, 2, 1, 1, 1);
 
-  /* initialize the center top panel */
-  _ui_init_panel_center_top(darktable.gui->ui, widget);
+  /* center top panel removed — unified into top panel */
 
   GtkWidget *centergrid = gtk_grid_new();
   gtk_box_pack_start(GTK_BOX(widget), centergrid, TRUE, TRUE, 0);
@@ -2154,15 +2151,12 @@ void dt_ui_container_add_widget(const dt_ui_t *ui,
   {
     /* if box is right lets pack at end for nicer alignment */
     case DT_UI_CONTAINER_PANEL_TOP_RIGHT:
-    case DT_UI_CONTAINER_PANEL_CENTER_TOP_RIGHT:
     case DT_UI_CONTAINER_PANEL_CENTER_BOTTOM_RIGHT:
       gtk_box_pack_end(GTK_BOX(ui->containers[c]), w, FALSE, FALSE, 0);
       break;
 
     /* if box is center we want it to fill as much as it can */
     case DT_UI_CONTAINER_PANEL_TOP_CENTER:
-    case DT_UI_CONTAINER_PANEL_CENTER_TOP_LEFT:
-    case DT_UI_CONTAINER_PANEL_CENTER_TOP_CENTER:
     case DT_UI_CONTAINER_PANEL_CENTER_BOTTOM_CENTER:
     case DT_UI_CONTAINER_PANEL_BOTTOM:
       gtk_box_pack_start(GTK_BOX(ui->containers[c]), w, TRUE, TRUE, 0);
@@ -3024,29 +3018,33 @@ static void _ui_init_panel_top(dt_ui_t *ui,
 {
   GtkWidget *widget;
 
-  /* create the panel box */
+  /* create the panel box — unified top bar merges header and toolbar */
   ui->panels[DT_UI_PANEL_TOP] = widget = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+  ui->panels[DT_UI_PANEL_CENTER_TOP] = widget;
   gtk_widget_set_hexpand(GTK_WIDGET(widget), TRUE);
   gtk_grid_attach(GTK_GRID(container), widget, 1, 0, 3, 1);
   gtk_widget_set_name(widget, "top-hinter");
 
-  /* add container for top left */
+  /* add container for top left — view tabs zone */
   ui->containers[DT_UI_CONTAINER_PANEL_TOP_LEFT] =
     gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_widget_set_name(ui->containers[DT_UI_CONTAINER_PANEL_TOP_LEFT], "top-zone-views");
   gtk_box_pack_start(GTK_BOX(widget), ui->containers[DT_UI_CONTAINER_PANEL_TOP_LEFT],
                      FALSE, FALSE,
                      DT_UI_PANEL_MODULE_SPACING);
 
-  /* add container for top center */
+  /* add container for top center — collection filters zone */
   ui->containers[DT_UI_CONTAINER_PANEL_TOP_CENTER] =
     gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_widget_set_name(ui->containers[DT_UI_CONTAINER_PANEL_TOP_CENTER], "top-zone-filters");
   gtk_box_pack_start(GTK_BOX(widget), ui->containers[DT_UI_CONTAINER_PANEL_TOP_CENTER],
                      TRUE, TRUE,
                      DT_UI_PANEL_MODULE_SPACING);
 
-  /* add container for top right */
+  /* add container for top right — global tools zone */
   ui->containers[DT_UI_CONTAINER_PANEL_TOP_RIGHT] =
     gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_widget_set_name(ui->containers[DT_UI_CONTAINER_PANEL_TOP_RIGHT], "top-zone-tools");
   gtk_box_pack_end(GTK_BOX(widget), ui->containers[DT_UI_CONTAINER_PANEL_TOP_RIGHT],
                    FALSE, FALSE,
                    DT_UI_PANEL_MODULE_SPACING);
@@ -3102,40 +3100,6 @@ static void _ui_init_panel_bottom(dt_ui_t *ui,
   gtk_widget_show(widget);
 }
 
-
-static void _ui_init_panel_center_top(dt_ui_t *ui,
-                                      GtkWidget *container)
-{
-  GtkWidget *widget;
-
-  /* create the panel box */
-  ui->panels[DT_UI_PANEL_CENTER_TOP] = widget = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_widget_set_name(widget, "header-toolbar");
-  dt_gui_add_class(widget, "dt_big_btn_canvas");
-
-  gtk_box_pack_start(GTK_BOX(container), widget, FALSE, TRUE, 0);
-
-  /* add container for center top left */
-  ui->containers[DT_UI_CONTAINER_PANEL_CENTER_TOP_LEFT] =
-    gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_box_pack_start(GTK_BOX(widget),
-                     ui->containers[DT_UI_CONTAINER_PANEL_CENTER_TOP_LEFT], TRUE, TRUE,
-                     DT_UI_PANEL_MODULE_SPACING);
-
-  /* add container for center top center */
-  ui->containers[DT_UI_CONTAINER_PANEL_CENTER_TOP_CENTER] =
-    gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_box_pack_start(GTK_BOX(widget),
-                     ui->containers[DT_UI_CONTAINER_PANEL_CENTER_TOP_CENTER], TRUE, FALSE,
-                     DT_UI_PANEL_MODULE_SPACING);
-
-  /* add container for center top right */
-  ui->containers[DT_UI_CONTAINER_PANEL_CENTER_TOP_RIGHT] =
-    gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_box_pack_end(GTK_BOX(widget),
-                   ui->containers[DT_UI_CONTAINER_PANEL_CENTER_TOP_RIGHT], FALSE, FALSE,
-                   DT_UI_PANEL_MODULE_SPACING);
-}
 
 static void _ui_init_panel_center_bottom(dt_ui_t *ui,
                                          GtkWidget *container)

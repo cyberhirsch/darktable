@@ -1,9 +1,7 @@
 <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40" height="40">
 	<style>
-		tspan { white-space:pre } 
-		.s0 { fill: #ffffff } 
-		.t1 { font-size: 150px;fill: #ffffff;font-weight: 300;font-family: "Figtree-SemiBold", "Figtree" } 
-		.t2 { font-size: 150px;line-height: 0px;fill: #ffffff;font-weight: 300;font-family: "Figtree-SemiBold", "Figtree" } 
+		tspan { white-space:pre }
+		.s0 { fill: #1b1b1b }
 	</style>
 	<g id="layer2">
 		<path id="path3902" class="s0" d="m303.2 32.67l-55.47 157.9 218.44-36.75c-32.35-62.13-91.96-107.79-162.97-121.15z"/>
@@ -11,10 +9,6 @@
 		<path id="path3909" class="s0" d="m425.81 408.54l-109.02-126.99-77.39 207.55c69.99 3.05 139.33-25.74 186.41-80.56z"/>
 		<path id="path3913" class="s0" d="m208.8 479.33l55.47-157.9-218.44 36.75c32.35 62.13 91.96 107.79 162.97 121.15z"/>
 		<path id="path3917" class="s0" d="m38.99 326.79l164.48-30.92-141.04-170.8c-37.64 59.09-47.37 133.54-23.44 201.72z"/>
-		<text id="darktable" style="transform: matrix(4.377,0,0,4.377,553.918,481.67)">
-			<tspan x="0" y="0" class="t1">d</tspan><tspan  y="0" class="t1">a</tspan><tspan  y="0" class="t1">r</tspan><tspan  y="0" class="t1">k</tspan><tspan  y="0" class="t1">t</tspan><tspan  y="0" class="t1">a</tspan><tspan  y="0" class="t1">b</tspan><tspan  y="0" class="t1">l</tspan><tspan  y="0" class="t2">e
-</tspan>
-		</text>
 		<path id="path3921" class="s0" d="m86.19 103.46l109.02 126.99 77.39-207.55c-69.99-3.05-139.33 25.74-186.41 80.56z"/>
 	</g>
 </svg>

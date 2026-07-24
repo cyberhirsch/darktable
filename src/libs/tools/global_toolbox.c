@@ -67,7 +67,7 @@ dt_view_type_flags_t views(dt_lib_module_t *self)
 
 uint32_t container(dt_lib_module_t *self)
 {
-  return DT_UI_CONTAINER_PANEL_CENTER_TOP_RIGHT;
+  return DT_UI_CONTAINER_PANEL_TOP_RIGHT;
 }
 
 gboolean expandable(dt_lib_module_t *self)

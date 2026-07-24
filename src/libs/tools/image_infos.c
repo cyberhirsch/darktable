@@ -61,7 +61,7 @@ uint32_t container(dt_lib_module_t *self)
   else if(g_strcmp0(pos, "top right") == 0)
     cont = DT_UI_CONTAINER_PANEL_RIGHT_TOP;
   else if(g_strcmp0(pos, "top center") == 0)
-    cont = DT_UI_CONTAINER_PANEL_CENTER_TOP_CENTER;
+    cont = DT_UI_CONTAINER_PANEL_TOP_CENTER;
 
   return cont;
 }

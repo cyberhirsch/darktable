@@ -495,28 +495,54 @@ separator
 /*------------------------
   - Main header settings -
   ------------------------*/
-/* Labels in views */
-#view-label,
-#view-dropdown
+/* the view tabs, grouped into one segmented-control pill */
+#view-switcher
 {
-  font-size: 1.5em;
-  border-radius: 0.14em;
+  background-color: @grey_10;
+  border-radius: 0.4em;
+  padding: 0.15em;
+  margin: 0 0.3em;
+}
+
+/* individual tabs inside the view switcher */
+#view-label
+{
+  font-size: 1.1em;
+  border-radius: 0.3em;
+  margin: 0 0.1em;
+  padding: 0.2em 0.5em;
   color: @disabled_fg_color;
 }
 
+/* the currently active view tab */
+#view-label:selected
+{
+  background-color: @selected_bg_color;
+  font-weight: bold;
+}
+
 /*------------------------------
-  - Header and footer toolbars -
+  - Unified top bar and footer -
   ------------------------------*/
-#header-toolbar,
+#top-hinter,
 #footer-toolbar
 {
   padding: 0.14em 0.28em;
 }
 
+/* divider lines between the top bar's zones (views | filters | tools) */
+#top-zone-filters,
+#top-zone-tools
+{
+  border-left: 0.07em solid @grey_25;
+  padding-left: 0.6em;
+  margin-left: 0.3em;
+}
+
 /* Set toolbars buttons in lighttable and darkroom views ; and top right button in accels window */
 .dt_accels_stick,
 #filter-colors-box .dt_module_btn,
-#header-toolbar .dt_module_btn,
+#top-hinter .dt_module_btn,
 #footer-toolbar .dt_module_btn
 {
   min-height: 1.7em;
@@ -1425,10 +1451,10 @@ filechooser row:hover .sidebar-icon
   border-color: alpha(@fg_color, 0.09);
 }
 
-/* set range parts and quick filter box in header toolbar */
+/* set range parts and quick filter box in top bar */
 .search,
 #dt-range-band,
-#header-toolbar #bauhaus-combobox:not(.dt_transparent_background)
+#top-hinter #bauhaus-combobox:not(.dt_transparent_background)
 {
   background-color: @range_bg_color;
 }
@@ -1438,12 +1464,12 @@ filechooser row:hover .sidebar-icon
 #filter-sort-box label,
 #header-rule-box label,
 #header-sort-box label,
-#header-toolbar .dt_module_btn
+#top-hinter .dt_module_btn
 {
   margin-right: 0.56em;
 }
 
-#header-toolbar .dt_module_btn
+#top-hinter .dt_module_btn
 {
     margin-left: 0;
     padding-left: 0;
@@ -2519,7 +2545,8 @@ Details :
 #splashscreen-program
 {
   font-size: 50pt;
-  margin-top: 25pt;
+  margin-top: 40pt;
+  margin-left: 30pt;
   margin-bottom: 0;
 }
 
@@ -2529,6 +2556,16 @@ Details :
   color: @grey_50;
   font-size: 22pt;
   margin-top: 0;
+  margin-left: 30pt;
+}
+
+/* copyright line */
+#splashscreen-copyright
+{
+  color: @grey_50;
+  font-size: 12pt;
+  margin-top: 6pt;
+  margin-left: 30pt;
 }
 
 /* tagline below logo */
