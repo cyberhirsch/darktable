@@ -48,6 +48,7 @@
 #include <gtk/gtk.h>
 #include <inttypes.h>
 #include <math.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 #include <lensfun.h>
@@ -66,14 +67,24 @@ G_BEGIN_DECLS
 #error Lensfun 0.3.95 and later development snapshots are not supported.
 #endif
 
-DT_MODULE_INTROSPECTION(10, dt_iop_lens_params_t)
+DT_MODULE_INTROSPECTION(11, dt_iop_lens_params_t)
 
 typedef enum dt_iop_lens_method_t
 {
   DT_IOP_LENS_METHOD_EMBEDDED_METADATA = 0, // $DESCRIPTION: "embedded metadata"
   DT_IOP_LENS_METHOD_LENSFUN = 1, // $DESCRIPTION: "Lensfun database"
-  DT_IOP_LENS_METHOD_ONLYVIGNETTE = 2 // $DESCRIPTION: "only manual vignette"
+  DT_IOP_LENS_METHOD_ONLYVIGNETTE = 2, // $DESCRIPTION: "only manual vignette"
+  DT_IOP_LENS_METHOD_MANUAL = 3 // $DESCRIPTION: "manual"
 } dt_iop_lens_method_t;
+
+// how much of the manual correction model is exposed in the gui. the
+// terms hidden in basic mode are not applied either, so what you see
+// is always what you get.
+typedef enum dt_iop_lens_manual_detail_t
+{
+  DT_IOP_LENS_MANUAL_DETAIL_BASIC = 0,   // $DESCRIPTION: "basic"
+  DT_IOP_LENS_MANUAL_DETAIL_ADVANCED = 1 // $DESCRIPTION: "advanced"
+} dt_iop_lens_manual_detail_t;
 
 typedef enum dt_iop_lens_modify_flag_t
 {
@@ -160,6 +171,16 @@ typedef struct dt_iop_lens_params_t
   float v_strength; // $DEFAULT: 0.0 $MIN: 0.0 $MAX: 1.0 $DESCRIPTION: "strength"
   float v_radius; // $DEFAULT: 0.5 $MIN: 0.0 $MAX: 1.0 $DESCRIPTION: "radius"
   float v_steepness; // $DEFAULT: 0.5 $MIN: 0.0 $MAX: 1.0 $DESCRIPTION: "steepness"
+
+  // manual method parameters
+  dt_iop_lens_manual_detail_t man_detail; // $DEFAULT: DT_IOP_LENS_MANUAL_DETAIL_BASIC $DESCRIPTION: "detail"
+  float man_k1; // $DEFAULT: 0.0 $MIN: -2.0 $MAX: 2.0 $DESCRIPTION: "distortion"
+  float man_k2; // $DEFAULT: 0.0 $MIN: -2.0 $MAX: 2.0 $DESCRIPTION: "distortion 4th order"
+  float man_k3; // $DEFAULT: 0.0 $MIN: -2.0 $MAX: 2.0 $DESCRIPTION: "distortion 6th order"
+  float man_tca_r; // $DEFAULT: 1.0 $MIN: 0.99 $MAX: 1.01 $DESCRIPTION: "TCA red"
+  float man_tca_b; // $DEFAULT: 1.0 $MIN: 0.99 $MAX: 1.01 $DESCRIPTION: "TCA blue"
+  float man_scale; // $DEFAULT: 1.0 $MIN: 0.1 $MAX: 2.0 $DESCRIPTION: "image scale"
+
   float reserved[2];
 } dt_iop_lens_params_t;
 
@@ -184,6 +205,8 @@ typedef struct dt_iop_lens_gui_data_t
   GtkWidget *cor_dist_ft, *cor_vig_ft, *cor_ca_r_ft, *cor_ca_b_ft, *scale_md;
   GtkWidget *use_latest_md_algo;
   GtkWidget *v_strength, *v_radius, *v_steepness;
+  GtkWidget *man_detail, *man_k1, *man_k2, *man_k3;
+  GtkWidget *man_tca_r, *man_tca_b, *man_scale;
   dt_gui_collapsible_section_t fine_tune, vignette;
   GtkLabel *message;
   GtkBox *hbox1;
@@ -296,6 +319,14 @@ static gboolean _have_embedded_metadata(dt_iop_module_t *self)
   return self->dev->image_storage.exif_correction_type;
 }
 
+// the embedded metadata and manual methods both express their
+// correction as a radial spline and share all processing code
+static inline gboolean _method_is_spline(const int method)
+{
+  return method == DT_IOP_LENS_METHOD_EMBEDDED_METADATA
+      || method == DT_IOP_LENS_METHOD_MANUAL;
+}
+
 static lfLensType _lenstype_to_lensfun_lenstype(const int lt)
 {
   switch(lt)
@@ -375,7 +406,7 @@ int legacy_params(dt_iop_module_t *self,
                   int32_t *new_params_size,
                   int *new_version)
 {
-  typedef struct _iop_lens_params_v10_t
+  typedef struct _iop_lens_params_v11_t
   {
     dt_iop_lens_method_t method;
     dt_iop_lens_modflag_t modify_flags;
@@ -414,8 +445,27 @@ int legacy_params(dt_iop_module_t *self,
     float v_strength;
     float v_radius;
     float v_steepness;
+
+    dt_iop_lens_manual_detail_t man_detail;
+    float man_k1;
+    float man_k2;
+    float man_k3;
+    float man_tca_r;
+    float man_tca_b;
+    float man_scale;
+
     float reserved[2];
-  } dt_iop_lens_params_v10_t;
+  } dt_iop_lens_params_v11_t;
+
+  // neutral manual-method defaults, shared by every conversion below
+  // since no older version ever had a manual method.
+  auto _set_manual_defaults = [](dt_iop_lens_params_v11_t *n)
+  {
+    n->man_detail = DT_IOP_LENS_MANUAL_DETAIL_BASIC;
+    n->man_k1 = n->man_k2 = n->man_k3 = 0.0f;
+    n->man_tca_r = n->man_tca_b = 1.0f;
+    n->man_scale = 1.0f;
+  };
 
  if(old_version == 2)
   {
@@ -438,8 +488,8 @@ int legacy_params(dt_iop_module_t *self,
     } dt_iop_lens_params_v2_t;
 
     const dt_iop_lens_params_v2_t *o = (dt_iop_lens_params_v2_t *)old_params;
-    dt_iop_lens_params_v10_t *n =
-      (dt_iop_lens_params_v10_t *)calloc(1, sizeof(dt_iop_lens_params_v10_t));
+    dt_iop_lens_params_v11_t *n =
+      (dt_iop_lens_params_v11_t *)calloc(1, sizeof(dt_iop_lens_params_v11_t));
 
     n->modify_flags = _modflags_from_lensfun_mods(o->modify_flags);
     n->inverse = (dt_iop_lens_mode_t)o->inverse;
@@ -479,11 +529,12 @@ int legacy_params(dt_iop_module_t *self,
     n->v_strength = 0.0f;
     n->v_radius = 0.5f;
     n->v_steepness = 0.5f;
+    _set_manual_defaults(n);
     n->reserved[0] = n->reserved[1] = 0.0f;
 
     *new_params = n;
-    *new_params_size = sizeof(dt_iop_lens_params_v10_t);
-    *new_version = 10;
+    *new_params_size = sizeof(dt_iop_lens_params_v11_t);
+    *new_version = 11;
     return 0;
   }
 
@@ -506,8 +557,8 @@ int legacy_params(dt_iop_module_t *self,
     } dt_iop_lens_params_v3_t;
 
     const dt_iop_lens_params_v3_t *o = (dt_iop_lens_params_v3_t *)old_params;
-    dt_iop_lens_params_v10_t *n =
-      (dt_iop_lens_params_v10_t *)calloc(1, sizeof(dt_iop_lens_params_v10_t));
+    dt_iop_lens_params_v11_t *n =
+      (dt_iop_lens_params_v11_t *)calloc(1, sizeof(dt_iop_lens_params_v11_t));
 
     n->modify_flags = _modflags_from_lensfun_mods(o->modify_flags);
     n->inverse = (dt_iop_lens_mode_t)o->inverse;
@@ -545,11 +596,12 @@ int legacy_params(dt_iop_module_t *self,
     n->v_strength = 0.0f;
     n->v_radius = 0.5f;
     n->v_steepness = 0.5f;
+    _set_manual_defaults(n);
     n->reserved[0] = n->reserved[1] = 0.0f;
 
     *new_params = n;
-    *new_params_size = sizeof(dt_iop_lens_params_v10_t);
-    *new_version = 10;
+    *new_params_size = sizeof(dt_iop_lens_params_v11_t);
+    *new_version = 11;
     return 0;
   }
 
@@ -573,8 +625,8 @@ int legacy_params(dt_iop_module_t *self,
     } dt_iop_lens_params_v4_t;
 
     const dt_iop_lens_params_v4_t *o = (dt_iop_lens_params_v4_t *)old_params;
-    dt_iop_lens_params_v10_t *n =
-      (dt_iop_lens_params_v10_t *)calloc(1, sizeof(dt_iop_lens_params_v10_t));
+    dt_iop_lens_params_v11_t *n =
+      (dt_iop_lens_params_v11_t *)calloc(1, sizeof(dt_iop_lens_params_v11_t));
 
     n->modify_flags = _modflags_from_lensfun_mods(o->modify_flags);
     n->inverse = (dt_iop_lens_mode_t)o->inverse;
@@ -612,11 +664,12 @@ int legacy_params(dt_iop_module_t *self,
     n->v_strength = 0.0f;
     n->v_radius = 0.5f;
     n->v_steepness = 0.5f;
+    _set_manual_defaults(n);
     n->reserved[0] = n->reserved[1] = 0.0f;
 
     *new_params = n;
-    *new_params_size = sizeof(dt_iop_lens_params_v10_t);
-    *new_version = 10;
+    *new_params_size = sizeof(dt_iop_lens_params_v11_t);
+    *new_version = 11;
     return o->modified == 0 ? -1 : 0;
   }
 
@@ -640,8 +693,8 @@ int legacy_params(dt_iop_module_t *self,
     } dt_iop_lens_params_v5_t;
 
     const dt_iop_lens_params_v5_t *o = (dt_iop_lens_params_v5_t *)old_params;
-    dt_iop_lens_params_v10_t *n =
-      (dt_iop_lens_params_v10_t *)calloc(1, sizeof(dt_iop_lens_params_v10_t));
+    dt_iop_lens_params_v11_t *n =
+      (dt_iop_lens_params_v11_t *)calloc(1, sizeof(dt_iop_lens_params_v11_t));
 
     // The unique method in previous versions was Lensfun
     n->modify_flags = _modflags_from_lensfun_mods(o->modify_flags);
@@ -680,11 +733,12 @@ int legacy_params(dt_iop_module_t *self,
     n->v_strength = 0.0f;
     n->v_radius = 0.5f;
     n->v_steepness = 0.5f;
+    _set_manual_defaults(n);
     n->reserved[0] = n->reserved[1] = 0.0f;
 
     *new_params = n;
-    *new_params_size = sizeof(dt_iop_lens_params_v10_t);
-    *new_version = 10;
+    *new_params_size = sizeof(dt_iop_lens_params_v11_t);
+    *new_version = 11;
     return o->modified == 0 ? -1 : 0;
   }
 
@@ -713,8 +767,8 @@ int legacy_params(dt_iop_module_t *self,
 
 
     const dt_iop_lens_params_v6_t *o = (dt_iop_lens_params_v6_t *)old_params;
-    dt_iop_lens_params_v10_t *n =
-      (dt_iop_lens_params_v10_t *)calloc(1, sizeof(dt_iop_lens_params_v10_t));
+    dt_iop_lens_params_v11_t *n =
+      (dt_iop_lens_params_v11_t *)calloc(1, sizeof(dt_iop_lens_params_v11_t));
 
     n->method = o->method;
     n->modify_flags = (dt_iop_lens_modflag_t)o->modify_flags;
@@ -754,11 +808,12 @@ int legacy_params(dt_iop_module_t *self,
     n->v_strength = 0.0f;
     n->v_radius = 0.5f;
     n->v_steepness = 0.5f;
+    _set_manual_defaults(n);
     n->reserved[0] = n->reserved[1] = 0.0f;
 
     *new_params = n;
-    *new_params_size = sizeof(dt_iop_lens_params_v10_t);
-    *new_version = 10;
+    *new_params_size = sizeof(dt_iop_lens_params_v11_t);
+    *new_version = 11;
     return o->modified == 0 ? -1 : 0;
   }
 
@@ -787,8 +842,8 @@ int legacy_params(dt_iop_module_t *self,
 
 
     const dt_iop_lens_params_v7_t *o = (dt_iop_lens_params_v7_t *)old_params;
-    dt_iop_lens_params_v10_t *n =
-      (dt_iop_lens_params_v10_t *)calloc(1, sizeof(dt_iop_lens_params_v10_t));
+    dt_iop_lens_params_v11_t *n =
+      (dt_iop_lens_params_v11_t *)calloc(1, sizeof(dt_iop_lens_params_v11_t));
 
     n->method = o->method;
     n->modify_flags = (dt_iop_lens_modflag_t)o->modify_flags;
@@ -826,11 +881,12 @@ int legacy_params(dt_iop_module_t *self,
     n->v_strength = 0.0f;
     n->v_radius = 0.5f;
     n->v_steepness = 0.5f;
+    _set_manual_defaults(n);
     n->reserved[0] = n->reserved[1] = 0.0f;
 
     *new_params = n;
-    *new_params_size = sizeof(dt_iop_lens_params_v10_t);
-    *new_version = 10;
+    *new_params_size = sizeof(dt_iop_lens_params_v11_t);
+    *new_version = 11;
     return 0;
   }
   if(old_version == 8)
@@ -862,8 +918,8 @@ int legacy_params(dt_iop_module_t *self,
     } dt_iop_lens_params_v8_t;
 
     const dt_iop_lens_params_v8_t *o = (dt_iop_lens_params_v8_t *)old_params;
-    dt_iop_lens_params_v10_t *n =
-      (dt_iop_lens_params_v10_t *)calloc(1, sizeof(dt_iop_lens_params_v10_t));
+    dt_iop_lens_params_v11_t *n =
+      (dt_iop_lens_params_v11_t *)calloc(1, sizeof(dt_iop_lens_params_v11_t));
 
     n->method = o->method;
     n->modify_flags = (dt_iop_lens_modflag_t)o->modify_flags;
@@ -893,11 +949,12 @@ int legacy_params(dt_iop_module_t *self,
     n->v_strength = 0.0f;
     n->v_radius = 0.5f;
     n->v_steepness = 0.5f;
+    _set_manual_defaults(n);
     n->reserved[0] = n->reserved[1] = 0.0f;
 
     *new_params = n;
-    *new_params_size = sizeof(dt_iop_lens_params_v10_t);
-    *new_version = 10;
+    *new_params_size = sizeof(dt_iop_lens_params_v11_t);
+    *new_version = 11;
     return 0;
   }
 
@@ -931,21 +988,73 @@ int legacy_params(dt_iop_module_t *self,
     } dt_iop_lens_params_v9_t;
 
     const dt_iop_lens_params_v9_t *o = (dt_iop_lens_params_v9_t *)old_params;
-    dt_iop_lens_params_v10_t *n =
-      (dt_iop_lens_params_v10_t *)calloc(1, sizeof(dt_iop_lens_params_v10_t));
+    dt_iop_lens_params_v11_t *n =
+      (dt_iop_lens_params_v11_t *)calloc(1, sizeof(dt_iop_lens_params_v11_t));
 
     memcpy(n, o, sizeof(dt_iop_lens_params_v9_t));
     // new in v10
     n->v_strength = 0.0f;
     n->v_radius = 0.5f;
     n->v_steepness = 0.5f;
+    _set_manual_defaults(n);
     n->reserved[0] = n->reserved[1] = 0.0f;
 
     *new_params = n;
-    *new_params_size = sizeof(dt_iop_lens_params_v10_t);
-    *new_version = 10;
+    *new_params_size = sizeof(dt_iop_lens_params_v11_t);
+    *new_version = 11;
     return 0;
   }
+
+  if(old_version == 10)
+  {
+    typedef struct
+    {
+      dt_iop_lens_method_t method;
+      dt_iop_lens_modflag_t modify_flags;
+      dt_iop_lens_mode_t inverse;
+      float scale;
+      float crop;
+      float focal;
+      float aperture;
+      float distance;
+      dt_iop_lens_lenstype_t target_geom;
+      char camera[128];
+      char lens[128];
+      gboolean tca_override;
+      float tca_r;
+      float tca_b;
+
+      float cor_dist_ft;
+      float cor_vig_ft;
+      float cor_ca_r_ft;
+      float cor_ca_b_ft;
+      float scale_md_v1;
+      dt_iop_lens_embedded_metadata_version md_version;
+      float scale_md;
+      gboolean has_been_set;
+      float v_strength;
+      float v_radius;
+      float v_steepness;
+      float reserved[2];
+    } dt_iop_lens_params_v10_t;
+
+    const dt_iop_lens_params_v10_t *o = (dt_iop_lens_params_v10_t *)old_params;
+    dt_iop_lens_params_v11_t *n =
+      (dt_iop_lens_params_v11_t *)calloc(1, sizeof(dt_iop_lens_params_v11_t));
+
+    // everything up to v_steepness is laid out identically, the manual
+    // parameters were appended after it.
+    memcpy(n, o, offsetof(dt_iop_lens_params_v10_t, reserved));
+    // new in v11
+    _set_manual_defaults(n);
+    n->reserved[0] = n->reserved[1] = 0.0f;
+
+    *new_params = n;
+    *new_params_size = sizeof(dt_iop_lens_params_v11_t);
+    *new_version = 11;
+    return 0;
+  }
+
   return 1;
 }
 
@@ -2568,6 +2677,102 @@ static void _commit_params_md(dt_iop_module_t *self,
   }
 }
 
+/* manual processing start */
+
+/* The manual method reuses the spline machinery of the embedded
+ * metadata method: we evaluate the user's radial polynomial at each
+ * knot and hand the resulting spline over to _process_md() and
+ * friends, so distortion, TCA and the roi/point transforms all come
+ * for free.
+ *
+ * The distortion model is the usual even radial polynomial
+ *   P(r) = 1 + k1*r^2 + k2*r^4 + k3*r^6
+ * with r normalised to the image's half-diagonal, matching the form
+ * used for DNG warp coefficients above.
+ *
+ * P is then divided by its area-weighted mean over the frame, so that
+ * the correction is centred: it pushes the inner part of the image
+ * outwards and pulls the outer part inwards instead of shrinking
+ * everything at once. The overall magnification is left alone, which
+ * keeps the framing (and the needed scale) close to 1.
+ *
+ * TCA is a linear per-channel scaling of that radius, as in Lensfun's
+ * linear TCA model.
+ *
+ * Vignetting is not handled here: the "manual vignette correction"
+ * section below already applies to every method. */
+static int _init_coeffs_man(const dt_iop_lens_params_t *p,
+                            float knots_dist[MAXKNOTS],
+                            float knots_vig[MAXKNOTS],
+                            float cor_rgb[3][MAXKNOTS],
+                            float vig[MAXKNOTS])
+{
+  const gboolean advanced = p->man_detail == DT_IOP_LENS_MANUAL_DETAIL_ADVANCED;
+
+  // the higher order distortion terms are advanced only, and in basic
+  // mode they are not just hidden, they are not applied either
+  const float k1 = p->man_k1;
+  const float k2 = advanced ? p->man_k2 : 0.0f;
+  const float k3 = advanced ? p->man_k3 : 0.0f;
+  const float tca_r = p->man_tca_r;
+  const float tca_b = p->man_tca_b;
+
+  // modify_flags is not consulted here: the sliders themselves are the
+  // per-correction switches, so the selector is hidden for this method
+  // and must not affect the result from behind the scenes
+
+  // integral of P(r) * 2r dr over [0,1], i.e. the mean radial factor
+  // weighted by area. clamped because extreme negative coefficients
+  // can drive it to zero or below.
+  const float norm = MAX(0.1f, 1.0f + k1 / 2.0f + k2 / 3.0f + k3 / 4.0f);
+  const float inv_norm = 1.0f / norm;
+
+  const int nc = MAXKNOTS;
+
+  for(int i = 0; i < nc; i++)
+  {
+    const float r = (float)i / (float)(nc - 1);
+    knots_dist[i] = knots_vig[i] = r;
+    if(vig) vig[i] = 1.0f;
+    if(!cor_rgb) continue;
+
+    const float r2 = r * r;
+    const float dr =
+      (1.0f + k1 * r2 + k2 * r2 * r2 + k3 * r2 * r2 * r2) * inv_norm;
+
+    cor_rgb[0][i] = dr * tca_r;
+    cor_rgb[1][i] = dr;
+    cor_rgb[2][i] = dr * tca_b;
+  }
+
+  return nc;
+}
+
+static void _commit_params_man(dt_iop_module_t *self,
+                               dt_iop_lens_params_t *p,
+                               dt_dev_pixelpipe_t *pipe,
+                               dt_dev_pixelpipe_iop_t *piece)
+{
+  dt_iop_lens_data_t *d = (dt_iop_lens_data_t *)piece->data;
+  dt_iop_lens_gui_data_t *g = (dt_iop_lens_gui_data_t *)self->gui_data;
+
+  d->nc = _init_coeffs_man(p, d->knots_dist, d->knots_vig,
+                           d->cor_rgb, d->vig);
+
+  d->scale_md = p->man_scale;
+  if((d->scale_md < 0.1f) || (d->scale_md > 2.0f))
+    d->scale_md = 1.0f;
+
+  if(self->dev->gui_attached && g && dt_pipe_is_preview(piece->pipe))
+  {
+    dt_iop_gui_enter_critical_section(self);
+    g->corrections_done = _check_corrections_md(d);
+    dt_iop_gui_leave_critical_section(self);
+  }
+}
+
+/* manual processing end */
+
 static void _commit_params_vig(dt_iop_module_t *self,
                                dt_iop_lens_params_t *p,
                                dt_dev_pixelpipe_t *pipe,
@@ -3027,7 +3232,7 @@ void process(dt_iop_module_t *self,
   {
     _process_lf(self, piece, data, ovoid, roi_in, roi_out);
   }
-  else if(d->method == DT_IOP_LENS_METHOD_EMBEDDED_METADATA)
+  else if(_method_is_spline(d->method))
   {
     _process_md(self, piece, data, ovoid, roi_in, roi_out, pre_vignette);
   }
@@ -3115,7 +3320,7 @@ int process_cl(dt_iop_module_t *self,
   {
     err = _process_cl_lf(self, piece, data, dev_out, roi_in, roi_out);
   }
-  else if(d->method == DT_IOP_LENS_METHOD_EMBEDDED_METADATA)
+  else if(_method_is_spline(d->method))
   {
     err = _process_cl_md(self, piece, data, dev_out, roi_in, roi_out);
   }
@@ -3144,7 +3349,7 @@ void tiling_callback(dt_iop_module_t *self,
   {
     _tiling_callback_lf(self, piece, roi_in, roi_out, tiling);
   }
-  else if(d->method == DT_IOP_LENS_METHOD_EMBEDDED_METADATA)
+  else if(_method_is_spline(d->method))
   {
     _tiling_callback_md(self, piece, roi_in, roi_out, tiling);
   }
@@ -3163,7 +3368,7 @@ gboolean distort_transform(dt_iop_module_t *self,
   {
     return _distort_transform_lf(self, piece, points, points_count);
   }
-  else if(d->method == DT_IOP_LENS_METHOD_EMBEDDED_METADATA)
+  else if(_method_is_spline(d->method))
   {
     return _distort_transform_md(self, piece, points, points_count);
   }
@@ -3181,7 +3386,7 @@ gboolean distort_backtransform(dt_iop_module_t *self,
   {
     return _distort_backtransform_lf(self, piece, points, points_count);
   }
-  else if(d->method == DT_IOP_LENS_METHOD_EMBEDDED_METADATA)
+  else if(_method_is_spline(d->method))
   {
     return _distort_backtransform_md(self, piece, points, points_count);
   }
@@ -3201,7 +3406,7 @@ void distort_mask(dt_iop_module_t *self,
   {
     _distort_mask_lf(self, piece, in, out, roi_in, roi_out);
   }
-  else if(d->method == DT_IOP_LENS_METHOD_EMBEDDED_METADATA)
+  else if(_method_is_spline(d->method))
   {
     _distort_mask_md(self, piece, in, out, roi_in, roi_out);
   }
@@ -3220,7 +3425,7 @@ void modify_roi_in(dt_iop_module_t *self,
   {
     _modify_roi_in_lf(self, piece, roi_out, roi_in);
   }
-  else if(d->method == DT_IOP_LENS_METHOD_EMBEDDED_METADATA)
+  else if(_method_is_spline(d->method))
   {
     _modify_roi_in_md(self, piece, roi_out, roi_in);
   }
@@ -3288,6 +3493,10 @@ void commit_params(dt_iop_module_t *self,
   else if(d->method == DT_IOP_LENS_METHOD_EMBEDDED_METADATA)
   {
     _commit_params_md(self, p, pipe, piece);
+  }
+  else if(d->method == DT_IOP_LENS_METHOD_MANUAL)
+  {
+    _commit_params_man(self, p, pipe, piece);
   }
   else
    _commit_params_vig(self, p, pipe, piece);
@@ -3722,9 +3931,28 @@ static void _camera_set(dt_iop_module_t *self, const lfCamera *cam)
 
   if(!cam)
   {
+    // Lensfun doesn't know this body. still show what the file says it
+    // was shot with, so it's clear what was searched for rather than
+    // leaving the user with a blank field.
+    const dt_image_t *img = &self->dev->image_storage;
+    g->camera = NULL;
+
+    if(img->exif_model[0])
+      fm = img->exif_maker[0]
+        ? g_strdup_printf("%s, %s", img->exif_maker, img->exif_model)
+        : g_strdup(img->exif_model);
+    else
+      fm = g_strdup(p->camera);
+
     gtk_label_set_text(GTK_LABEL(gtk_bin_get_child(GTK_BIN(g->camera_model))),
-                       "");
-    gtk_widget_set_tooltip_text(GTK_WIDGET(g->camera_model), "");
+                       fm);
+    gtk_widget_set_tooltip_text
+      (GTK_WIDGET(g->camera_model),
+       *fm ? _("this camera is not in the Lensfun database\n"
+               "click to pick one manually")
+           : _("no camera information found\n"
+               "click to pick one manually"));
+    g_free(fm);
     return;
   }
 
@@ -3940,6 +4168,18 @@ static void _lens_set(dt_iop_module_t *self,
 
   if(!lens)
   {
+    // keep whatever the file claims the lens was, and point at the
+    // picker -- searching without a camera lists the whole database
+    const dt_image_t *img = &self->dev->image_storage;
+    const char *name = p->lens[0] ? p->lens : img->exif_lens;
+
+    gtk_label_set_text(GTK_LABEL(gtk_bin_get_child(GTK_BIN(g->lens_model))),
+                       name);
+    gtk_widget_set_tooltip_text
+      (GTK_WIDGET(g->lens_model),
+       _("no matching lens in the Lensfun database\n"
+         "click to pick one from the full list"));
+
     g->lensfun_trouble = TRUE;
     return;
   }
@@ -4220,6 +4460,109 @@ static void _autoscale_pressed_lf(GtkWidget *button, dt_iop_module_t *self)
 
 /* -- Lensfun GUI end -- */
 
+/* The two useful ends of the scale range.
+ *
+ * An output pixel at normalised radius rho samples the source at
+ * radius dr(rho/s)/s * rho, so it stays inside the image exactly while
+ * dr(rho/s)/s <= 1. Only the frame border matters -- from the shorter
+ * edge at srr out to the corner at 1 -- and including radii below srr
+ * gives values far more extreme than the frame actually requires.
+ *
+ * Both bounds are roots of a function that decreases in s (the 1/s
+ * factor dominates), so they are found by bisection. Fixed point
+ * iteration oscillates instead of converging once the distortion gets
+ * strong. */
+static float _border_extreme_man(const float *knots,
+                                 const float cor_rgb[3][MAXKNOTS],
+                                 const int nc,
+                                 const float srr,
+                                 const float s,
+                                 const gboolean want_max)
+{
+  const int tested = 200;
+  float res = want_max ? -FLT_MAX : FLT_MAX;
+
+  for(int i = 0; i < tested; i++)
+  {
+    const float rho = srr + (1.0f - srr) * (float)i / (float)(tested - 1);
+    for(int c = 0; c < 3; c++)
+    {
+      const float v =
+        _interpolate_linear_spline(knots, cor_rgb[c], nc, rho / s) / s;
+      res = want_max ? MAX(res, v) : MIN(res, v);
+    }
+  }
+
+  return res;
+}
+
+static void _get_scale_range_man(dt_iop_module_t *self,
+                                 const dt_iop_lens_params_t *p,
+                                 float *scale_min,
+                                 float *scale_max)
+{
+  const dt_image_t *img = &self->dev->image_storage;
+
+  float knots_dist[MAXKNOTS], knots_vig[MAXKNOTS], cor_rgb[3][MAXKNOTS];
+  const int nc = _init_coeffs_man(p, knots_dist, knots_vig, cor_rgb, NULL);
+
+  const float iwd2 = 0.5f * img->p_width;
+  const float iht2 = 0.5f * img->p_height;
+  const float diag = dt_fast_hypotf(iwd2, iht2);
+  const float srr = (diag > 0.0f) ? MIN(iwd2, iht2) / diag : 0.0f;
+
+  // smallest scale with nothing sampled from outside the image, i.e.
+  // no empty areas anywhere along the border
+  float lo = 0.1f, hi = 2.0f;
+  for(int i = 0; i < 40; i++)
+  {
+    const float mid = 0.5f * (lo + hi);
+    if(_border_extreme_man(knots_dist, cor_rgb, nc, srr, mid, TRUE) > 1.0f)
+      lo = mid;
+    else
+      hi = mid;
+  }
+  *scale_max = hi;
+
+  // largest scale that still reaches the image border everywhere, i.e.
+  // nothing is cropped away
+  lo = 0.1f;
+  hi = 2.0f;
+  for(int i = 0; i < 40; i++)
+  {
+    const float mid = 0.5f * (lo + hi);
+    if(_border_extreme_man(knots_dist, cor_rgb, nc, srr, mid, FALSE) < 1.0f)
+      hi = mid;
+    else
+      lo = mid;
+  }
+  *scale_min = lo;
+}
+
+static void _scale_min_pressed_man(GtkWidget *button, dt_iop_module_t *self)
+{
+  dt_iop_lens_gui_data_t *g = (dt_iop_lens_gui_data_t *)self->gui_data;
+  dt_iop_lens_params_t *p = (dt_iop_lens_params_t *)self->params;
+
+  float smin, smax;
+  _get_scale_range_man(self, p, &smin, &smax);
+
+  p->has_been_set = TRUE;
+  dt_bauhaus_slider_set(g->man_scale, smin);
+}
+
+static void _scale_max_pressed_man(GtkWidget *button, dt_iop_module_t *self)
+{
+  dt_iop_lens_gui_data_t *g = (dt_iop_lens_gui_data_t *)self->gui_data;
+  dt_iop_lens_params_t *p = (dt_iop_lens_params_t *)self->params;
+
+  float smin, smax;
+  _get_scale_range_man(self, p, &smin, &smax);
+
+  p->has_been_set = TRUE;
+  dt_bauhaus_slider_set(g->man_scale, smax);
+}
+
 static void _display_errors(dt_iop_module_t *self)
 {
   dt_iop_lens_gui_data_t *g = (dt_iop_lens_gui_data_t *)self->gui_data;
@@ -4231,7 +4574,10 @@ static void _display_errors(dt_iop_module_t *self)
   {
     dt_iop_set_module_trouble_message
       (self, _("camera/lens not found"),
-       _("please select your lens manually\n"
+       _("pick a camera or lens from the buttons below --\n"
+         "the lens button lists the whole database when the body is unknown\n"
+         "scale, target geometry and the TCA override work without a profile\n"
+         "for an uncatalogued lens, switch the correction method to manual\n"
          "you might also want to check if your Lensfun database is up-to-date\n"
          "by running lensfun-update-data"),
        "camera/lens not found");
@@ -4253,13 +4599,17 @@ void gui_changed(dt_iop_module_t *self, GtkWidget *w, void *previous)
   {
     gtk_stack_set_visible_child_name(GTK_STACK(g->methods), "lensfun");
 
-    gtk_widget_set_sensitive(GTK_WIDGET(g->modflags), !g->lensfun_trouble);
-    gtk_widget_set_sensitive(GTK_WIDGET(g->target_geom), !g->lensfun_trouble);
-    gtk_widget_set_sensitive(GTK_WIDGET(g->scale), !g->lensfun_trouble);
-    gtk_widget_set_sensitive(GTK_WIDGET(g->reverse), !g->lensfun_trouble);
-    gtk_widget_set_sensitive(GTK_WIDGET(g->tca_r), !g->lensfun_trouble);
-    gtk_widget_set_sensitive(GTK_WIDGET(g->tca_b), !g->lensfun_trouble);
-    gtk_widget_set_sensitive(GTK_WIDGET(g->message), !g->lensfun_trouble);
+    // none of these need a lens profile to work -- scale, geometry and
+    // the TCA override are independent of the database -- so they stay
+    // usable even when the camera or lens wasn't recognised. graying
+    // them out only made the panel look broken.
+    gtk_widget_set_sensitive(GTK_WIDGET(g->modflags), TRUE);
+    gtk_widget_set_sensitive(GTK_WIDGET(g->target_geom), TRUE);
+    gtk_widget_set_sensitive(GTK_WIDGET(g->scale), TRUE);
+    gtk_widget_set_sensitive(GTK_WIDGET(g->reverse), TRUE);
+    gtk_widget_set_sensitive(GTK_WIDGET(g->tca_r), TRUE);
+    gtk_widget_set_sensitive(GTK_WIDGET(g->tca_b), TRUE);
+    gtk_widget_set_sensitive(GTK_WIDGET(g->message), TRUE);
 
     const gboolean raw_monochrome =
       dt_image_is_monochrome(&self->dev->image_storage);
@@ -4305,6 +4655,22 @@ void gui_changed(dt_iop_module_t *self, GtkWidget *w, void *previous)
     gtk_widget_set_sensitive(GTK_WIDGET(g->modflags), TRUE);
     gtk_widget_set_sensitive(GTK_WIDGET(g->message), TRUE);
   }
+  else if(p->method == DT_IOP_LENS_METHOD_MANUAL)
+  {
+    gtk_stack_set_visible_child_name(GTK_STACK(g->methods), "manual");
+
+    const gboolean advanced =
+      p->man_detail == DT_IOP_LENS_MANUAL_DETAIL_ADVANCED;
+    const gboolean raw_monochrome =
+      dt_image_is_monochrome(&self->dev->image_storage);
+
+    gtk_widget_set_visible(g->man_k2, advanced);
+    gtk_widget_set_visible(g->man_k3, advanced);
+    gtk_widget_set_visible(g->man_tca_r, !raw_monochrome);
+    gtk_widget_set_visible(g->man_tca_b, !raw_monochrome);
+
+    gtk_widget_set_sensitive(GTK_WIDGET(g->message), TRUE);
+  }
   else
   {
     gtk_stack_set_visible_child_name(GTK_STACK(g->methods), "onlyvig");
@@ -4312,7 +4678,10 @@ void gui_changed(dt_iop_module_t *self, GtkWidget *w, void *previous)
     gtk_widget_set_sensitive(GTK_WIDGET(g->message), FALSE);
   }
   const gboolean onlyvig = p->method == DT_IOP_LENS_METHOD_ONLYVIGNETTE;
-  gtk_widget_set_visible(GTK_WIDGET(g->modflags), !onlyvig);
+  const gboolean manual = p->method == DT_IOP_LENS_METHOD_MANUAL;
+  // in manual mode the detail selector takes the modflags slot
+  gtk_widget_set_visible(GTK_WIDGET(g->modflags), !onlyvig && !manual);
+  gtk_widget_set_visible(GTK_WIDGET(g->man_detail), manual);
   gtk_widget_set_visible(GTK_WIDGET(g->hbox1), !onlyvig);
 
   // set modified if user did modify something with some widget
@@ -4477,6 +4846,74 @@ void gui_init(dt_iop_module_t *self)
   /* empty correction mode widget */
   GtkWidget *only_vig = dt_gui_vbox();
 
+  /* manual correction widgets */
+  GtkWidget *box_man = self->widget = dt_gui_vbox();
+
+  // the sliders show a comfortable range for everyday lenses, but the
+  // hard limits go much further for strongly distorting glass
+  g->man_k1 = dt_bauhaus_slider_from_params(self, "man_k1");
+  dt_bauhaus_slider_set_digits(g->man_k1, 4);
+  dt_bauhaus_slider_set_soft_range(g->man_k1, -0.3f, 0.3f);
+  gtk_widget_set_tooltip_text
+    (g->man_k1,
+     _("amount of radial distortion correction\n"
+       "positive values correct barrel, negative values correct pincushion\n"
+       "the centre of the frame is pushed outwards and the edges inwards,\n"
+       "so the overall framing stays put"));
+
+  g->man_k2 = dt_bauhaus_slider_from_params(self, "man_k2");
+  dt_bauhaus_slider_set_digits(g->man_k2, 4);
+  dt_bauhaus_slider_set_soft_range(g->man_k2, -0.3f, 0.3f);
+  gtk_widget_set_tooltip_text(g->man_k2,
+                              _("4th order term of the distortion polynomial"));
+
+  g->man_k3 = dt_bauhaus_slider_from_params(self, "man_k3");
+  dt_bauhaus_slider_set_digits(g->man_k3, 4);
+  dt_bauhaus_slider_set_soft_range(g->man_k3, -0.3f, 0.3f);
+  gtk_widget_set_tooltip_text(g->man_k3,
+                              _("6th order term of the distortion polynomial"));
+
+  g->man_tca_r = dt_bauhaus_slider_from_params(self, "man_tca_r");
+  dt_bauhaus_slider_set_digits(g->man_tca_r, 5);
+  gtk_widget_set_tooltip_text(g->man_tca_r,
+                              _("transversal chromatic aberration red"));
+
+  g->man_tca_b = dt_bauhaus_slider_from_params(self, "man_tca_b");
+  dt_bauhaus_slider_set_digits(g->man_tca_b, 5);
+  gtk_widget_set_tooltip_text(g->man_tca_b,
+                              _("transversal chromatic aberration blue"));
+
+  // the scale slider is flanked by the two ends of the range the
+  // distortion spans: keep the whole frame, or fill it completely
+  GtkWidget *scale_row = self->widget = dt_gui_hbox();
+
+  GtkWidget *scale_min_btn = dtgtk_button_new(dtgtk_cairo_paint_solid_arrow,
+                                              CPF_DIRECTION_LEFT, NULL);
+  gtk_widget_set_tooltip_text
+    (scale_min_btn,
+     _("scale to where the distortion starts, at the shorter edge:\n"
+       "crops nothing, may leave empty areas at the border"));
+  g_signal_connect(G_OBJECT(scale_min_btn), "clicked",
+                   G_CALLBACK(_scale_min_pressed_man), self);
+  dt_gui_box_add(self->widget, scale_min_btn);
+
+  g->man_scale = dt_gui_expand(dt_bauhaus_slider_from_params(self, "man_scale"));
+  dt_bauhaus_slider_set_digits(g->man_scale, 4);
+  gtk_widget_set_tooltip_text(g->man_scale, _("image scaling"));
+
+  GtkWidget *scale_max_btn = dtgtk_button_new(dtgtk_cairo_paint_solid_arrow,
+                                              CPF_DIRECTION_RIGHT, NULL);
+  gtk_widget_set_tooltip_text
+    (scale_max_btn,
+     _("scale to where the distortion ends, at the corner:\n"
+       "leaves no empty areas, crops the border"));
+  g_signal_connect(G_OBJECT(scale_max_btn), "clicked",
+                   G_CALLBACK(_scale_max_pressed_man), self);
+  dt_gui_box_add(self->widget, scale_max_btn);
+
+  self->widget = box_man;
+  dt_gui_box_add(self->widget, scale_row);
+
   /* embedded metadata widgets */
   g->use_latest_md_algo =
     gtk_check_button_new_with_label(_("use latest algorithm"));
@@ -4538,12 +4975,25 @@ void gui_init(dt_iop_module_t *self)
     (g->methods_selector,
      _("select a correction mode either based on\n"
        " a) data and algorithms provided by the Lensfun project\n"
-       " b) embedded metadata provided by the camera or software vendor"));
+       " b) embedded metadata provided by the camera or software vendor\n"
+       " c) your own manually dialled-in correction, for lenses\n"
+       "    neither the database nor the camera knows about"));
 
   // selector for correction type (modflags): one or more out of
   // distortion, TCA, vignetting
   g->modflags = dt_bauhaus_combobox_from_params(self, "modify_flags");
   gtk_widget_set_tooltip_text(g->modflags, _("which corrections to apply"));
+
+  // the manual method takes this slot instead: its sliders already are
+  // the per-correction switches, so the modflags selector has nothing
+  // left to say there and only the level of detail is worth choosing
+  g->man_detail = dt_bauhaus_combobox_from_params(self, "man_detail");
+  gtk_widget_set_tooltip_text
+    (g->man_detail,
+     _("how much of the correction model to expose:\n"
+       "basic — distortion amount and chromatic aberration\n"
+       "advanced — adds the higher order distortion terms\n"
+       "terms hidden by basic are not applied"));
 
   // message box to inform user what corrections have been done. this
   // is useful as depending on Lensfun's profile only some of the lens
@@ -4562,6 +5012,7 @@ void gui_init(dt_iop_module_t *self)
 
   gtk_stack_add_named(GTK_STACK(g->methods), box_lf, "lensfun");
   gtk_stack_add_named(GTK_STACK(g->methods), box_md, "metadata");
+  gtk_stack_add_named(GTK_STACK(g->methods), box_man, "manual");
   gtk_stack_add_named(GTK_STACK(g->methods), only_vig, "onlyvig");
 
   // widget for extra manual vignette correction, FIXME manual reference
@@ -4656,13 +5107,13 @@ void gui_update(dt_iop_module_t *self)
     dt_pthread_mutex_lock(&darktable.plugin_threadsafe);
     cam = dt_iop_lensfun_db->FindCamerasExt(NULL, p->camera, 0);
     dt_pthread_mutex_unlock(&darktable.plugin_threadsafe);
-    if(cam)
-      _camera_set(self, cam[0]);
-    else
-      _camera_set(self, NULL);
   }
+  // always call this: with no match it falls back to the EXIF name
+  _camera_set(self, cam ? cam[0] : NULL);
 
-  if(g->camera && p->lens[0])
+  // an unknown body is no reason to give up on the lens -- searching
+  // without a camera simply widens the search to the whole database
+  if(p->lens[0])
   {
     char model[200];
     _parse_model(p->lens, model, sizeof(model));
