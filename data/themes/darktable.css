@@ -495,29 +495,28 @@ separator
 /*------------------------
   - Main header settings -
   ------------------------*/
-/* the view tabs, grouped into one segmented-control pill */
+/* the view tabs group */
 #view-switcher
 {
-  background-color: @grey_10;
-  border-radius: 0.4em;
-  padding: 0.15em;
   margin: 0 0.3em;
+  border-bottom: 0.07em solid @grey_25;
 }
 
 /* individual tabs inside the view switcher */
 #view-label
 {
   font-size: 1.1em;
-  border-radius: 0.3em;
   margin: 0 0.1em;
   padding: 0.2em 0.5em;
+  border-bottom: 0.15em solid transparent;
   color: @disabled_fg_color;
 }
 
-/* the currently active view tab */
+/* the currently active view tab, indicated by an underline */
 #view-label:selected
 {
-  background-color: @selected_bg_color;
+  border-bottom: 0.15em solid @fg_color;
+  color: @fg_color;
   font-weight: bold;
 }
 
