@@ -1,0 +1,194 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Sony",
+  "model": "E PZ 18-105mm f/4 G OSS",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Sony E"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Sony_E_PZ_18-105mm_f_4_G_OSS"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 18.0,
+     "params": [
+      1.0,
+      0.98735,
+      0.10212,
+      -0.14747,
+      0.058,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 21.0,
+     "params": [
+      1.0,
+      0.9460900000000001,
+      0.16895,
+      -0.19694,
+      0.0819,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 26.0,
+     "params": [
+      1.0,
+      0.9608500000000001,
+      0.08288,
+      -0.0963,
+      0.05257,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 28.0,
+     "params": [
+      1.0,
+      0.9683700000000001,
+      0.04944,
+      -0.05729,
+      0.03948,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 105.0,
+     "params": [
+      1.0,
+      0.98288,
+      -0.01695,
+      0.02022,
+      0.01385,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 18.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -8.02e-05,
+      0.0,
+      1.0007953
+     ],
+     "tca_b": [
+      0.0001123,
+      0.0,
+      0.9997721
+     ]
+    },
+    {
+     "focal": 21.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0001951,
+      0.0,
+      1.0007857
+     ],
+     "tca_b": [
+      0.0001194,
+      0.0,
+      0.9997885
+     ]
+    },
+    {
+     "focal": 26.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0001807,
+      0.0,
+      1.0006159
+     ],
+     "tca_b": [
+      0.0001234,
+      0.0,
+      0.9997867
+     ]
+    },
+    {
+     "focal": 28.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0001413,
+      0.0,
+      1.0005127
+     ],
+     "tca_b": [
+      9.42e-05,
+      0.0,
+      0.9997947
+     ]
+    },
+    {
+     "focal": 105.0,
+     "source_model": "poly3",
+     "tca_r": [
+      4.07e-05,
+      0.0,
+      0.9996731
+     ],
+     "tca_b": [
+      6.75e-05,
+      0.0,
+      0.9997709
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-sony.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 6.661338147750939e-16,
+  "unrepresentable": []
+ }
+}

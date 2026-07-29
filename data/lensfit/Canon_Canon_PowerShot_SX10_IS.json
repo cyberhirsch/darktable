@@ -1,0 +1,262 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Canon",
+  "model": "Canon PowerShot SX10 IS",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "canonSX10IS"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Canon_Canon_PowerShot_SX10_IS"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 7.9,
+     "params": [
+      1.0,
+      1.00184,
+      0.02812,
+      -0.0514,
+      0.02144,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 13.7,
+     "params": [
+      1.0,
+      0.9799699999999999,
+      0.01012,
+      0.00887,
+      0.00104,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 23.0,
+     "params": [
+      1.0,
+      0.9954600000000001,
+      0.01202,
+      -0.01354,
+      0.00606,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 33.5,
+     "params": [
+      1.0,
+      0.9814299999999999,
+      0.03222,
+      -0.01698,
+      0.00333,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 49.8,
+     "params": [
+      1.0,
+      0.9866599999999999,
+      0.01773,
+      -0.00161,
+      -0.00278,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 67.4,
+     "params": [
+      1.0,
+      0.9849800000000001,
+      0.03282,
+      -0.02254,
+      0.00474,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 95.5,
+     "params": [
+      1.0,
+      0.9800399999999999,
+      0.05062,
+      -0.04402,
+      0.01336,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 7.9,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0002362
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000038
+     ]
+    },
+    {
+     "focal": 13.7,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0001858
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999953
+     ]
+    },
+    {
+     "focal": 23.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0002228
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9998707
+     ]
+    },
+    {
+     "focal": 31.7,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0002011
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9997086
+     ]
+    },
+    {
+     "focal": 33.5,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0002194
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9996814
+     ]
+    },
+    {
+     "focal": 49.8,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0001195
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999249
+     ]
+    },
+    {
+     "focal": 67.4,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0000258
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9998699
+     ]
+    },
+    {
+     "focal": 95.5,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9999331
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999027
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "compact-canon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 6.661338147750939e-16,
+  "unrepresentable": []
+ }
+}

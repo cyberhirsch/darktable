@@ -1,0 +1,124 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Tokina",
+  "model": "Tokina atx-i 11-16mm F2.8 CF",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Nikon F AF",
+   "Canon EF-S"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Tokina_Tokina_atx-i_11-16mm_F2.8_CF"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 11.0,
+     "params": [
+      1.0,
+      1.013,
+      -0.006,
+      -0.005,
+      -0.002,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.0,
+     "params": [
+      1.0,
+      0.9989999999999999,
+      0.022,
+      -0.025,
+      0.004,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 13.0,
+     "params": [
+      1.0,
+      1.002,
+      0.009,
+      -0.011,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 14.0,
+     "params": [
+      1.0,
+      0.9979999999999999,
+      0.017,
+      -0.018,
+      0.003,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 16.0,
+     "params": [
+      1.0,
+      1.0079999999999998,
+      -0.01,
+      0.003,
+      -0.001,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-tokina.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

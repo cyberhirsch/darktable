@@ -1,0 +1,194 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Pentax",
+  "model": "smc Pentax-DA Fish-Eye 10-17mm f/3.5-4.5 ED IF",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Pentax KAF2"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Pentax_smc_Pentax-DA_Fish-Eye_10-17mm_f_3.5-4.5_ED_IF"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "equisolid",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 10.0,
+     "params": [
+      1.0,
+      1.0013,
+      -0.09198,
+      0.12586,
+      -0.03518,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 11.0,
+     "params": [
+      1.0,
+      0.9746100000000001,
+      -0.07233,
+      0.12685,
+      -0.02913,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 13.0,
+     "params": [
+      1.0,
+      0.97626,
+      -0.02116,
+      0.05636,
+      -0.01146,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 15.0,
+     "params": [
+      1.0,
+      0.99592,
+      -0.02424,
+      0.03724,
+      -0.00892,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 17.0,
+     "params": [
+      1.0,
+      1.0017500000000001,
+      -0.01391,
+      0.01752,
+      -0.00536,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 10.0,
+     "source_model": "poly3",
+     "tca_r": [
+      4.05e-05,
+      0.0,
+      1.0004481
+     ],
+     "tca_b": [
+      -3.64e-05,
+      0.0,
+      1.0004715
+     ]
+    },
+    {
+     "focal": 11.0,
+     "source_model": "poly3",
+     "tca_r": [
+      4e-05,
+      0.0,
+      1.0004872
+     ],
+     "tca_b": [
+      -3.48e-05,
+      0.0,
+      1.0003633
+     ]
+    },
+    {
+     "focal": 13.0,
+     "source_model": "poly3",
+     "tca_r": [
+      2.81e-05,
+      0.0,
+      1.0005141
+     ],
+     "tca_b": [
+      -2.86e-05,
+      0.0,
+      1.0002823
+     ]
+    },
+    {
+     "focal": 15.0,
+     "source_model": "poly3",
+     "tca_r": [
+      2.14e-05,
+      0.0,
+      1.0005105
+     ],
+     "tca_b": [
+      -1.17e-05,
+      0.0,
+      1.0002102
+     ]
+    },
+    {
+     "focal": 17.0,
+     "source_model": "poly3",
+     "tca_r": [
+      9.4e-06,
+      0.0,
+      1.000564
+     ],
+     "tca_b": [
+      -2.73e-05,
+      0.0,
+      1.0001892
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-pentax.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

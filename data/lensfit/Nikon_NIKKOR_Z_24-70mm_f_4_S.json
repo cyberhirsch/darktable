@@ -1,0 +1,895 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Nikon",
+  "model": "NIKKOR Z 24-70mm f/4 S",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Nikon Z"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Nikon_NIKKOR_Z_24-70mm_f_4_S"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 24.0,
+     "params": [
+      1.0,
+      1.0090000000000001,
+      0.073,
+      -0.114,
+      0.032,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 28.0,
+     "params": [
+      1.0,
+      0.994,
+      0.061,
+      -0.077,
+      0.022,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 35.0,
+     "params": [
+      1.0,
+      0.974,
+      0.063,
+      -0.056,
+      0.019,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 50.0,
+     "params": [
+      1.0,
+      0.947,
+      0.096,
+      -0.067,
+      0.024,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 70.0,
+     "params": [
+      1.0,
+      0.9659999999999999,
+      0.039,
+      -0.017,
+      0.012,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 24.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0002247
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000753
+     ]
+    },
+    {
+     "focal": 28.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0001203
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.000131
+     ]
+    },
+    {
+     "focal": 35.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0000506
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0001152
+     ]
+    },
+    {
+     "focal": 50.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9999946
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000632
+     ]
+    },
+    {
+     "focal": 70.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9999059
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999643
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": [
+     {
+      "k": [
+       -0.4443301,
+       -0.875733,
+       0.4629641
+      ],
+      "ellipticity": 1.0,
+      "focal": 24.0,
+      "aperture": 4.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.4443301,
+       -0.875733,
+       0.4629641
+      ],
+      "ellipticity": 1.0,
+      "focal": 24.0,
+      "aperture": 4.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.6482147,
+       -0.0472485,
+       -0.0642677
+      ],
+      "ellipticity": 1.0,
+      "focal": 24.0,
+      "aperture": 5.6,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.6482147,
+       -0.0472485,
+       -0.0642677
+      ],
+      "ellipticity": 1.0,
+      "focal": 24.0,
+      "aperture": 5.6,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.6578518,
+       -0.1161517,
+       0.1095337
+      ],
+      "ellipticity": 1.0,
+      "focal": 24.0,
+      "aperture": 8.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.6578518,
+       -0.1161517,
+       0.1095337
+      ],
+      "ellipticity": 1.0,
+      "focal": 24.0,
+      "aperture": 8.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.6197886,
+       -0.3217191,
+       0.3238373
+      ],
+      "ellipticity": 1.0,
+      "focal": 24.0,
+      "aperture": 11.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.6197886,
+       -0.3217191,
+       0.3238373
+      ],
+      "ellipticity": 1.0,
+      "focal": 24.0,
+      "aperture": 11.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.5014912,
+       -0.49952,
+       0.4113183
+      ],
+      "ellipticity": 1.0,
+      "focal": 24.0,
+      "aperture": 22.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.5014912,
+       -0.49952,
+       0.4113183
+      ],
+      "ellipticity": 1.0,
+      "focal": 24.0,
+      "aperture": 22.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3718631,
+       -0.9318504,
+       0.6048719
+      ],
+      "ellipticity": 1.0,
+      "focal": 28.0,
+      "aperture": 4.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3718631,
+       -0.9318504,
+       0.6048719
+      ],
+      "ellipticity": 1.0,
+      "focal": 28.0,
+      "aperture": 4.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.4570521,
+       -0.3860115,
+       0.1850579
+      ],
+      "ellipticity": 1.0,
+      "focal": 28.0,
+      "aperture": 5.6,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.4570521,
+       -0.3860115,
+       0.1850579
+      ],
+      "ellipticity": 1.0,
+      "focal": 28.0,
+      "aperture": 5.6,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.5697124,
+       -0.0975593,
+       0.0678084
+      ],
+      "ellipticity": 1.0,
+      "focal": 28.0,
+      "aperture": 8.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.5697124,
+       -0.0975593,
+       0.0678084
+      ],
+      "ellipticity": 1.0,
+      "focal": 28.0,
+      "aperture": 8.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.5323665,
+       -0.294743,
+       0.2789542
+      ],
+      "ellipticity": 1.0,
+      "focal": 28.0,
+      "aperture": 11.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.5323665,
+       -0.294743,
+       0.2789542
+      ],
+      "ellipticity": 1.0,
+      "focal": 28.0,
+      "aperture": 11.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.4361415,
+       -0.4515922,
+       0.3679098
+      ],
+      "ellipticity": 1.0,
+      "focal": 28.0,
+      "aperture": 22.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.4361415,
+       -0.4515922,
+       0.3679098
+      ],
+      "ellipticity": 1.0,
+      "focal": 28.0,
+      "aperture": 22.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3397245,
+       -0.8805424,
+       0.601324
+      ],
+      "ellipticity": 1.0,
+      "focal": 34.5,
+      "aperture": 4.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3397245,
+       -0.8805424,
+       0.601324
+      ],
+      "ellipticity": 1.0,
+      "focal": 34.5,
+      "aperture": 4.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3739464,
+       -0.2778535,
+       0.0778164
+      ],
+      "ellipticity": 1.0,
+      "focal": 34.5,
+      "aperture": 5.6,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3739464,
+       -0.2778535,
+       0.0778164
+      ],
+      "ellipticity": 1.0,
+      "focal": 34.5,
+      "aperture": 5.6,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.4893736,
+       -0.0042425,
+       -0.0161347
+      ],
+      "ellipticity": 1.0,
+      "focal": 34.5,
+      "aperture": 8.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.4893736,
+       -0.0042425,
+       -0.0161347
+      ],
+      "ellipticity": 1.0,
+      "focal": 34.5,
+      "aperture": 8.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.4237889,
+       -0.2560042,
+       0.2244748
+      ],
+      "ellipticity": 1.0,
+      "focal": 34.5,
+      "aperture": 11.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.4237889,
+       -0.2560042,
+       0.2244748
+      ],
+      "ellipticity": 1.0,
+      "focal": 34.5,
+      "aperture": 11.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3960898,
+       -0.294747,
+       0.2490447
+      ],
+      "ellipticity": 1.0,
+      "focal": 34.5,
+      "aperture": 22.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3960898,
+       -0.294747,
+       0.2490447
+      ],
+      "ellipticity": 1.0,
+      "focal": 34.5,
+      "aperture": 22.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.4901334,
+       -0.1517376,
+       0.0889762
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 4.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.4901334,
+       -0.1517376,
+       0.0889762
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 4.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2447861,
+       -0.2477095,
+       0.0419547
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 5.6,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2447861,
+       -0.2477095,
+       0.0419547
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 5.6,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.344842,
+       -0.0069534,
+       -0.0263308
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 8.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.344842,
+       -0.0069534,
+       -0.0263308
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 8.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2914087,
+       -0.2187803,
+       0.1883851
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 11.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2914087,
+       -0.2187803,
+       0.1883851
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 11.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2861722,
+       -0.2221781,
+       0.1877337
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 22.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2861722,
+       -0.2221781,
+       0.1877337
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 22.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.5974678,
+       0.3024944,
+       -0.4322144
+      ],
+      "ellipticity": 1.0,
+      "focal": 70.0,
+      "aperture": 4.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.5974678,
+       0.3024944,
+       -0.4322144
+      ],
+      "ellipticity": 1.0,
+      "focal": 70.0,
+      "aperture": 4.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2655728,
+       0.1325074,
+       -0.4145619
+      ],
+      "ellipticity": 1.0,
+      "focal": 70.0,
+      "aperture": 5.6,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2655728,
+       0.1325074,
+       -0.4145619
+      ],
+      "ellipticity": 1.0,
+      "focal": 70.0,
+      "aperture": 5.6,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3521749,
+       0.2507118,
+       -0.2609059
+      ],
+      "ellipticity": 1.0,
+      "focal": 70.0,
+      "aperture": 8.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3521749,
+       0.2507118,
+       -0.2609059
+      ],
+      "ellipticity": 1.0,
+      "focal": 70.0,
+      "aperture": 8.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2480068,
+       -0.1645881,
+       0.1456365
+      ],
+      "ellipticity": 1.0,
+      "focal": 70.0,
+      "aperture": 11.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2480068,
+       -0.1645881,
+       0.1456365
+      ],
+      "ellipticity": 1.0,
+      "focal": 70.0,
+      "aperture": 11.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2555569,
+       -0.1340241,
+       0.1268382
+      ],
+      "ellipticity": 1.0,
+      "focal": 70.0,
+      "aperture": 22.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2555569,
+       -0.1340241,
+       0.1268382
+      ],
+      "ellipticity": 1.0,
+      "focal": 70.0,
+      "aperture": 22.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     }
+    ]
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-nikon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

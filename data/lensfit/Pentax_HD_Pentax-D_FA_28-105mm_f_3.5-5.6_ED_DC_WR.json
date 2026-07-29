@@ -1,0 +1,194 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Pentax",
+  "model": "HD Pentax-D FA 28-105mm f/3.5-5.6 ED DC WR",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Pentax KAF3"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Pentax_HD_Pentax-D_FA_28-105mm_f_3.5-5.6_ED_DC_WR"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 28.0,
+     "params": [
+      1.0,
+      1.029320605,
+      -0.000358805,
+      -0.0455463,
+      0.0165845,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 40.0,
+     "params": [
+      1.0,
+      1.00658525,
+      -0.00543098,
+      -0.00768683,
+      0.00653256,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 58.0,
+     "params": [
+      1.0,
+      0.99258003,
+      0.0,
+      0.00741997,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 73.0,
+     "params": [
+      1.0,
+      0.99180131,
+      0.0,
+      0.00819869,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 105.0,
+     "params": [
+      1.0,
+      0.99149215,
+      0.0,
+      0.00850785,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 28.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.000251
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0001311
+     ]
+    },
+    {
+     "focal": 40.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0001204
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000619
+     ]
+    },
+    {
+     "focal": 58.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0000364
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999813
+     ]
+    },
+    {
+     "focal": 73.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.999905
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.999936
+     ]
+    },
+    {
+     "focal": 105.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9995892
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999858
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-pentax.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

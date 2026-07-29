@@ -1,0 +1,227 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Canon",
+  "model": "Canon EF 40mm f/2.8 STM",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Canon EF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Canon_Canon_EF_40mm_f_2.8_STM"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 40.0,
+     "params": [
+      1.0,
+      1.00244,
+      0.0162,
+      -0.02951,
+      0.01087,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 40.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0001009,
+      0.0,
+      1.0003216
+     ],
+     "tca_b": [
+      0.0001426,
+      0.0,
+      0.9997719
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": [
+     {
+      "k": [
+       -1.2236,
+       0.9039,
+       -0.3077
+      ],
+      "ellipticity": 1.0,
+      "focal": 40.0,
+      "aperture": 2.8,
+      "focus_distance": 0.3,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -1.5776,
+       1.3808,
+       -0.5311
+      ],
+      "ellipticity": 1.0,
+      "focal": 40.0,
+      "aperture": 2.8,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3194,
+       -0.1724,
+       0.1008
+      ],
+      "ellipticity": 1.0,
+      "focal": 40.0,
+      "aperture": 4.0,
+      "focus_distance": 0.3,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3977,
+       -0.2867,
+       0.1647
+      ],
+      "ellipticity": 1.0,
+      "focal": 40.0,
+      "aperture": 4.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3672,
+       -0.0314,
+       0.0908
+      ],
+      "ellipticity": 1.0,
+      "focal": 40.0,
+      "aperture": 5.6,
+      "focus_distance": 0.3,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.5092,
+       0.0993,
+       0.0131
+      ],
+      "ellipticity": 1.0,
+      "focal": 40.0,
+      "aperture": 5.6,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3743,
+       -0.0158,
+       0.0813
+      ],
+      "ellipticity": 1.0,
+      "focal": 40.0,
+      "aperture": 8.0,
+      "focus_distance": 0.3,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.4955,
+       0.037,
+       0.0743
+      ],
+      "ellipticity": 1.0,
+      "focal": 40.0,
+      "aperture": 8.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.3722,
+       -0.0237,
+       0.0875
+      ],
+      "ellipticity": 1.0,
+      "focal": 40.0,
+      "aperture": 22.0,
+      "focus_distance": 0.3,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.4923,
+       0.0279,
+       0.0801
+      ],
+      "ellipticity": 1.0,
+      "focal": 40.0,
+      "aperture": 22.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     }
+    ]
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-canon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 2.220446049250313e-16,
+  "unrepresentable": []
+ }
+}

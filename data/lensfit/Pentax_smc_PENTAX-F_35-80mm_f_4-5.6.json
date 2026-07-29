@@ -1,0 +1,221 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Pentax",
+  "model": "smc PENTAX-F 35-80mm f/4-5.6",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Pentax KAF2"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Pentax_smc_PENTAX-F_35-80mm_f_4-5.6"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 35.0,
+     "params": [
+      1.0,
+      1.009,
+      -0.009,
+      0.003,
+      -0.003,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 40.0,
+     "params": [
+      1.0,
+      1.003,
+      -0.0,
+      -0.002,
+      -0.001,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 53.0,
+     "params": [
+      1.0,
+      0.9919999999999999,
+      0.021,
+      -0.018,
+      0.005,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 60.0,
+     "params": [
+      1.0,
+      0.995,
+      0.001,
+      0.006,
+      -0.002,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 68.0,
+     "params": [
+      1.0,
+      0.9799999999999999,
+      0.041,
+      -0.028,
+      0.007,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 80.0,
+     "params": [
+      1.0,
+      1.0099999999999998,
+      -0.032,
+      0.029,
+      -0.007,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 35.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -8.89e-05,
+      0.0,
+      1.0005049
+     ],
+     "tca_b": [
+      3.8e-05,
+      0.0,
+      0.999781
+     ]
+    },
+    {
+     "focal": 40.0,
+     "source_model": "poly3",
+     "tca_r": [
+      2.38e-05,
+      0.0,
+      1.0002715
+     ],
+     "tca_b": [
+      4.9e-06,
+      0.0,
+      0.999907
+     ]
+    },
+    {
+     "focal": 53.0,
+     "source_model": "poly3",
+     "tca_r": [
+      1.7e-06,
+      0.0,
+      1.0001317
+     ],
+     "tca_b": [
+      -1e-07,
+      0.0,
+      1.0001057
+     ]
+    },
+    {
+     "focal": 60.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -8.9e-06,
+      0.0,
+      1.0000545
+     ],
+     "tca_b": [
+      -8.4e-06,
+      0.0,
+      1.0002341
+     ]
+    },
+    {
+     "focal": 68.0,
+     "source_model": "poly3",
+     "tca_r": [
+      6.6e-06,
+      0.0,
+      0.9999577
+     ],
+     "tca_b": [
+      -4.8e-06,
+      0.0,
+      1.0003661
+     ]
+    },
+    {
+     "focal": 80.0,
+     "source_model": "poly3",
+     "tca_r": [
+      9.8e-06,
+      0.0,
+      0.9998537
+     ],
+     "tca_b": [
+      -3.1e-05,
+      0.0,
+      1.0004053
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-pentax.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 6.661338147750939e-16,
+  "unrepresentable": []
+ }
+}

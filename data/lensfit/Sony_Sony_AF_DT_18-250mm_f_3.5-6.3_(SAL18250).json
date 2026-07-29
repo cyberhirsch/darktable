@@ -1,0 +1,149 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Sony",
+  "model": "Sony AF DT 18-250mm f/3.5-6.3 (SAL18250)",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Sony Alpha"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Sony_Sony_AF_DT_18-250mm_f_3.5-6.3_(SAL18250)"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 18.0,
+     "params": [
+      1.0,
+      1.03237,
+      0.00708,
+      -0.05832,
+      0.01887,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 30.0,
+     "params": [
+      1.0,
+      0.94559,
+      0.13898,
+      -0.12525,
+      0.04068,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 40.0,
+     "params": [
+      1.0,
+      0.97603,
+      0.04514,
+      -0.03561,
+      0.01444,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 55.0,
+     "params": [
+      1.0,
+      0.98383,
+      0.00508,
+      0.01095,
+      0.00014,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 75.0,
+     "params": [
+      1.0,
+      0.97979,
+      0.01781,
+      -0.00043,
+      0.00283,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 130.0,
+     "params": [
+      1.0,
+      1.03247,
+      -0.07297,
+      0.04556,
+      -0.00506,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 250.0,
+     "params": [
+      1.0,
+      0.9903000000000001,
+      -0.005,
+      0.02298,
+      -0.00828,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-sony.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 6.661338147750939e-16,
+  "unrepresentable": []
+ }
+}

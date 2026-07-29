@@ -1,0 +1,142 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Tokina",
+  "model": "Tokina 80-200mm f/4.5-5.6 SZ-X",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Canon EF",
+   "Nikon F AF",
+   "Pentax KAF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Tokina_Tokina_80-200mm_f_4.5-5.6_SZ-X"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 80.0,
+     "params": [
+      1.0,
+      1.02894,
+      -0.07566,
+      0.06433,
+      -0.01761,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 110.0,
+     "params": [
+      1.0,
+      1.01799,
+      -0.06129,
+      0.05909,
+      -0.01579,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 200.0,
+     "params": [
+      1.0,
+      1.00582,
+      -0.03935,
+      0.04681,
+      -0.01328,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 80.0,
+     "source_model": "poly3",
+     "tca_r": [
+      3.51e-05,
+      0.0,
+      0.9998083
+     ],
+     "tca_b": [
+      -1.09e-05,
+      0.0,
+      0.9998991
+     ]
+    },
+    {
+     "focal": 110.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.55e-05,
+      0.0,
+      0.9999253
+     ],
+     "tca_b": [
+      -3.48e-05,
+      0.0,
+      0.9994977
+     ]
+    },
+    {
+     "focal": 200.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -7.5e-06,
+      0.0,
+      0.9993965
+     ],
+     "tca_b": [
+      -7.82e-05,
+      0.0,
+      0.9994524
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-tokina.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

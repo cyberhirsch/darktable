@@ -1,0 +1,178 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Tamron",
+  "model": "Tamron AF 18-200mm f/3.5-6.3 XR Di II LD Aspherical (IF) Macro A14",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Canon EF",
+   "Nikon F AF",
+   "Pentax KAF",
+   "Sony Alpha"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Tamron_Tamron_AF_18-200mm_f_3.5-6.3_XR_Di_II_LD_Aspherical_(IF)_Macro_A14"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 18.0,
+     "params": [
+      1.0,
+      1.028517,
+      0.0,
+      -0.042157,
+      0.01364,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 28.0,
+     "params": [
+      1.0,
+      1.006064,
+      0.0,
+      -0.016742,
+      0.010678,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 35.0,
+     "params": [
+      1.0,
+      0.999305,
+      0.0,
+      -0.008863,
+      0.009558,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 50.0,
+     "params": [
+      1.0,
+      0.988803,
+      0.0,
+      0.011197,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 72.0,
+     "params": [
+      1.0,
+      0.989448,
+      0.0,
+      0.010552,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 102.0,
+     "params": [
+      1.0,
+      0.992834,
+      0.0,
+      0.007166,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 135.0,
+     "params": [
+      1.0,
+      0.992974,
+      0.0,
+      0.007026,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 150.0,
+     "params": [
+      1.0,
+      0.993222,
+      0.0,
+      0.006778,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 200.0,
+     "params": [
+      1.0,
+      0.993984,
+      0.0,
+      0.006016,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-tamron.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

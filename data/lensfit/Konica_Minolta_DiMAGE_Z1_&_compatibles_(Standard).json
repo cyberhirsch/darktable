@@ -1,0 +1,214 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Konica Minolta",
+  "model": "DiMAGE Z1 & compatibles (Standard)",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "kmZ1"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Konica_Minolta_DiMAGE_Z1_&_compatibles_(Standard)"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 5.8,
+     "params": [
+      1.0,
+      1.040071,
+      0.0,
+      -0.065158,
+      0.025087,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 6.0,
+     "params": [
+      1.0,
+      1.031257,
+      0.0,
+      -0.052445,
+      0.021188,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 6.6,
+     "params": [
+      1.0,
+      1.026821,
+      0.0,
+      -0.047765,
+      0.020944,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 7.3,
+     "params": [
+      1.0,
+      1.0184250000000001,
+      0.0,
+      -0.033767,
+      0.015342,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 10.5,
+     "params": [
+      1.0,
+      1.0109050000000002,
+      0.0,
+      -0.019123,
+      0.008218,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 15.2,
+     "params": [
+      1.0,
+      1.009322,
+      0.0,
+      -0.016335,
+      0.007013,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 22.9,
+     "params": [
+      1.0,
+      1.004909,
+      0.0,
+      -0.00752,
+      0.002611,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 30.1,
+     "params": [
+      1.0,
+      1.00372,
+      0.0,
+      -0.00372,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 39.6,
+     "params": [
+      1.0,
+      1.0046,
+      0.0,
+      -0.0046,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 45.4,
+     "params": [
+      1.0,
+      1.004482,
+      0.0,
+      -0.004482,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 49.8,
+     "params": [
+      1.0,
+      1.004394,
+      0.0,
+      -0.004394,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 58.0,
+     "params": [
+      1.0,
+      0.999783,
+      0.0,
+      0.000217,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "compact-konica-minolta.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

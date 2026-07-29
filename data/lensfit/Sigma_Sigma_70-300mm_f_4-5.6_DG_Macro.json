@@ -1,0 +1,212 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Sigma",
+  "model": "Sigma 70-300mm f/4-5.6 DG Macro",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Sony Alpha",
+   "Sigma SA",
+   "Pentax KAF2",
+   "Canon EF",
+   "Nikon F AF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Sigma_Sigma_70-300mm_f_4-5.6_DG_Macro"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 70.0,
+     "params": [
+      1.0,
+      0.9977499999999999,
+      0.00665,
+      -0.00079,
+      -0.00361,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 90.0,
+     "params": [
+      1.0,
+      0.9890399999999999,
+      0.01353,
+      -0.00111,
+      -0.00146,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 102.0,
+     "params": [
+      1.0,
+      0.9822799999999999,
+      0.02682,
+      -0.01327,
+      0.00417,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 135.0,
+     "params": [
+      1.0,
+      0.98714,
+      0.01656,
+      -0.01051,
+      0.00681,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 300.0,
+     "params": [
+      1.0,
+      0.99095,
+      0.0,
+      0.00905,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 70.0,
+     "source_model": "poly3",
+     "tca_r": [
+      7.07e-05,
+      0.0,
+      1.0000548
+     ],
+     "tca_b": [
+      -7.28e-05,
+      0.0,
+      1.000055
+     ]
+    },
+    {
+     "focal": 90.0,
+     "source_model": "poly3",
+     "tca_r": [
+      1.78e-05,
+      0.0,
+      1.0000676
+     ],
+     "tca_b": [
+      -3.35e-05,
+      0.0,
+      0.9999981
+     ]
+    },
+    {
+     "focal": 102.0,
+     "source_model": "poly3",
+     "tca_r": [
+      2.1e-06,
+      0.0,
+      1.0000526
+     ],
+     "tca_b": [
+      -6e-06,
+      0.0,
+      0.9999382
+     ]
+    },
+    {
+     "focal": 135.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.71e-05,
+      0.0,
+      1.0000352
+     ],
+     "tca_b": [
+      2.14e-05,
+      0.0,
+      0.9998037
+     ]
+    },
+    {
+     "focal": 220.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.98e-05,
+      0.0,
+      0.9999532
+     ],
+     "tca_b": [
+      4.35e-05,
+      0.0,
+      0.999686
+     ]
+    },
+    {
+     "focal": 300.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -5.55e-05,
+      0.0,
+      0.99987
+     ],
+     "tca_b": [
+      8.69e-05,
+      0.0,
+      0.9996162
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-sigma.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

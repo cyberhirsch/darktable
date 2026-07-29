@@ -1,0 +1,227 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Minolta",
+  "model": "Minolta AF 50mm f/1.7",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Minolta AF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Minolta_Minolta_AF_50mm_f_1.7"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 50.0,
+     "params": [
+      1.0,
+      1.0324369,
+      -0.0694918,
+      0.0487039,
+      -0.011649,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 50.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -7.9e-06,
+      0.0,
+      1.0001002
+     ],
+     "tca_b": [
+      4.9e-06,
+      0.0,
+      0.9998329
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": [
+     {
+      "k": [
+       -0.6179935,
+       0.2004261,
+       0.0077114
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 1.7,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.6179935,
+       0.2004261,
+       0.0077114
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 1.7,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.0974143,
+       -0.088581,
+       0.0780874
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 2.8,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.0974143,
+       -0.088581,
+       0.0780874
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 2.8,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.1332431,
+       -0.0378155,
+       0.044796
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 4.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.1332431,
+       -0.0378155,
+       0.044796
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 4.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.1563957,
+       0.0048113,
+       0.0104719
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 5.6,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.1563957,
+       0.0048113,
+       0.0104719
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 5.6,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2098254,
+       0.0251807,
+       -0.0032312
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 22.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2098254,
+       0.0251807,
+       -0.0032312
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 22.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     }
+    ]
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-konica-minolta.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 2.220446049250313e-16,
+  "unrepresentable": []
+ }
+}

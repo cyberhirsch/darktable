@@ -1,0 +1,136 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Nikon",
+  "model": "NIKKOR Z 28-75mm f/2.8",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Nikon Z"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Nikon_NIKKOR_Z_28-75mm_f_2.8"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 28.0,
+     "params": [
+      1.0,
+      1.02595261,
+      0.00332019,
+      -0.0458621,
+      0.0165893,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 34.0,
+     "params": [
+      1.0,
+      0.9980214000000001,
+      0.0340585,
+      -0.0472161,
+      0.0151362,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 40.0,
+     "params": [
+      1.0,
+      0.99204239,
+      0.0264789,
+      -0.0284322,
+      0.00991091,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 49.0,
+     "params": [
+      1.0,
+      0.9870360899999999,
+      0.0251584,
+      -0.0199752,
+      0.00778071,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 57.0,
+     "params": [
+      1.0,
+      0.98191792,
+      0.0341663,
+      -0.0260097,
+      0.00992548,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 75.0,
+     "params": [
+      1.0,
+      0.99737013,
+      -0.00238103,
+      0.00264827,
+      0.00236263,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-nikon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

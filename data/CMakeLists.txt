@@ -176,6 +176,41 @@ if(USE_AI)
 endif(USE_AI)
 
 #
+# Install the shipped lensfit database, if one is present.
+#
+# `dt_lens_profile_find()` (src/common/lens_warp.c) looks for individual
+# profiles in ${DARKTABLE_DATADIR}/lensfit, falling back there only after
+# the user's own directory. This just needs somewhere to look; *what* goes
+# in data/lensfit -- the whole converted Lensfun set, a curated subset, or
+# nothing until the first release -- is still open (see task.md 1.1). Wrapped
+# in an existence check so an empty tree does not break the build meanwhile.
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lensfit")
+  FILE(GLOB LENSFIT_PROFILES "lensfit/*.json")
+  if(LENSFIT_PROFILES)
+    FILE(COPY ${LENSFIT_PROFILES} DESTINATION "${DARKTABLE_DATADIR}/lensfit")
+    install(FILES ${LENSFIT_PROFILES}
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/darktable/lensfit
+            COMPONENT DTApplication)
+  endif()
+endif()
+
+#
+# Install the printable calibration charts (tools/make_charts.py in the
+# lensfit repo generates these -- vector PDF, a grid of straight lines at
+# each common frame aspect ratio). The "info" panel in the lensfit view
+# opens them from here via dt_loc_get_datadir().
+#
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/charts")
+  FILE(GLOB LENSFIT_CHARTS "charts/*.pdf")
+  if(LENSFIT_CHARTS)
+    FILE(COPY ${LENSFIT_CHARTS} DESTINATION "${DARKTABLE_DATADIR}/charts")
+    install(FILES ${LENSFIT_CHARTS}
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/darktable/charts
+            COMPONENT DTApplication)
+  endif()
+endif()
+
+#
 # Transform darktableconfig.xml into darktablerc
 #
 

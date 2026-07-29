@@ -1,0 +1,235 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Nikon",
+  "model": "Nikon AF Zoom-Nikkor 24-85mm f/2.8-4D IF",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Nikon F AF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Nikon_Nikon_AF_Zoom-Nikkor_24-85mm_f_2.8-4D_IF"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 24.0,
+     "params": [
+      1.0,
+      0.9962,
+      0.12989,
+      -0.19609,
+      0.07,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 28.0,
+     "params": [
+      1.0,
+      0.9881300000000001,
+      0.10719,
+      -0.15106,
+      0.05574,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 35.0,
+     "params": [
+      1.0,
+      0.9934700000000001,
+      0.03497,
+      -0.05159,
+      0.02315,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 50.0,
+     "params": [
+      1.0,
+      0.94736,
+      0.13239,
+      -0.1185,
+      0.03875,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 70.0,
+     "params": [
+      1.0,
+      0.98776,
+      0.0,
+      0.01224,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 85.0,
+     "params": [
+      1.0,
+      0.9564999999999999,
+      0.06945,
+      -0.03888,
+      0.01293,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 24.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001551,
+      0.0,
+      1.000083
+     ],
+     "tca_b": [
+      -0.0002466,
+      0.0,
+      1.0004527
+     ]
+    },
+    {
+     "focal": 26.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001998,
+      0.0,
+      0.9999858
+     ],
+     "tca_b": [
+      -0.0001978,
+      0.0,
+      1.000366
+     ]
+    },
+    {
+     "focal": 28.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0002641,
+      0.0,
+      0.9998895
+     ],
+     "tca_b": [
+      -0.0002754,
+      0.0,
+      1.0005002
+     ]
+    },
+    {
+     "focal": 35.0,
+     "source_model": "poly3",
+     "tca_r": [
+      8.29e-05,
+      0.0,
+      0.9999597
+     ],
+     "tca_b": [
+      -0.0001594,
+      0.0,
+      1.0003188
+     ]
+    },
+    {
+     "focal": 50.0,
+     "source_model": "poly3",
+     "tca_r": [
+      4.25e-05,
+      0.0,
+      0.999919
+     ],
+     "tca_b": [
+      -9.53e-05,
+      0.0,
+      1.000224
+     ]
+    },
+    {
+     "focal": 70.0,
+     "source_model": "poly3",
+     "tca_r": [
+      3.82e-05,
+      0.0,
+      0.9998777
+     ],
+     "tca_b": [
+      -3.9e-05,
+      0.0,
+      1.0000807
+     ]
+    },
+    {
+     "focal": 85.0,
+     "source_model": "poly3",
+     "tca_r": [
+      3.88e-05,
+      0.0,
+      0.9998218
+     ],
+     "tca_b": [
+      -1.24e-05,
+      0.0,
+      1.0000196
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-nikon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

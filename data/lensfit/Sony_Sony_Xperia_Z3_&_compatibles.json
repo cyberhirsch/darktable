@@ -1,0 +1,71 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Sony",
+  "model": "Sony Xperia Z3 & compatibles",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "sonyXperiaZ3"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Sony_Sony_Xperia_Z3_&_compatibles"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 4.9,
+     "params": [
+      1.0,
+      0.9176199999999999,
+      0.14683,
+      -0.07765,
+      0.0132,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "compact-sony.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 1.1102230246251565e-16,
+  "unrepresentable": []
+ }
+}

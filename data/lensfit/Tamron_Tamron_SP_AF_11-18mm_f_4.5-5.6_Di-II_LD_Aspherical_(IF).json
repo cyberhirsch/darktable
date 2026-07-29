@@ -1,0 +1,197 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Tamron",
+  "model": "Tamron SP AF 11-18mm f/4.5-5.6 Di-II LD Aspherical (IF)",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Canon EF",
+   "Nikon F AF",
+   "Sony Alpha",
+   "Pentax KAF2"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Tamron_Tamron_SP_AF_11-18mm_f_4.5-5.6_Di-II_LD_Aspherical_(IF)"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 11.0,
+     "params": [
+      1.0,
+      1.07822,
+      -0.12889,
+      0.06318,
+      -0.01251,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.0,
+     "params": [
+      1.0,
+      1.07058,
+      -0.094,
+      0.02168,
+      0.00174,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 13.0,
+     "params": [
+      1.0,
+      1.06232,
+      -0.08444,
+      0.02035,
+      0.00177,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 15.0,
+     "params": [
+      1.0,
+      1.03571,
+      -0.03469,
+      -0.00895,
+      0.00793,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 18.0,
+     "params": [
+      1.0,
+      1.02675,
+      -0.02884,
+      -0.00223,
+      0.00432,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 11.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0003262,
+      0.0,
+      1.0002776
+     ],
+     "tca_b": [
+      -0.000106,
+      0.0,
+      1.0000957
+     ]
+    },
+    {
+     "focal": 12.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0002765,
+      0.0,
+      1.0001904
+     ],
+     "tca_b": [
+      -0.0001172,
+      0.0,
+      1.0001615
+     ]
+    },
+    {
+     "focal": 13.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0002045,
+      0.0,
+      1.0000647
+     ],
+     "tca_b": [
+      -0.0001133,
+      0.0,
+      1.0002291
+     ]
+    },
+    {
+     "focal": 15.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001933,
+      0.0,
+      1.0000948
+     ],
+     "tca_b": [
+      -0.0001079,
+      0.0,
+      1.0002024
+     ]
+    },
+    {
+     "focal": 18.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0002596,
+      0.0,
+      1.0001649
+     ],
+     "tca_b": [
+      -0.0001312,
+      0.0,
+      1.0000839
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-tamron.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 2.220446049250313e-16,
+  "unrepresentable": []
+ }
+}

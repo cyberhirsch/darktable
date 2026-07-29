@@ -27,6 +27,9 @@
     <section name="database" title="database"/>
     <section name="XMP" title="XMP sidecar files"/>
   </dttab>
+  <dttab name="lensfit" title="lensfit">
+    <section name="sharing" title="sharing"/>
+  </dttab>
   <dttab name="misc" title="miscellaneous">
     <section name="interface" title="interface"/>
     <section name="tags" title="tags"/>
@@ -433,6 +436,141 @@
     <longdescription>folder where AI models are stored. leave empty for the default location. existing models in the default location are not migrated automatically</longdescription>
   </dtconfig>
   <dtconfig>
+    <name>plugins/lens_calib/cells_x</name>
+    <type min="1" max="200">int</type>
+    <default>28</default>
+    <shortdescription>grid chart cells across</shortdescription>
+    <longdescription>number of cells across the calibration chart, counting cells rather than lines. the default matches the 28x12 chart shipped by Chaos.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/cells_y</name>
+    <type min="1" max="200">int</type>
+    <default>12</default>
+    <shortdescription>grid chart cells down</shortdescription>
+    <longdescription>number of cells down the calibration chart, counting cells rather than lines.</longdescription>
+  </dtconfig>
+  <!-- The calibration panels start open: they are steps of one procedure
+       and a new user has no way to guess what is inside a shut one. -->
+  <dtconfig>
+    <name>plugins/lens_calib/lens_calib_chart/expanded</name>
+    <type>bool</type>
+    <default>true</default>
+    <shortdescription>chart panel expanded</shortdescription>
+    <longdescription>whether the chart and points panel starts expanded in the lens view.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/lens_calib_display/expanded</name>
+    <type>bool</type>
+    <default>true</default>
+    <shortdescription>display panel expanded</shortdescription>
+    <longdescription>whether the display panel starts expanded in the lens view.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/lens_calib_fit/expanded</name>
+    <type>bool</type>
+    <default>true</default>
+    <shortdescription>fit panel expanded</shortdescription>
+    <longdescription>whether the fit panel starts expanded in the lens view.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/lens_calib_lensfun/expanded</name>
+    <type>bool</type>
+    <default>true</default>
+    <shortdescription>Lensfun panel expanded</shortdescription>
+    <longdescription>whether the Lensfun profile panel starts expanded in the lens view.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/lens_calib_output/expanded</name>
+    <type>bool</type>
+    <default>true</default>
+    <shortdescription>calibration output panel expanded</shortdescription>
+    <longdescription>whether the calibration output panel starts expanded in the lens view.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/model</name>
+    <type min="0" max="2">int</type>
+    <default>0</default>
+    <shortdescription>lens calibration warp model</shortdescription>
+    <longdescription>0 bivariate polynomial, 1 anamorphic radial, 2 thin plate spline on a polynomial base.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/order</name>
+    <type min="2" max="5">int</type>
+    <default>4</default>
+    <shortdescription>lens calibration polynomial order</shortdescription>
+    <longdescription>highest polynomial degree the fit may use. higher orders follow the measurements more closely and extrapolate less sanely beyond them.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/regularization</name>
+    <type min="0.0" max="1.0">float</type>
+    <default>0.0001</default>
+    <shortdescription>lens calibration regularization</shortdescription>
+    <longdescription>how strongly the fit is pulled towards a simple model. higher values are more stable at the frame edges and less accurate in the middle.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/solve_centre</name>
+    <type>bool</type>
+    <default>true</default>
+    <shortdescription>fit the optical centre</shortdescription>
+    <longdescription>let the distortion centre move away from the centre of the frame, which real lenses generally require.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/chart_frontal</name>
+    <type>bool</type>
+    <default>true</default>
+    <shortdescription>calibration chart shot square on</shortdescription>
+    <longdescription>assert that the camera faced the chart squarely. recovers the anamorphic squeeze from the cell shape, and prevents the fit from absorbing a perspective keystone that plumb lines cannot detect.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/darkroom/lens/expand_vignette</name>
+    <type>bool</type>
+    <default>true</default>
+    <shortdescription>expand the vignette section in the lens module</shortdescription>
+    <longdescription>whether the vignette section of the lens correction module starts open.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/darkroom/lens/expand_chroma</name>
+    <type>bool</type>
+    <default>true</default>
+    <shortdescription>expand the chromatic aberration section in the lens module</shortdescription>
+    <longdescription>whether the chromatic aberration section of the lens correction module starts open.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/squeeze</name>
+    <type min="0.5" max="4.0">float</type>
+    <default>1.0</default>
+    <shortdescription>anamorphic squeeze factor</shortdescription>
+    <longdescription>the squeeze the lens applies: 1.6 for a 1.6x anamorphic, 1.0 for a spherical lens. this is what the correction desqueezes by. it cannot be fitted from line straightness, since a scale along one axis leaves straight lines straight.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/measure_squeeze</name>
+    <type>bool</type>
+    <default>false</default>
+    <shortdescription>measure the squeeze from the chart</shortdescription>
+    <longdescription>infer the squeeze from the shape of the cells rather than using the declared value. requires the chart to have been shot square on, since foreshortening is indistinguishable from squeeze.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/use_interpolated</name>
+    <type>bool</type>
+    <default>false</default>
+    <shortdescription>fit interpolated mesh nodes too</shortdescription>
+    <longdescription>include nodes that were interpolated from their neighbours in the fit. off by default: such a node was computed from the assumption that the lattice is smooth, so fitting it lowers the reported residual without improving the calibration.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/stmap_bottom_up</name>
+    <type>bool</type>
+    <default>true</default>
+    <shortdescription>STmap origin at bottom left</shortdescription>
+    <longdescription>write STmaps with the origin at the bottom left, which is what Nuke and most compositors expect. turn off for tools that use a top left origin.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/profile_name</name>
+    <type>string</type>
+    <default></default>
+    <shortdescription>lens calibration profile name</shortdescription>
+    <longdescription>name the next saved calibration profile is written under.</longdescription>
+  </dtconfig>
+  <dtconfig>
     <name>plugins/ai/cuda_device_id</name>
     <type min="0" max="15">int</type>
     <default>0</default>
@@ -542,6 +680,153 @@
     <default/>
     <shortdescription>system library with OpenCL runtime</shortdescription>
     <longdescription>OpenCL runtime library is normally detected automatically by darktable. if your OpenCL runtime is at an unusual place and cannot be detected, enter the full pathname here. leave empty for default behavior.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lensfit/endpoint</name>
+    <type>string</type>
+    <default>https://lensfit-api.sebhirsch.com/submit</default>
+    <shortdescription>lensfit collection service</shortdescription>
+    <longdescription>a service that submits on your behalf, for anyone who does not have a GitHub account. when set, a shared profile is posted here first; if this is empty, or the service does not accept it, the browser pull request is used instead.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lensfit/repo</name>
+    <type>string</type>
+    <default>cyberhirsch/lensfit</default>
+    <shortdescription>lensfit repository</shortdescription>
+    <longdescription>the GitHub repository shared profiles are proposed to.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lensfit/install_id</name>
+    <type>string</type>
+    <default></default>
+    <shortdescription>random identifier for this installation</shortdescription>
+    <longdescription>generated locally on first use so repeated submissions of the same lens can be recognised as repeats. never derived from hardware.</longdescription>
+  </dtconfig>
+  <dtconfig prefs="lensfit" section="sharing">
+    <name>plugins/lensfit/show_share_notice</name>
+    <type>bool</type>
+    <default>true</default>
+    <shortdescription>show what is shared before each submission</shortdescription>
+    <longdescription>display exactly what a submission contains, and what it does not, each time a profile is shared. unticking show next time on that notice clears this setting; turn it back on here to see the notice again.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/maker</name>
+    <type>string</type>
+    <default></default>
+    <shortdescription>lens maker</shortdescription>
+    <longdescription>who made the lens being calibrated. taken from EXIF when the camera reports it.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/model</name>
+    <type>string</type>
+    <default></default>
+    <shortdescription>lens model</shortdescription>
+    <longdescription>the lens being calibrated. a manual lens reports nothing over the mount, so this usually has to be typed.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/mount</name>
+    <type>string</type>
+    <default></default>
+    <shortdescription>lens mount</shortdescription>
+    <longdescription>the mount the lens attaches by, for example E, RF or PL.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/crop_factor</name>
+    <type>float</type>
+    <default>1.0</default>
+    <shortdescription>crop factor</shortdescription>
+    <longdescription>crop factor of the sensor the lens was calibrated on.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/focal</name>
+    <type>float</type>
+    <default>0.0</default>
+    <shortdescription>focal length</shortdescription>
+    <longdescription>the focal length this calibration was shot at, in millimetres. zero means take it from EXIF -- which a manual lens does not provide, and a profile without a focal length can never be matched to an image.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/aperture</name>
+    <type>float</type>
+    <default>0.0</default>
+    <shortdescription>aperture</shortdescription>
+    <longdescription>the aperture this calibration was shot at. zero means take it from EXIF. vignetting depends on aperture more than on anything else, so a falloff measurement without one cannot be selected correctly later.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/focal_min</name>
+    <type>float</type>
+    <default>0.0</default>
+    <shortdescription>lens focal range, wide end</shortdescription>
+    <longdescription>the lens's own shortest focal length in millimetres, typed by hand or left at zero to track the shortest focal length actually measured so far.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/focal_max</name>
+    <type>float</type>
+    <default>0.0</default>
+    <shortdescription>lens focal range, tele end</shortdescription>
+    <longdescription>the lens's own longest focal length in millimetres, typed by hand or left at zero to track the longest focal length actually measured so far.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/aperture_min</name>
+    <type>float</type>
+    <default>0.0</default>
+    <shortdescription>lens aperture range, wide end</shortdescription>
+    <longdescription>the lens's own widest aperture as an f-number, typed by hand or left at zero to track the widest aperture actually measured so far.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/aperture_max</name>
+    <type>float</type>
+    <default>0.0</default>
+    <shortdescription>lens aperture range, narrow end</shortdescription>
+    <longdescription>the lens's own smallest aperture as an f-number, typed by hand or left at zero to track the smallest aperture actually measured so far.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/distance_min</name>
+    <type>float</type>
+    <default>0.0</default>
+    <shortdescription>lens focus range, near end</shortdescription>
+    <longdescription>the lens's own closest focus distance in metres, typed by hand or left at zero to track the closest focus distance actually measured so far.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/distance_max</name>
+    <type>float</type>
+    <default>0.0</default>
+    <shortdescription>lens focus range, far end</shortdescription>
+    <longdescription>the lens's own farthest focus distance in metres, typed by hand or left at zero to track the farthest focus distance actually measured so far.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/source</name>
+    <type>int</type>
+    <default>0</default>
+    <shortdescription>where the current values came from</shortdescription>
+    <longdescription>0 measured, 1 manufacturer, 2 converted from Lensfun, 3 aggregated, 4 reverse engineered, 5 a measurement since edited by hand.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/license</name>
+    <type>string</type>
+    <default></default>
+    <shortdescription>licence the current values carry</shortdescription>
+    <longdescription>set when the source imposes one, for example CC-BY-SA-3.0 for anything converted out of Lensfun.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/parent</name>
+    <type>string</type>
+    <default></default>
+    <shortdescription>profile the current values were derived from</shortdescription>
+    <longdescription>the Lensfun lens or lensfit profile an import came from, so the trail back to the original is not lost.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/edit_values</name>
+    <type>bool</type>
+    <default>false</default>
+    <shortdescription>allow the fitted values to be edited by hand</shortdescription>
+    <longdescription>unlocks the coefficients under fit. editing one turns the profile from a measurement into a hand-made one, which is recorded in the file.</longdescription>
+  </dtconfig>
+  <dtconfig>
+    <name>plugins/lens_calib/share_profile</name>
+    <type>bool</type>
+    <default>true</default>
+    <shortdescription>share this profile with lensfit</shortdescription>
+    <longdescription>per-save state of the sharing checkbox beside the save button.</longdescription>
   </dtconfig>
   <dtconfig prefs="security" section="general">
     <name>ask_before_remove</name>

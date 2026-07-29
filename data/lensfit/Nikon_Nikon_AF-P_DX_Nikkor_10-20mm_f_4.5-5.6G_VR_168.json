@@ -1,0 +1,208 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Nikon",
+  "model": "Nikon AF-P DX Nikkor 10-20mm f/4.5-5.6G VR 168",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Nikon F AF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Nikon_Nikon_AF-P_DX_Nikkor_10-20mm_f_4.5-5.6G_VR_168"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 10.0,
+     "params": [
+      1.0,
+      0.96044,
+      0.1144,
+      -0.08749,
+      0.01265,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.0,
+     "params": [
+      1.0,
+      0.9872299999999998,
+      0.02749,
+      -0.00799,
+      -0.00673,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 14.0,
+     "params": [
+      1.0,
+      0.9869699999999999,
+      0.02532,
+      -0.0087,
+      -0.00359,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 16.0,
+     "params": [
+      1.0,
+      0.99257,
+      0.01315,
+      -0.00316,
+      -0.00256,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 20.0,
+     "params": [
+      1.0,
+      0.99846,
+      -0.00065,
+      0.00544,
+      -0.00325,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 10.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -3.2e-06,
+      0.0,
+      1.0007529
+     ],
+     "tca_b": [
+      3.86e-05,
+      0.0,
+      1.0000732
+     ]
+    },
+    {
+     "focal": 12.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.000134,
+      0.0,
+      1.0005158
+     ],
+     "tca_b": [
+      2.6e-06,
+      0.0,
+      1.0001274
+     ]
+    },
+    {
+     "focal": 14.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001856,
+      0.0,
+      1.0002542
+     ],
+     "tca_b": [
+      -7.95e-05,
+      0.0,
+      1.0002859
+     ]
+    },
+    {
+     "focal": 16.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001505,
+      0.0,
+      1.0001841
+     ],
+     "tca_b": [
+      -7.52e-05,
+      0.0,
+      1.0003352
+     ]
+    },
+    {
+     "focal": 18.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001426,
+      0.0,
+      1.0001261
+     ],
+     "tca_b": [
+      6.6e-06,
+      0.0,
+      1.0002335
+     ]
+    },
+    {
+     "focal": 20.0,
+     "source_model": "poly3",
+     "tca_r": [
+      4.88e-05,
+      0.0,
+      1.000153
+     ],
+     "tca_b": [
+      -3.68e-05,
+      0.0,
+      1.000291
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-nikon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 2.220446049250313e-16,
+  "unrepresentable": []
+ }
+}

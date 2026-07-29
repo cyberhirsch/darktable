@@ -50,6 +50,15 @@
     control which view the module should be available in also
     which placement in the panels the module have.
 */
+// overlays the lens calibration view can be asked to draw
+typedef enum dt_lens_calib_show_t
+{
+  DT_LENS_CALIB_SHOW_POINTS = 0,
+  DT_LENS_CALIB_SHOW_CURVES,
+  DT_LENS_CALIB_SHOW_RESIDUALS,
+  DT_LENS_CALIB_SHOW_MESH
+} dt_lens_calib_show_t;
+
 typedef enum dt_view_type_flags_t
 {
   DT_VIEW_NONE       = 0,
@@ -59,6 +68,7 @@ typedef enum dt_view_type_flags_t
   DT_VIEW_MAP        = 1 << 3,
   DT_VIEW_SLIDESHOW  = 1 << 4,
   DT_VIEW_PRINT      = 1 << 5,
+  DT_VIEW_LENS_CALIB = 1 << 6,
   DT_VIEW_MULTI      = 1 << 28,
   DT_VIEW_FALLBACK   = 1 << 29,
   DT_VIEW_OTHER      = 1 << 30, // for your own unpublished user view
@@ -318,6 +328,149 @@ typedef struct dt_view_manager_t
       struct dt_view_t *view;
       dt_darkroom_layout_t (*get_layout)(struct dt_view_t *view);
     } darkroom;
+
+    /* lens calibration view proxy object. lets the settings lib drive
+       the view without the two modules linking against each other. */
+    struct
+    {
+      struct dt_view_t *view;
+      // re-read the chart geometry from conf and redraw
+      void (*chart_changed)(struct dt_view_t *view);
+      // run grid detection on the loaded image
+      void (*detect)(struct dt_view_t *view);
+      // TRUE once a detection produced usable points
+      gboolean (*has_points)(struct dt_view_t *view);
+      // fit a warp to whatever points are available
+      void (*solve)(struct dt_view_t *view);
+      // TRUE once a fit exists, so the exports can be offered
+      gboolean (*has_solution)(struct dt_view_t *view);
+      // a line describing the current fit, newly allocated, or NULL
+      char *(*status_text)(struct dt_view_t *view);
+      // write the fit as a calibration profile under the given name
+      gboolean (*save_profile)(struct dt_view_t *view, const char *name);
+
+      /* Adopt an existing profile into this session, either one of ours or
+         one converted out of the Lensfun catalogue. Both bring their own
+         provenance with them: an imported calibration is somebody else's
+         measurement and must not be able to present itself as this one. */
+      gboolean (*open_profile)(struct dt_view_t *view, const char *name);
+      gboolean (*import_lensfun)(struct dt_view_t *view, const char *model);
+      /* Forget whatever profile is open or being built, without touching
+         the chart detection -- see the comment on _new_profile. */
+      gboolean (*new_profile)(struct dt_view_t *view);
+
+      /* The lens's observed focal (axis 0), aperture (1) or focus distance
+         (2) range across every measurement currently held, for the lens
+         panel to show as a starting point before anyone types an override.
+         Returns FALSE if nothing relevant has a known value yet. */
+      gboolean (*measurement_range)(struct dt_view_t *view, const int axis,
+                                    float *lo, float *hi);
+
+      /* The fitted coefficients, as a flat list the panel can draw one row
+         per entry from. Which ones exist depends on the model and on whether
+         vignetting was measured, so the view enumerates rather than the panel
+         assuming. Setting one marks the profile as no longer a measurement. */
+      /* The entries the profile being built holds -- one per focal length,
+         and per aperture again for vignetting. A lens is not one
+         measurement, so the panel lists them and switches between them
+         rather than the session only ever holding the last one fitted. */
+      /* one line summarising what the session's profile currently holds,
+         e.g. "2 focal lengths (24-70mm); vignetting at f/2.8, f/4" --
+         caller frees with g_free */
+      char *(*contents_summary)(struct dt_view_t *view);
+      int (*entry_count)(struct dt_view_t *view);
+      char *(*entry_label)(struct dt_view_t *view, const int i);
+      int (*entry_selected)(struct dt_view_t *view);
+      void (*entry_select)(struct dt_view_t *view, const int i);
+      void (*entry_add)(struct dt_view_t *view);
+      void (*entry_remove)(struct dt_view_t *view, const int i);
+
+      /* Distinct values along one axis of the key, each filtered by the
+         axes above it -- 0 focal, 1 aperture, 2 distance. An imported zoom
+         can hold four hundred entries, which is only navigable as three
+         short lists rather than one long one. */
+      int (*axis_values)(struct dt_view_t *view, const int axis,
+                         const float focal, const float aperture,
+                         float *out, const int max);
+      int (*entry_find)(struct dt_view_t *view, const float focal,
+                        const float aperture, const float distance);
+
+      int (*value_count)(struct dt_view_t *view);
+      const char *(*value_name)(struct dt_view_t *view, const int i);
+      double (*value_get)(struct dt_view_t *view, const int i);
+      void (*value_set)(struct dt_view_t *view, const int i, const double v);
+      // write the fit as an OpenEXR STmap
+      gboolean (*export_stmap)(struct dt_view_t *view, const char *path,
+                               const gboolean bottom_up);
+      /* write the fit as a Lensfun database fragment. Lossy: whatever
+         Lensfun's models cannot hold is skipped and a human readable
+         reason appended to `unrepresentable` (caller-owned GPtrArray of
+         gchar*, may be NULL to discard). */
+      gboolean (*export_lensfun)(struct dt_view_t *view, const char *path,
+                                 GPtrArray *unrepresentable);
+
+      /* Hand editing. Enabling it takes ownership of whatever the
+         detector found, turning those points into editable ones. */
+      void (*set_manual_edit)(struct dt_view_t *view, const gboolean on);
+      gboolean (*get_manual_edit)(struct dt_view_t *view);
+
+      // show the image remapped by the current fit rather than as shot
+      void (*set_flat)(struct dt_view_t *view, const gboolean on);
+      gboolean (*get_flat)(struct dt_view_t *view);
+
+      /* Undo the measured brightness falloff in the preview. Separate from
+         the geometry, because they are separate corrections and each is
+         easier to judge when the other is not also changing. */
+      void (*set_falloff)(struct dt_view_t *view, const gboolean on);
+      gboolean (*get_falloff)(struct dt_view_t *view);
+
+      void (*set_show)(struct dt_view_t *view, const int what,
+                       const gboolean on);
+      gboolean (*get_show)(struct dt_view_t *view, const int what);
+
+      // how many editable points there are, for the panel readout
+      int (*point_count)(struct dt_view_t *view);
+      int (*measured_count)(struct dt_view_t *view);
+      void (*clear_points)(struct dt_view_t *view);
+
+      /* The chart corners. Not a mode the user selects: they are the lattice
+         nodes at the extreme indices, so they follow from the pose. The view
+         asks for them by hand only when there is no pose to derive them
+         from, and stops asking as soon as there is. */
+      int (*corner_count)(struct dt_view_t *view);
+      gboolean (*get_corner_mode)(struct dt_view_t *view);
+
+      /* Measure the brightness falloff from the loaded frame, and whether
+         one has been measured. Independent of the geometry fit: it is a
+         different measurement made from a different kind of frame, and
+         either can be recorded without the other. */
+      void (*fit_vignette)(struct dt_view_t *view);
+      gboolean (*has_vignette)(struct dt_view_t *view);
+
+      // fit the pose so the reference grid lands on the chart
+      void (*align_grid)(struct dt_view_t *view);
+      gboolean (*has_pose)(struct dt_view_t *view);
+      float (*pose_rms)(struct dt_view_t *view);
+
+      /* Complete the lattice: generate any missing nodes and settle them
+         against the measured ones. A fallback for a detection that came up
+         short, which is why it is one action rather than two -- laying out
+         nodes without settling them is never what anyone wants. */
+      void (*mesh_fill)(struct dt_view_t *view);
+
+      /* Whether an overlay has anything to draw. Half the display toggles
+         govern layers that are empty most of the time, and a checkbox that
+         does nothing is worse than an absent one. */
+      gboolean (*layer_has_data)(struct dt_view_t *view, int what);
+
+      // how many nodes were guessed rather than measured
+      int (*interpolated_count)(struct dt_view_t *view);
+
+      /* Measured points that sit on no lattice site. They take no part in
+         the fit, so counting them separately is the difference between a
+         readout and a flattering one. */
+      int (*stray_count)(struct dt_view_t *view);
+    } lens_calib;
 
     /* lighttable view proxy object */
     struct

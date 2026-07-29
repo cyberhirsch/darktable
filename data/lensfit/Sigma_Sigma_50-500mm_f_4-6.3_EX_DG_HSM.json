@@ -1,0 +1,180 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Sigma",
+  "model": "Sigma 50-500mm f/4-6.3 EX DG HSM",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Sigma SA",
+   "Canon EF",
+   "Minolta AF",
+   "Nikon F AF",
+   "Pentax KAF",
+   "4/3 System"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Sigma_Sigma_50-500mm_f_4-6.3_EX_DG_HSM"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 50.0,
+     "params": [
+      1.0,
+      1.00059,
+      0.0,
+      -0.00059,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 72.0,
+     "params": [
+      1.0,
+      0.995851,
+      0.0,
+      0.004149,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 100.0,
+     "params": [
+      1.0,
+      0.994885,
+      0.0,
+      0.005115,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 135.0,
+     "params": [
+      1.0,
+      0.994999,
+      0.0,
+      0.005001,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 195.0,
+     "params": [
+      1.0,
+      0.995043,
+      0.0,
+      0.004957,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 270.0,
+     "params": [
+      1.0,
+      0.995361,
+      0.0,
+      0.004639,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 320.0,
+     "params": [
+      1.0,
+      0.994018,
+      0.0,
+      0.005982,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 420.0,
+     "params": [
+      1.0,
+      0.994603,
+      0.0,
+      0.005397,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 500.0,
+     "params": [
+      1.0,
+      0.995143,
+      0.0,
+      0.004857,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-sigma.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 0.0,
+  "unrepresentable": []
+ }
+}

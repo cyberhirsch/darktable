@@ -1,0 +1,225 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Sigma",
+  "model": "Sigma 8-16mm f/4.5-5.6 DC HSM",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Sigma SA",
+   "Canon EF",
+   "Nikon F AF",
+   "Pentax KAF",
+   "Sony Alpha"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Sigma_Sigma_8-16mm_f_4.5-5.6_DC_HSM__1"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 8.0,
+     "params": [
+      1.0,
+      0.9723099999999999,
+      0.09452,
+      -0.07668,
+      0.00985,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 9.0,
+     "params": [
+      1.0,
+      1.01133,
+      -0.00329,
+      -0.00074,
+      -0.0073,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 10.0,
+     "params": [
+      1.0,
+      0.9946800000000001,
+      0.02021,
+      -0.00881,
+      -0.00608,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.0,
+     "params": [
+      1.0,
+      1.02872,
+      -0.08027,
+      0.07817,
+      -0.02662,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 14.0,
+     "params": [
+      1.0,
+      0.9954400000000001,
+      -0.01315,
+      0.0306,
+      -0.01289,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 16.0,
+     "params": [
+      1.0,
+      1.00545,
+      -0.04454,
+      0.05749,
+      -0.0184,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 8.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.41e-05,
+      0.0,
+      1.0001963
+     ],
+     "tca_b": [
+      -5.73e-05,
+      0.0,
+      1.0001735
+     ]
+    },
+    {
+     "focal": 9.0,
+     "source_model": "poly3",
+     "tca_r": [
+      2.77e-05,
+      0.0,
+      1.0000937
+     ],
+     "tca_b": [
+      -5.35e-05,
+      0.0,
+      1.000234
+     ]
+    },
+    {
+     "focal": 10.0,
+     "source_model": "poly3",
+     "tca_r": [
+      2.57e-05,
+      0.0,
+      1.0000862
+     ],
+     "tca_b": [
+      -6.79e-05,
+      0.0,
+      1.0002823
+     ]
+    },
+    {
+     "focal": 12.0,
+     "source_model": "poly3",
+     "tca_r": [
+      7.17e-05,
+      0.0,
+      1.0000453
+     ],
+     "tca_b": [
+      -8.47e-05,
+      0.0,
+      1.0002906
+     ]
+    },
+    {
+     "focal": 14.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001034,
+      0.0,
+      1.0000726
+     ],
+     "tca_b": [
+      -9.92e-05,
+      0.0,
+      1.0002334
+     ]
+    },
+    {
+     "focal": 16.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001132,
+      0.0,
+      1.0001441
+     ],
+     "tca_b": [
+      -0.0001015,
+      0.0,
+      1.0001906
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-sigma.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

@@ -1,0 +1,317 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Leica",
+  "model": "FZ1000 & compatibles",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "panasonicFZ1000"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Leica_FZ1000_&_compatibles"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 9.1,
+     "params": [
+      1.0,
+      1.1053199999999999,
+      -0.06581,
+      -0.05809,
+      0.01858,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 10.1,
+     "params": [
+      1.0,
+      1.08141,
+      -0.03567,
+      -0.06488,
+      0.01914,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.6,
+     "params": [
+      1.0,
+      1.03654,
+      -0.00043,
+      -0.0477,
+      0.01159,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 18.2,
+     "params": [
+      1.0,
+      1.00914,
+      0.0,
+      -0.00914,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 26.3,
+     "params": [
+      1.0,
+      1.00224,
+      0.0,
+      -0.00224,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 65.8,
+     "params": [
+      1.0,
+      0.99965,
+      0.0,
+      0.00035,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 109.3,
+     "params": [
+      1.0,
+      0.99951,
+      0.0,
+      0.00049,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 146.0,
+     "params": [
+      1.0,
+      1.00305,
+      0.0,
+      -0.00305,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 9.1,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0004262
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.000303
+     ]
+    },
+    {
+     "focal": 9.1,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0004371
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0003172
+     ]
+    },
+    {
+     "focal": 10.1,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0003178
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0001682
+     ]
+    },
+    {
+     "focal": 12.6,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0003066
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0001788
+     ]
+    },
+    {
+     "focal": 18.2,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0002344
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0002283
+     ]
+    },
+    {
+     "focal": 18.2,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0002353
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0002221
+     ]
+    },
+    {
+     "focal": 18.2,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0002476
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0002138
+     ]
+    },
+    {
+     "focal": 26.3,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0001965
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0001175
+     ]
+    },
+    {
+     "focal": 65.8,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0000103
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999799
+     ]
+    },
+    {
+     "focal": 109.3,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9999002
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999031
+     ]
+    },
+    {
+     "focal": 146.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9997527
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9998454
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "compact-panasonic.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

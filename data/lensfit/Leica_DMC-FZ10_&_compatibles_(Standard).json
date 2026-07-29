@@ -1,0 +1,162 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Leica",
+  "model": "DMC-FZ10 & compatibles (Standard)",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "panasonicFZ10"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Leica_DMC-FZ10_&_compatibles_(Standard)"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 6.0,
+     "params": [
+      1.0,
+      1.030702,
+      0.0,
+      -0.046197,
+      0.015495,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 7.0,
+     "params": [
+      1.0,
+      1.012678,
+      0.0,
+      -0.026853,
+      0.014175,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.0,
+     "params": [
+      1.0,
+      0.994368,
+      0.0,
+      0.000522,
+      0.00511,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 21.1,
+     "params": [
+      1.0,
+      0.996054,
+      0.0,
+      0.003946,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 37.6,
+     "params": [
+      1.0,
+      0.999061,
+      0.0,
+      0.000939,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 47.1,
+     "params": [
+      1.0,
+      0.99898,
+      0.0,
+      0.00102,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 56.1,
+     "params": [
+      1.0,
+      0.99883,
+      0.0,
+      0.00117,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 72.0,
+     "params": [
+      1.0,
+      0.998692,
+      0.0,
+      0.001308,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "compact-panasonic.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

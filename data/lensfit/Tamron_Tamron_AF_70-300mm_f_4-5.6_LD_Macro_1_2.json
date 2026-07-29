@@ -1,0 +1,268 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Tamron",
+  "model": "Tamron AF 70-300mm f/4-5.6 LD Macro 1:2",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Canon EF",
+   "Nikon F AF",
+   "Pentax KAF2",
+   "Sony Alpha"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Tamron_Tamron_AF_70-300mm_f_4-5.6_LD_Macro_1_2"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 70.0,
+     "params": [
+      1.0,
+      1.00271,
+      0.0021,
+      -0.00649,
+      0.00168,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 100.0,
+     "params": [
+      1.0,
+      0.99928,
+      -0.00716,
+      0.01075,
+      -0.00287,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 133.0,
+     "params": [
+      1.0,
+      0.99361,
+      0.00845,
+      -0.0061,
+      0.00404,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 180.0,
+     "params": [
+      1.0,
+      0.99612,
+      0.0,
+      0.00388,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 300.0,
+     "params": [
+      1.0,
+      0.99558,
+      0.0,
+      0.00442,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 70.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -4.87e-05,
+      0.0,
+      1.0002053
+     ],
+     "tca_b": [
+      3.52e-05,
+      0.0,
+      0.9998612
+     ]
+    },
+    {
+     "focal": 100.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -4.02e-05,
+      0.0,
+      1.0000889
+     ],
+     "tca_b": [
+      2.6e-06,
+      0.0,
+      0.9998133
+     ]
+    },
+    {
+     "focal": 133.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.1e-05,
+      0.0,
+      0.9999776
+     ],
+     "tca_b": [
+      6.7e-06,
+      0.0,
+      0.9998469
+     ]
+    },
+    {
+     "focal": 180.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.39e-05,
+      0.0,
+      0.9998566
+     ],
+     "tca_b": [
+      2.95e-05,
+      0.0,
+      0.999785
+     ]
+    },
+    {
+     "focal": 300.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.1e-05,
+      0.0,
+      0.9996417
+     ],
+     "tca_b": [
+      2.2e-05,
+      0.0,
+      0.9998125
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": [
+     {
+      "k": [
+       -0.05486,
+       0.04427,
+       -0.01908
+      ],
+      "ellipticity": 1.0,
+      "focal": 70.0,
+      "aperture": 11.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.07719,
+       0.13209,
+       -0.09579
+      ],
+      "ellipticity": 1.0,
+      "focal": 100.0,
+      "aperture": 11.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.05807,
+       0.07773,
+       -0.05601
+      ],
+      "ellipticity": 1.0,
+      "focal": 133.0,
+      "aperture": 11.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.03723,
+       0.02431,
+       -0.02236
+      ],
+      "ellipticity": 1.0,
+      "focal": 180.0,
+      "aperture": 11.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.03866,
+       0.05966,
+       -0.04464
+      ],
+      "ellipticity": 1.0,
+      "focal": 300.0,
+      "aperture": 11.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     }
+    ]
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-tamron.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

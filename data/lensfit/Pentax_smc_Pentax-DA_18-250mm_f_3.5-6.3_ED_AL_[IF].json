@@ -1,0 +1,369 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Pentax",
+  "model": "smc Pentax-DA 18-250mm f/3.5-6.3 ED AL [IF]",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Pentax KAF2"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Pentax_smc_Pentax-DA_18-250mm_f_3.5-6.3_ED_AL_[IF]"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 18.0,
+     "params": [
+      1.0,
+      1.03869,
+      0.0,
+      -0.05905,
+      0.02036,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 20.0,
+     "params": [
+      1.0,
+      1.03163,
+      0.0,
+      -0.0524,
+      0.02077,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 23.0,
+     "params": [
+      1.0,
+      1.01631,
+      0.0,
+      -0.03254,
+      0.01623,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 29.0,
+     "params": [
+      1.0,
+      1.00332,
+      0.0,
+      -0.01548,
+      0.01216,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 35.0,
+     "params": [
+      1.0,
+      0.96245,
+      -0.0,
+      0.03755,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 47.0,
+     "params": [
+      1.0,
+      0.96678,
+      -0.0,
+      0.03322,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 70.0,
+     "params": [
+      1.0,
+      0.99684,
+      -0.01435,
+      0.01751,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 100.0,
+     "params": [
+      1.0,
+      1.00011,
+      -0.01881,
+      0.0187,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 120.0,
+     "params": [
+      1.0,
+      1.00157,
+      -0.01997,
+      0.0184,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 155.0,
+     "params": [
+      1.0,
+      0.9928699999999999,
+      -0.00245,
+      0.00958,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 200.0,
+     "params": [
+      1.0,
+      0.9848100000000001,
+      0.01396,
+      0.00123,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 250.0,
+     "params": [
+      1.0,
+      0.99155,
+      0.00856,
+      -0.00011,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 18.0,
+     "source_model": "poly3",
+     "tca_r": [
+      4.55e-05,
+      0.0001324,
+      1.0003247
+     ],
+     "tca_b": [
+      -0.0002737,
+      0.0006098,
+      1.0000266
+     ]
+    },
+    {
+     "focal": 23.1,
+     "source_model": "poly3",
+     "tca_r": [
+      -8.3e-05,
+      0.0002635,
+      1.0002333
+     ],
+     "tca_b": [
+      -0.0001797,
+      0.0007033,
+      0.999982
+     ]
+    },
+    {
+     "focal": 26.9,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0003871,
+      0.0008622,
+      0.9999533
+     ],
+     "tca_b": [
+      -0.0001398,
+      0.0006987,
+      0.9999226
+     ]
+    },
+    {
+     "focal": 29.4,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0003218,
+      0.0007089,
+      0.9999775
+     ],
+     "tca_b": [
+      0.000163,
+      -2.55e-05,
+      1.0003434
+     ]
+    },
+    {
+     "focal": 35.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0001337,
+      0.0002671,
+      1.000062
+     ],
+     "tca_b": [
+      -7.37e-05,
+      0.0004179,
+      1.0001761
+     ]
+    },
+    {
+     "focal": 55.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -6e-07,
+      -7.47e-05,
+      1.0000795
+     ],
+     "tca_b": [
+      -2.02e-05,
+      0.0002275,
+      1.0002342
+     ]
+    },
+    {
+     "focal": 70.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2e-06,
+      -4.49e-05,
+      0.9999473
+     ],
+     "tca_b": [
+      -0.0002686,
+      0.0006367,
+      1.0000025
+     ]
+    },
+    {
+     "focal": 100.0,
+     "source_model": "poly3",
+     "tca_r": [
+      9.28e-05,
+      -0.0002755,
+      0.999844
+     ],
+     "tca_b": [
+      -0.0001632,
+      0.0002535,
+      1.0000525
+     ]
+    },
+    {
+     "focal": 142.5,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001761,
+      -0.0004582,
+      0.999629
+     ],
+     "tca_b": [
+      -0.0003233,
+      0.000566,
+      0.9996693
+     ]
+    },
+    {
+     "focal": 220.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001387,
+      -0.0004467,
+      0.999339
+     ],
+     "tca_b": [
+      9.52e-05,
+      -0.0001185,
+      0.9997363
+     ]
+    },
+    {
+     "focal": 250.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0005417,
+      -0.0013082,
+      0.9997014
+     ],
+     "tca_b": [
+      -0.0007442,
+      0.0015463,
+      0.9988026
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-pentax.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

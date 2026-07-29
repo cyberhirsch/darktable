@@ -81,6 +81,7 @@ enum
 
 static void init_tab_presets(GtkWidget *stack);
 static void init_tab_accels(GtkWidget *stack);
+static void _add_lensfit_repo_link(GtkWidget *stack);
 static gint compare_rows_presets(GtkTreeModel *model,
                                  GtkTreeIter *a,
                                  GtkTreeIter *b,
@@ -586,6 +587,59 @@ static void init_tab_general(GtkWidget *dialog,
 ///////////// end of gui and theme language selection
 
 
+/* The lensfit repository is a fact about the project, not a setting -- there
+ * is one repository shared profiles go to, and typing a different one in
+ * would not redirect submissions anywhere useful. So unlike every other row
+ * on this tab it is not generated from darktableconfig.xml.in as an editable
+ * entry; it is appended here, once, as a plain link. Clicking it is the only
+ * interaction it offers.
+ *
+ * This reaches into the grid the generator built for the "lensfit" tab
+ * rather than adding a tab of its own, so the link sits with the sharing
+ * toggles it explains rather than off on its own. The grid is found by
+ * walking the container the generator produced: a GtkScrolledWindow wrapping
+ * a GtkViewport wrapping the grid, exactly what dt_gui_scroll_wrap() builds.
+ */
+static void _add_lensfit_repo_link(GtkWidget *stack)
+{
+  GtkWidget *tab_box =
+    gtk_stack_get_child_by_name(GTK_STACK(stack), _("lensfit"));
+  if(!tab_box) return;
+
+  GtkWidget *scroll = NULL;
+  for(GList *c = gtk_container_get_children(GTK_CONTAINER(tab_box));
+      c; c = c->next)
+    if(GTK_IS_SCROLLED_WINDOW(c->data)) { scroll = c->data; break; }
+  if(!scroll) return;
+
+  GtkWidget *viewport = gtk_bin_get_child(GTK_BIN(scroll));
+  GtkWidget *grid = viewport ? gtk_bin_get_child(GTK_BIN(viewport)) : NULL;
+  if(!GTK_IS_GRID(grid)) return;
+
+  gchar *repo = dt_conf_get_string("plugins/lensfit/repo");
+  if(!repo || !*repo) { g_free(repo); return; }
+
+  GtkWidget *label = gtk_label_new(_("lensfit repository"));
+  gtk_label_set_xalign(GTK_LABEL(label), .0);
+
+  gchar *url = g_strdup_printf("https://github.com/%s", repo);
+  GtkWidget *link = gtk_link_button_new_with_label(url, url);
+  gtk_widget_set_halign(link, GTK_ALIGN_START);
+  gtk_widget_set_tooltip_text
+    (link, _("the repository shared lens profiles are proposed to"));
+
+  /* A row index past anything the generator could have used places this
+     last regardless of how many preference rows the section ends up with --
+     GtkGrid orders by row number, not by attach order. */
+  gtk_grid_attach(GTK_GRID(grid), label, 0, 9999, 1, 1);
+  gtk_grid_attach(GTK_GRID(grid), link, 1, 9999, 1, 1);
+  gtk_widget_show(label);
+  gtk_widget_show(link);
+
+  g_free(url);
+  g_free(repo);
+}
+
 void dt_gui_preferences_show()
 {
   dt_stop_backthumbs_crawler(FALSE);
@@ -622,6 +676,7 @@ void dt_gui_preferences_show()
   //setup tabs
   init_tab_general(_preferences_dialog, stack, tweak_widgets);
   init_tab_generated(_preferences_dialog, stack);
+  _add_lensfit_repo_link(stack);
   init_tab_accels(stack);
   init_tab_presets(stack);
 #ifdef HAVE_AI

@@ -1,0 +1,248 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Canon",
+  "model": "Canon RF 24-240mm F4-6.3 IS USM",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Canon RF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Canon_Canon_RF_24-240mm_F4-6.3_IS_USM"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 24.0,
+     "params": [
+      1.0,
+      1.019,
+      0.101,
+      -0.167,
+      0.047,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 35.0,
+     "params": [
+      1.0,
+      1.0030000000000001,
+      0.029,
+      -0.048,
+      0.016,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 52.0,
+     "params": [
+      1.0,
+      0.9799999999999999,
+      0.043,
+      -0.04,
+      0.017,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 70.0,
+     "params": [
+      1.0,
+      0.989,
+      0.004,
+      -0.003,
+      0.01,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 100.0,
+     "params": [
+      1.0,
+      0.962,
+      0.058,
+      -0.036,
+      0.016,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 157.0,
+     "params": [
+      1.0,
+      0.977,
+      0.029,
+      -0.018,
+      0.012,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 240.0,
+     "params": [
+      1.0,
+      0.9989999999999999,
+      -0.034,
+      0.04,
+      -0.005,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 24.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.000486
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000727
+     ]
+    },
+    {
+     "focal": 35.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0004138
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000426
+     ]
+    },
+    {
+     "focal": 52.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0002351
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000445
+     ]
+    },
+    {
+     "focal": 70.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0000836
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000431
+     ]
+    },
+    {
+     "focal": 100.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9999379
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000382
+     ]
+    },
+    {
+     "focal": 157.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.999742
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999491
+     ]
+    },
+    {
+     "focal": 240.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9995148
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9998347
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-canon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 6.661338147750939e-16,
+  "unrepresentable": []
+ }
+}

@@ -1,0 +1,302 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Nikon",
+  "model": "Nikon AF-S DX VR Nikkor 18-55mm f/3.5-5.6G II",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Nikon F AF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Nikon_Nikon_AF-S_DX_VR_Nikkor_18-55mm_f_3.5-5.6G_II"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 18.0,
+     "params": [
+      1.0,
+      1.0232289999999997,
+      -0.015154,
+      -0.007745,
+      -0.00033,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 20.0,
+     "params": [
+      1.0,
+      1.0137340000000001,
+      -0.003154,
+      -0.011226,
+      0.000646,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 21.0,
+     "params": [
+      1.0,
+      0.99325,
+      0.04664,
+      -0.051056,
+      0.011166,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 25.0,
+     "params": [
+      1.0,
+      1.0047,
+      0.003416,
+      -0.008896,
+      0.00078,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 32.0,
+     "params": [
+      1.0,
+      1.000294,
+      0.004324,
+      -0.005467,
+      0.000849,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 40.0,
+     "params": [
+      1.0,
+      0.9954440000000001,
+      0.010631,
+      -0.008653,
+      0.002578,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 46.0,
+     "params": [
+      1.0,
+      0.999901,
+      -0.010555,
+      0.015171,
+      -0.004517,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 50.0,
+     "params": [
+      1.0,
+      0.9984129999999999,
+      -0.002504,
+      0.005271,
+      -0.00118,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 55.0,
+     "params": [
+      1.0,
+      0.999694,
+      -0.007068,
+      0.009876,
+      -0.002502,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 18.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.000114,
+      0.0,
+      1.0008246
+     ],
+     "tca_b": [
+      0.0001631,
+      0.0,
+      0.9995273
+     ]
+    },
+    {
+     "focal": 20.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -7.06e-05,
+      0.0,
+      1.0007579
+     ],
+     "tca_b": [
+      0.0001198,
+      0.0,
+      0.9995775
+     ]
+    },
+    {
+     "focal": 21.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -5.78e-05,
+      0.0,
+      1.0007205
+     ],
+     "tca_b": [
+      0.00011,
+      0.0,
+      0.9995902
+     ]
+    },
+    {
+     "focal": 25.0,
+     "source_model": "poly3",
+     "tca_r": [
+      3e-07,
+      0.0,
+      1.0005248
+     ],
+     "tca_b": [
+      6.04e-05,
+      0.0,
+      0.9997175
+     ]
+    },
+    {
+     "focal": 32.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -6e-06,
+      0.0,
+      1.0003273
+     ],
+     "tca_b": [
+      3.07e-05,
+      0.0,
+      0.9998234
+     ]
+    },
+    {
+     "focal": 40.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.64e-05,
+      0.0,
+      1.0001566
+     ],
+     "tca_b": [
+      2.47e-05,
+      0.0,
+      0.9999039
+     ]
+    },
+    {
+     "focal": 46.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.66e-05,
+      0.0,
+      1.0000953
+     ],
+     "tca_b": [
+      2.41e-05,
+      0.0,
+      0.9999198
+     ]
+    },
+    {
+     "focal": 50.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.54e-05,
+      0.0,
+      1.0000472
+     ],
+     "tca_b": [
+      2.51e-05,
+      0.0,
+      0.9999325
+     ]
+    },
+    {
+     "focal": 55.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.81e-05,
+      0.0,
+      1.0000225
+     ],
+     "tca_b": [
+      2.68e-05,
+      0.0,
+      0.9999503
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-nikon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

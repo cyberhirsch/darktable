@@ -1,0 +1,491 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Fujifilm",
+  "model": "FinePix HS20EXR & compatibles (Standard)",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "fujihs20exr"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Fujifilm_FinePix_HS20EXR_&_compatibles_(Standard)"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 4.2,
+     "params": [
+      1.0,
+      1.0836700000000001,
+      -0.04858,
+      -0.05066,
+      0.01557,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 5.0,
+     "params": [
+      1.0,
+      1.04184,
+      -0.03499,
+      -0.01443,
+      0.00758,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 5.4,
+     "params": [
+      1.0,
+      1.02113,
+      -0.00966,
+      -0.02342,
+      0.01195,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 5.6,
+     "params": [
+      1.0,
+      0.9938699999999999,
+      0.04049,
+      -0.05672,
+      0.02236,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 7.1,
+     "params": [
+      1.0,
+      0.9620500000000001,
+      0.07626,
+      -0.07378,
+      0.03547,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 8.6,
+     "params": [
+      1.0,
+      0.96513,
+      0.01696,
+      0.00674,
+      0.01117,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.3,
+     "params": [
+      1.0,
+      0.94565,
+      0.06929,
+      -0.05129,
+      0.03635,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 16.1,
+     "params": [
+      1.0,
+      0.9299499999999999,
+      0.11586,
+      -0.09542,
+      0.04961,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 21.2,
+     "params": [
+      1.0,
+      0.9583699999999999,
+      0.03685,
+      -0.02899,
+      0.03377,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 24.9,
+     "params": [
+      1.0,
+      0.9242900000000001,
+      0.04379,
+      0.0363,
+      -0.00438,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 28.0,
+     "params": [
+      1.0,
+      0.99244,
+      -0.09839,
+      0.13049,
+      -0.02454,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 30.3,
+     "params": [
+      1.0,
+      0.95821,
+      -0.06339,
+      0.14051,
+      -0.03533,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 43.1,
+     "params": [
+      1.0,
+      0.9461999999999999,
+      0.01142,
+      0.04359,
+      -0.00121,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 59.0,
+     "params": [
+      1.0,
+      0.9681500000000001,
+      -0.04338,
+      0.09605,
+      -0.02082,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 84.1,
+     "params": [
+      1.0,
+      0.9767100000000001,
+      -0.08548,
+      0.14772,
+      -0.03895,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 126.0,
+     "params": [
+      1.0,
+      0.9494,
+      0.0165,
+      0.03685,
+      -0.00275,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 4.2,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0006044,
+      0.0,
+      1.0015583
+     ],
+     "tca_b": [
+      0.0003064,
+      0.0,
+      0.9996509
+     ]
+    },
+    {
+     "focal": 5.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0006921,
+      0.0,
+      1.0015321
+     ],
+     "tca_b": [
+      0.0002984,
+      0.0,
+      0.9996267
+     ]
+    },
+    {
+     "focal": 5.4,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.000483,
+      0.0,
+      1.0012212
+     ],
+     "tca_b": [
+      0.0002778,
+      0.0,
+      0.9996477
+     ]
+    },
+    {
+     "focal": 5.6,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0005,
+      0.0,
+      1.0012408
+     ],
+     "tca_b": [
+      0.0002717,
+      0.0,
+      0.9996562
+     ]
+    },
+    {
+     "focal": 7.1,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0005363,
+      0.0,
+      1.0012541
+     ],
+     "tca_b": [
+      0.0001994,
+      0.0,
+      0.9997148
+     ]
+    },
+    {
+     "focal": 8.6,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0004482,
+      0.0,
+      1.0008582
+     ],
+     "tca_b": [
+      0.0002015,
+      0.0,
+      0.9997459
+     ]
+    },
+    {
+     "focal": 12.3,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0002563,
+      0.0,
+      1.0006152
+     ],
+     "tca_b": [
+      0.0001535,
+      0.0,
+      0.9998155
+     ]
+    },
+    {
+     "focal": 16.1,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0002135,
+      0.0,
+      1.000423
+     ],
+     "tca_b": [
+      0.0001455,
+      0.0,
+      0.9998099
+     ]
+    },
+    {
+     "focal": 21.2,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0001491,
+      0.0,
+      1.0002478
+     ],
+     "tca_b": [
+      2.14e-05,
+      0.0,
+      0.9999322
+     ]
+    },
+    {
+     "focal": 24.9,
+     "source_model": "poly3",
+     "tca_r": [
+      -7.12e-05,
+      0.0,
+      1.0001499
+     ],
+     "tca_b": [
+      1.78e-05,
+      0.0,
+      0.999937
+     ]
+    },
+    {
+     "focal": 28.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0002714,
+      0.0,
+      1.0005178
+     ],
+     "tca_b": [
+      0.0001966,
+      0.0,
+      0.9995914
+     ]
+    },
+    {
+     "focal": 30.3,
+     "source_model": "poly3",
+     "tca_r": [
+      -7.42e-05,
+      0.0,
+      1.0000964
+     ],
+     "tca_b": [
+      9e-06,
+      0.0,
+      0.9999415
+     ]
+    },
+    {
+     "focal": 43.1,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0001378,
+      0.0,
+      1.0002126
+     ],
+     "tca_b": [
+      7.2e-05,
+      0.0,
+      0.9995407
+     ]
+    },
+    {
+     "focal": 59.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0001059,
+      0.0,
+      0.9999289
+     ],
+     "tca_b": [
+      0.0001135,
+      0.0,
+      0.9996203
+     ]
+    },
+    {
+     "focal": 84.1,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0001983,
+      0.0,
+      0.9999666
+     ],
+     "tca_b": [
+      5.23e-05,
+      0.0,
+      0.9996942
+     ]
+    },
+    {
+     "focal": 126.0,
+     "source_model": "poly3",
+     "tca_r": [
+      2.2e-05,
+      0.0,
+      0.9994784
+     ],
+     "tca_b": [
+      0.0001868,
+      0.0,
+      0.9993445
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "compact-fujifilm.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

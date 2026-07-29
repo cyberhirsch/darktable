@@ -1,0 +1,194 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Sony",
+  "model": "Carl Zeiss Vario-Sonnar T* 16-35mm f/2.8 ZA SSM II (SAL1635Z2)",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Sony Alpha"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Sony_Carl_Zeiss_Vario-Sonnar_T__16-35mm_f_2.8_ZA_SSM_II_(SAL1635Z2)"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 16.0,
+     "params": [
+      1.0,
+      1.02305,
+      0.01126,
+      -0.0563,
+      0.02199,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 18.0,
+     "params": [
+      1.0,
+      1.02787,
+      -0.02347,
+      -0.01349,
+      0.00909,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 22.0,
+     "params": [
+      1.0,
+      1.01197,
+      0.00129,
+      -0.02528,
+      0.01202,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 26.0,
+     "params": [
+      1.0,
+      1.0069400000000002,
+      -0.00988,
+      -0.00256,
+      0.0055,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 35.0,
+     "params": [
+      1.0,
+      0.9921000000000001,
+      0.0176,
+      -0.02025,
+      0.01055,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 16.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.3e-06,
+      0.0,
+      1.0003061
+     ],
+     "tca_b": [
+      9.37e-05,
+      0.0,
+      1.0000319
+     ]
+    },
+    {
+     "focal": 18.0,
+     "source_model": "poly3",
+     "tca_r": [
+      5.67e-05,
+      0.0,
+      1.0002389
+     ],
+     "tca_b": [
+      -2.28e-05,
+      0.0,
+      1.0000695
+     ]
+    },
+    {
+     "focal": 22.0,
+     "source_model": "poly3",
+     "tca_r": [
+      3.53e-05,
+      0.0,
+      1.000144
+     ],
+     "tca_b": [
+      -2.09e-05,
+      0.0,
+      1.0001207
+     ]
+    },
+    {
+     "focal": 26.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0001027
+     ],
+     "tca_b": [
+      -1.77e-05,
+      0.0,
+      1.0001683
+     ]
+    },
+    {
+     "focal": 35.0,
+     "source_model": "poly3",
+     "tca_r": [
+      6.1e-06,
+      0.0,
+      1.0000246
+     ],
+     "tca_b": [
+      -7.2e-06,
+      0.0,
+      1.0001181
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-sony.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

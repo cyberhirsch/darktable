@@ -1,0 +1,194 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Panasonic",
+  "model": "Lumix G Vario 7-14mm f/4.0 Asph.",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Micro 4/3 System"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Panasonic_Lumix_G_Vario_7-14mm_f_4.0_Asph."
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 7.0,
+     "params": [
+      1.0,
+      1.02158,
+      0.05484,
+      -0.10328,
+      0.02686,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 8.0,
+     "params": [
+      1.0,
+      1.0226499999999998,
+      0.03957,
+      -0.08574,
+      0.02352,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 10.0,
+     "params": [
+      1.0,
+      1.00539,
+      0.03089,
+      -0.05043,
+      0.01415,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.0,
+     "params": [
+      1.0,
+      0.9914599999999999,
+      0.05591,
+      -0.07167,
+      0.0243,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 14.0,
+     "params": [
+      1.0,
+      0.9860300000000001,
+      0.02886,
+      -0.02541,
+      0.01052,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 7.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001073,
+      0.0,
+      1.0002675
+     ],
+     "tca_b": [
+      6.22e-05,
+      0.0,
+      1.0001169
+     ]
+    },
+    {
+     "focal": 8.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.41e-05,
+      0.0,
+      1.0002604
+     ],
+     "tca_b": [
+      1.24e-05,
+      0.0,
+      1.0002017
+     ]
+    },
+    {
+     "focal": 10.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.43e-05,
+      0.0,
+      1.0000787
+     ],
+     "tca_b": [
+      7.94e-05,
+      0.0,
+      1.0001936
+     ]
+    },
+    {
+     "focal": 12.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -3.16e-05,
+      0.0,
+      1.0001091
+     ],
+     "tca_b": [
+      0.0001177,
+      0.0,
+      1.0001823
+     ]
+    },
+    {
+     "focal": 14.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -9.62e-05,
+      0.0,
+      1.0002823
+     ],
+     "tca_b": [
+      5.13e-05,
+      0.0,
+      1.0001142
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-panasonic.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 6.661338147750939e-16,
+  "unrepresentable": []
+ }
+}

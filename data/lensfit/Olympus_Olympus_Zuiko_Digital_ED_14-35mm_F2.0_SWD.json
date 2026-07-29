@@ -1,0 +1,275 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Olympus",
+  "model": "Olympus Zuiko Digital ED 14-35mm F2.0 SWD",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "4/3 System"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Olympus_Olympus_Zuiko_Digital_ED_14-35mm_F2.0_SWD"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 14.0,
+     "params": [
+      1.0,
+      1.00786,
+      0.03264,
+      -0.06336,
+      0.02286,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 16.0,
+     "params": [
+      1.0,
+      1.00477,
+      0.02397,
+      -0.0447,
+      0.01596,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 18.0,
+     "params": [
+      1.0,
+      1.00351,
+      0.0114,
+      -0.0231,
+      0.00819,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 20.0,
+     "params": [
+      1.0,
+      1.00926,
+      -0.01591,
+      0.00768,
+      -0.00103,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 23.0,
+     "params": [
+      1.0,
+      1.0071999999999999,
+      -0.01246,
+      0.00424,
+      0.00102,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 26.0,
+     "params": [
+      1.0,
+      1.00256,
+      -0.00626,
+      0.00295,
+      0.00075,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 30.0,
+     "params": [
+      1.0,
+      0.99792,
+      0.00304,
+      -0.00279,
+      0.00183,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 35.0,
+     "params": [
+      1.0,
+      0.98841,
+      0.0247,
+      -0.01855,
+      0.00544,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 14.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0001858
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000144
+     ]
+    },
+    {
+     "focal": 16.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0001931
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999968
+     ]
+    },
+    {
+     "focal": 18.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0002164
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999765
+     ]
+    },
+    {
+     "focal": 20.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0002153
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999632
+     ]
+    },
+    {
+     "focal": 23.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0002047
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999521
+     ]
+    },
+    {
+     "focal": 26.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0001182
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999707
+     ]
+    },
+    {
+     "focal": 30.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0000099
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000244
+     ]
+    },
+    {
+     "focal": 35.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.999774
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0001929
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-olympus.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

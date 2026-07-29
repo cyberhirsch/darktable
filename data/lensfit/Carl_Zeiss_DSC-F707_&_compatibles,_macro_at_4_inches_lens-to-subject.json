@@ -1,0 +1,175 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Carl Zeiss",
+  "model": "DSC-F707 & compatibles, macro at 4 inches lens-to-subject",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "sony707"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Carl_Zeiss_DSC-F707_&_compatibles,_macro_at_4_inches_lens-to-subject"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 9.7,
+     "params": [
+      1.0,
+      1.030318,
+      0.0,
+      -0.041732,
+      0.011414,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 10.2,
+     "params": [
+      1.0,
+      1.029657,
+      0.0,
+      -0.041182,
+      0.011525,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 11.4,
+     "params": [
+      1.0,
+      1.019166,
+      0.0,
+      -0.02482,
+      0.005654,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.0,
+     "params": [
+      1.0,
+      1.02064,
+      0.0,
+      -0.028628,
+      0.007988,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.4,
+     "params": [
+      1.0,
+      1.019187,
+      0.0,
+      -0.026438,
+      0.007251,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 13.7,
+     "params": [
+      1.0,
+      1.015538,
+      0.0,
+      -0.021097,
+      0.005559,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 16.2,
+     "params": [
+      1.0,
+      1.007481,
+      0.0,
+      -0.007708,
+      0.000227,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 18.3,
+     "params": [
+      1.0,
+      1.00997,
+      0.0,
+      -0.015272,
+      0.005302,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 19.8,
+     "params": [
+      1.0,
+      1.003924,
+      0.0,
+      -0.004201,
+      0.000277,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "compact-sony.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 2.220446049250313e-16,
+  "unrepresentable": []
+ }
+}

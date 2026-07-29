@@ -1,0 +1,167 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Nikon",
+  "model": "Nikon AF Zoom-Nikkor 20-35mm f/2.8D IF",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Nikon F AF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Nikon_Nikon_AF_Zoom-Nikkor_20-35mm_f_2.8D_IF"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 20.0,
+     "params": [
+      1.0,
+      1.0152,
+      0.0026,
+      -0.03259,
+      0.01479,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 28.0,
+     "params": [
+      1.0,
+      1.00174,
+      0.02036,
+      -0.03716,
+      0.01506,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 32.0,
+     "params": [
+      1.0,
+      0.9962099999999999,
+      0.02473,
+      -0.03456,
+      0.01362,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 35.0,
+     "params": [
+      1.0,
+      0.99211,
+      0.03203,
+      -0.03881,
+      0.01467,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 20.0,
+     "source_model": "poly3",
+     "tca_r": [
+      7.71e-05,
+      0.0,
+      1.0004274
+     ],
+     "tca_b": [
+      1.35e-05,
+      0.0,
+      1.00011
+     ]
+    },
+    {
+     "focal": 28.0,
+     "source_model": "poly3",
+     "tca_r": [
+      7.42e-05,
+      0.0,
+      1.0001392
+     ],
+     "tca_b": [
+      -5.55e-05,
+      0.0,
+      1.0001588
+     ]
+    },
+    {
+     "focal": 32.0,
+     "source_model": "poly3",
+     "tca_r": [
+      6.72e-05,
+      0.0,
+      1.0001007
+     ],
+     "tca_b": [
+      -5.85e-05,
+      0.0,
+      1.000123
+     ]
+    },
+    {
+     "focal": 35.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001757,
+      0.0,
+      0.9999669
+     ],
+     "tca_b": [
+      -3.78e-05,
+      0.0,
+      1.0000656
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-nikon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

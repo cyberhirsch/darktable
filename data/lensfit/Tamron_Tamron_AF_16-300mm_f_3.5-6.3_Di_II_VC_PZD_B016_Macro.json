@@ -1,0 +1,303 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Tamron",
+  "model": "Tamron AF 16-300mm f/3.5-6.3 Di II VC PZD B016 Macro",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Nikon F AF",
+   "Sony Alpha"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Tamron_Tamron_AF_16-300mm_f_3.5-6.3_Di_II_VC_PZD_B016_Macro"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 16.0,
+     "params": [
+      1.0,
+      1.0307300000000001,
+      0.01928,
+      -0.0757,
+      0.02569,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 18.0,
+     "params": [
+      1.0,
+      0.99795,
+      0.04944,
+      -0.07396,
+      0.02657,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 22.0,
+     "params": [
+      1.0,
+      0.99174,
+      0.02957,
+      -0.03909,
+      0.01778,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 26.0,
+     "params": [
+      1.0,
+      0.99259,
+      0.01513,
+      -0.0211,
+      0.01338,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 31.0,
+     "params": [
+      1.0,
+      0.99802,
+      -0.00376,
+      -0.00334,
+      0.00908,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 50.0,
+     "params": [
+      1.0,
+      0.9787799999999999,
+      0.02269,
+      -0.01139,
+      0.00992,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 70.0,
+     "params": [
+      1.0,
+      0.98434,
+      0.0,
+      0.01566,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 150.0,
+     "params": [
+      1.0,
+      0.99041,
+      0.0,
+      0.00959,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 300.0,
+     "params": [
+      1.0,
+      0.9938,
+      0.0,
+      0.0062,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 16.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -7.4e-06,
+      0.0,
+      1.0006557
+     ],
+     "tca_b": [
+      4.19e-05,
+      0.0,
+      1.0001881
+     ]
+    },
+    {
+     "focal": 18.0,
+     "source_model": "poly3",
+     "tca_r": [
+      5.41e-05,
+      0.0,
+      1.0004807
+     ],
+     "tca_b": [
+      1.47e-05,
+      0.0,
+      1.0000854
+     ]
+    },
+    {
+     "focal": 22.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.2e-06,
+      0.0,
+      1.0004633
+     ],
+     "tca_b": [
+      3.5e-06,
+      0.0,
+      1.0001122
+     ]
+    },
+    {
+     "focal": 26.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -3.8e-06,
+      0.0,
+      1.0004575
+     ],
+     "tca_b": [
+      1.26e-05,
+      0.0,
+      1.0000604
+     ]
+    },
+    {
+     "focal": 31.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.48e-05,
+      0.0,
+      1.0004258
+     ],
+     "tca_b": [
+      -8.5e-06,
+      0.0,
+      1.0001555
+     ]
+    },
+    {
+     "focal": 50.0,
+     "source_model": "poly3",
+     "tca_r": [
+      9.9e-06,
+      0.0,
+      1.0001272
+     ],
+     "tca_b": [
+      -1.59e-05,
+      0.0,
+      1.0000252
+     ]
+    },
+    {
+     "focal": 70.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.4e-06,
+      0.0,
+      1.0001413
+     ],
+     "tca_b": [
+      -6.06e-05,
+      0.0,
+      0.9998388
+     ]
+    },
+    {
+     "focal": 150.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -3.44e-05,
+      0.0,
+      0.9999047
+     ],
+     "tca_b": [
+      -0.0001974,
+      0.0,
+      0.9996163
+     ]
+    },
+    {
+     "focal": 300.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001277,
+      0.0,
+      0.9985891
+     ],
+     "tca_b": [
+      -2.68e-05,
+      0.0,
+      0.9999028
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-tamron.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

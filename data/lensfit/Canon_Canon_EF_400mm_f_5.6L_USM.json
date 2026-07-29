@@ -1,0 +1,198 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Canon",
+  "model": "Canon EF 400mm f/5.6L USM",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Canon EF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Canon_Canon_EF_400mm_f_5.6L_USM"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 400.0,
+     "params": [
+      1.0,
+      1.00489,
+      -0.00493,
+      -0.00425,
+      0.00429,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 400.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9999
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9998
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": [
+     {
+      "k": [
+       -0.622,
+       0.7685,
+       -0.4254
+      ],
+      "ellipticity": 1.0,
+      "focal": 400.0,
+      "aperture": 5.6,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.622,
+       0.7685,
+       -0.4254
+      ],
+      "ellipticity": 1.0,
+      "focal": 400.0,
+      "aperture": 5.6,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.0503,
+       -0.189,
+       0.1157
+      ],
+      "ellipticity": 1.0,
+      "focal": 400.0,
+      "aperture": 6.3,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.0503,
+       -0.189,
+       0.1157
+      ],
+      "ellipticity": 1.0,
+      "focal": 400.0,
+      "aperture": 6.3,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       0.0358,
+       -0.0701,
+       0.0046
+      ],
+      "ellipticity": 1.0,
+      "focal": 400.0,
+      "aperture": 7.1,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       0.0358,
+       -0.0701,
+       0.0046
+      ],
+      "ellipticity": 1.0,
+      "focal": 400.0,
+      "aperture": 7.1,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     }
+    ]
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-canon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": [
+   "vignetting: vignetting gain falls 0.0297 below its peak (0.042 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.0297 below its peak (0.042 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03208 below its peak (0.046 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03208 below its peak (0.046 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03013 below its peak (0.043 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03013 below its peak (0.043 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03177 below its peak (0.045 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03177 below its peak (0.045 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03196 below its peak (0.045 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03196 below its peak (0.045 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03462 below its peak (0.049 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03462 below its peak (0.049 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03432 below its peak (0.049 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03432 below its peak (0.049 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03349 below its peak (0.048 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03349 below its peak (0.048 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03131 below its peak (0.044 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03131 below its peak (0.044 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03113 below its peak (0.044 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03113 below its peak (0.044 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03044 below its peak (0.043 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03044 below its peak (0.043 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.02913 below its peak (0.041 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.02913 below its peak (0.041 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03475 below its peak (0.049 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.03475 below its peak (0.049 stops) -- the curve turns over"
+  ]
+ }
+}

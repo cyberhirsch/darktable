@@ -1,0 +1,194 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Panasonic",
+  "model": "LEICA DG 50-200/F2.8-4.0",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Micro 4/3 System"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Panasonic_LEICA_DG_50-200_F2.8-4.0"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 50.0,
+     "params": [
+      1.0,
+      0.99004333,
+      0.0219299,
+      -0.0216944,
+      0.00972117,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 70.0,
+     "params": [
+      1.0,
+      0.996557464,
+      -0.00271997,
+      0.00603698,
+      0.000125526,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 100.0,
+     "params": [
+      1.0,
+      0.9868342600000001,
+      0.0178477,
+      -0.00903287,
+      0.00435091,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 150.0,
+     "params": [
+      1.0,
+      0.9911228870000001,
+      0.0034214,
+      0.00643138,
+      -0.000975667,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 200.0,
+     "params": [
+      1.0,
+      0.99415124,
+      0.00702667,
+      -0.00374369,
+      0.00256578,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 50.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0001373,
+      0.0,
+      1.0004375
+     ],
+     "tca_b": [
+      0.0001201,
+      0.0,
+      0.9998296
+     ]
+    },
+    {
+     "focal": 70.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -7.89e-05,
+      0.0,
+      1.0001792
+     ],
+     "tca_b": [
+      2.93e-05,
+      0.0,
+      1.0000226
+     ]
+    },
+    {
+     "focal": 100.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.97e-05,
+      0.0,
+      1.0000083
+     ],
+     "tca_b": [
+      -6.9e-06,
+      0.0,
+      1.0000714
+     ]
+    },
+    {
+     "focal": 150.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2e-06,
+      0.0,
+      0.9999648
+     ],
+     "tca_b": [
+      2.97e-05,
+      0.0,
+      0.9998947
+     ]
+    },
+    {
+     "focal": 200.0,
+     "source_model": "poly3",
+     "tca_r": [
+      3.62e-05,
+      0.0,
+      0.9999235
+     ],
+     "tca_b": [
+      1.19e-05,
+      0.0,
+      0.9998211
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-panasonic.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

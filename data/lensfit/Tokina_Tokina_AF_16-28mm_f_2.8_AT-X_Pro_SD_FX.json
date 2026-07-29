@@ -1,0 +1,249 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Tokina",
+  "model": "Tokina AF 16-28mm f/2.8 AT-X Pro SD FX",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Canon EF",
+   "Nikon F AF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Tokina_Tokina_AF_16-28mm_f_2.8_AT-X_Pro_SD_FX"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 16.0,
+     "params": [
+      1.0,
+      1.00888,
+      0.0,
+      -0.00888,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 18.0,
+     "params": [
+      1.0,
+      1.00572,
+      0.0,
+      -0.00572,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 19.0,
+     "params": [
+      1.0,
+      1.00426,
+      0.0,
+      -0.00426,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 21.0,
+     "params": [
+      1.0,
+      1.00249,
+      0.0,
+      -0.00249,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 22.0,
+     "params": [
+      1.0,
+      1.00113,
+      0.0,
+      -0.00113,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 25.0,
+     "params": [
+      1.0,
+      1.00033,
+      0.0,
+      -0.00033,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 28.0,
+     "params": [
+      1.0,
+      0.99966,
+      0.0,
+      0.00034,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 16.0,
+     "source_model": "poly3",
+     "tca_r": [
+      4.09e-05,
+      0.0,
+      1.0000971
+     ],
+     "tca_b": [
+      3.02e-05,
+      0.0,
+      1.0000925
+     ]
+    },
+    {
+     "focal": 18.0,
+     "source_model": "poly3",
+     "tca_r": [
+      5.1e-05,
+      0.0,
+      1.0000552
+     ],
+     "tca_b": [
+      -1.65e-05,
+      0.0,
+      1.0001691
+     ]
+    },
+    {
+     "focal": 19.0,
+     "source_model": "poly3",
+     "tca_r": [
+      5.87e-05,
+      0.0,
+      1.0000284
+     ],
+     "tca_b": [
+      -3.46e-05,
+      0.0,
+      1.0001799
+     ]
+    },
+    {
+     "focal": 21.0,
+     "source_model": "poly3",
+     "tca_r": [
+      5.02e-05,
+      0.0,
+      1.0000214
+     ],
+     "tca_b": [
+      -3.35e-05,
+      0.0,
+      1.0001829
+     ]
+    },
+    {
+     "focal": 22.0,
+     "source_model": "poly3",
+     "tca_r": [
+      4.16e-05,
+      0.0,
+      1.0000146
+     ],
+     "tca_b": [
+      -4.35e-05,
+      0.0,
+      1.0002136
+     ]
+    },
+    {
+     "focal": 25.0,
+     "source_model": "poly3",
+     "tca_r": [
+      5.2e-05,
+      0.0,
+      0.9999853
+     ],
+     "tca_b": [
+      -2.32e-05,
+      0.0,
+      1.0001969
+     ]
+    },
+    {
+     "focal": 28.0,
+     "source_model": "poly3",
+     "tca_r": [
+      3.73e-05,
+      0.0,
+      0.999996
+     ],
+     "tca_b": [
+      -4.21e-05,
+      0.0,
+      1.0002272
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-tokina.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 0.0,
+  "unrepresentable": []
+ }
+}

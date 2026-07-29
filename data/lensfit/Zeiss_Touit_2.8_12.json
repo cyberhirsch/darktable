@@ -1,0 +1,284 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Zeiss",
+  "model": "Touit 2.8/12",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Fujifilm X",
+   "Sony E"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Zeiss_Touit_2.8_12"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 12.0,
+     "params": [
+      1.0,
+      1.012,
+      0.01,
+      -0.029,
+      0.007,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 12.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0001138,
+      0.0,
+      1.0003426
+     ],
+     "tca_b": [
+      0.0001549,
+      0.0,
+      0.9998049
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": [
+     {
+      "k": [
+       -1.3491751,
+       0.7310271,
+       -0.1549161
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 2.8,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -1.3491751,
+       0.7310271,
+       -0.1549161
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 2.8,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.64164,
+       -0.3021986,
+       0.2974415
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 4.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.64164,
+       -0.3021986,
+       0.2974415
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 4.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.7861321,
+       0.2537078,
+       -0.0397094
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 5.6,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.7861321,
+       0.2537078,
+       -0.0397094
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 5.6,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.796,
+       0.2570996,
+       -0.0266323
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 8.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.796,
+       0.2570996,
+       -0.0266323
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 8.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.8137004,
+       0.2778998,
+       -0.0333833
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 11.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.8137004,
+       0.2778998,
+       -0.0333833
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 11.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.8274779,
+       0.3209522,
+       -0.06388
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 16.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.8274779,
+       0.3209522,
+       -0.06388
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 16.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.8710585,
+       0.3162095,
+       -0.0329601
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 22.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.8710585,
+       0.3162095,
+       -0.0329601
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 22.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     }
+    ]
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-zeiss.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 2.220446049250313e-16,
+  "unrepresentable": []
+ }
+}

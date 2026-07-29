@@ -1,0 +1,202 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Nikon",
+  "model": "NIKKOR Z MC 105mm f/2.8 VR S",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Nikon Z"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Nikon_NIKKOR_Z_MC_105mm_f_2.8_VR_S"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 105.0,
+     "params": [
+      1.0,
+      1.01969887,
+      -0.0436214,
+      0.0335446,
+      -0.00962207,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 105.0,
+     "source_model": "poly3",
+     "tca_r": [
+      6.9e-06,
+      0.0,
+      1.0001602
+     ],
+     "tca_b": [
+      1.78e-05,
+      0.0,
+      0.9999263
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": [
+     {
+      "k": [
+       -1.1354285,
+       0.7509271,
+       -0.345391
+      ],
+      "ellipticity": 1.0,
+      "focal": 105.0,
+      "aperture": 2.8,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -1.1354285,
+       0.7509271,
+       -0.345391
+      ],
+      "ellipticity": 1.0,
+      "focal": 105.0,
+      "aperture": 2.8,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.099744,
+       0.4999534,
+       -0.6160787
+      ],
+      "ellipticity": 1.0,
+      "focal": 105.0,
+      "aperture": 5.6,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.099744,
+       0.4999534,
+       -0.6160787
+      ],
+      "ellipticity": 1.0,
+      "focal": 105.0,
+      "aperture": 5.6,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       0.0152965,
+       -0.0351252,
+       0.0010145
+      ],
+      "ellipticity": 1.0,
+      "focal": 105.0,
+      "aperture": 8.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       0.0152965,
+       -0.0351252,
+       0.0010145
+      ],
+      "ellipticity": 1.0,
+      "focal": 105.0,
+      "aperture": 8.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.0003241,
+       -0.0293428,
+       0.0137706
+      ],
+      "ellipticity": 1.0,
+      "focal": 105.0,
+      "aperture": 22.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.0003241,
+       -0.0293428,
+       0.0137706
+      ],
+      "ellipticity": 1.0,
+      "focal": 105.0,
+      "aperture": 22.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     }
+    ]
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-nikon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 1.1102230246251565e-16,
+  "unrepresentable": [
+   "vignetting: vignetting gain falls 0.0193 below its peak (0.028 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.0193 below its peak (0.028 stops) -- the curve turns over"
+  ]
+ }
+}

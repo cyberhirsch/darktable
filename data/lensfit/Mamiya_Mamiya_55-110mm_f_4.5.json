@@ -1,0 +1,149 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Mamiya",
+  "model": "Mamiya 55-110mm f/4.5",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Mamiya 645"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Mamiya_Mamiya_55-110mm_f_4.5"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 55.0,
+     "params": [
+      1.0,
+      1.003876,
+      0.0,
+      -0.002243,
+      -0.001633,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 65.0,
+     "params": [
+      1.0,
+      0.9964219999999999,
+      0.0,
+      0.008348,
+      -0.00477,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 75.0,
+     "params": [
+      1.0,
+      0.997864,
+      0.0,
+      0.002136,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 83.0,
+     "params": [
+      1.0,
+      0.9884229999999999,
+      0.0,
+      0.021454,
+      -0.009877,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 90.0,
+     "params": [
+      1.0,
+      0.9876839999999999,
+      0.0,
+      0.019618,
+      -0.007302,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 100.0,
+     "params": [
+      1.0,
+      0.984202,
+      0.0,
+      0.025981,
+      -0.010183,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 110.0,
+     "params": [
+      1.0,
+      0.983113,
+      0.0,
+      0.029683,
+      -0.012796,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "6x6.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

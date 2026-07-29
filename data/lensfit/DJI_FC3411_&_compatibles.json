@@ -1,0 +1,89 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "DJI",
+  "model": "FC3411 & compatibles",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "djiFC3411"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "DJI_FC3411_&_compatibles"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 8.4,
+     "params": [
+      1.0,
+      1.0176785490000002,
+      -0.000777849,
+      -0.0317787,
+      0.014878,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 8.38,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.04e-05,
+      0.0,
+      1.0003052
+     ],
+     "tca_b": [
+      -3.65e-05,
+      0.0,
+      1.000032
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "actioncams.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 2.220446049250313e-16,
+  "unrepresentable": [
+   "vignetting: vignetting gain falls 0.02502 below its peak (0.036 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.02502 below its peak (0.036 stops) -- the curve turns over"
+  ]
+ }
+}

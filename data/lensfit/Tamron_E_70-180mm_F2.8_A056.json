@@ -1,0 +1,194 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Tamron",
+  "model": "E 70-180mm F2.8 A056",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Sony E"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Tamron_E_70-180mm_F2.8_A056"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 70.0,
+     "params": [
+      1.0,
+      1.005,
+      0.002,
+      -0.008,
+      0.001,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 85.0,
+     "params": [
+      1.0,
+      1.002,
+      -0.007,
+      0.007,
+      -0.002,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 100.0,
+     "params": [
+      1.0,
+      1.0039999999999998,
+      -0.026,
+      0.029,
+      -0.007,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 136.0,
+     "params": [
+      1.0,
+      1.006,
+      -0.042,
+      0.044,
+      -0.008,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 180.0,
+     "params": [
+      1.0,
+      0.988,
+      -0.017,
+      0.033,
+      -0.004,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 70.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.08e-05,
+      0.0,
+      1.0000971
+     ],
+     "tca_b": [
+      1.51e-05,
+      0.0,
+      1.0000422
+     ]
+    },
+    {
+     "focal": 85.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.67e-05,
+      0.0,
+      1.0000757
+     ],
+     "tca_b": [
+      -1.57e-05,
+      0.0,
+      1.0000463
+     ]
+    },
+    {
+     "focal": 100.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -9.4e-06,
+      0.0,
+      1.0000439
+     ],
+     "tca_b": [
+      6.1e-06,
+      0.0,
+      0.9999763
+     ]
+    },
+    {
+     "focal": 136.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.44e-05,
+      0.0,
+      1.0000122
+     ],
+     "tca_b": [
+      1.19e-05,
+      0.0,
+      0.9998655
+     ]
+    },
+    {
+     "focal": 180.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -4.06e-05,
+      0.0,
+      0.9999732
+     ],
+     "tca_b": [
+      3.42e-05,
+      0.0,
+      0.9998075
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-tamron.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 2.220446049250313e-16,
+  "unrepresentable": []
+ }
+}

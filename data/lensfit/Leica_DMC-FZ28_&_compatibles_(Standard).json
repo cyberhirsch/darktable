@@ -1,0 +1,214 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Leica",
+  "model": "DMC-FZ28 & compatibles (Standard)",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "panasonicFZ28"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Leica_DMC-FZ28_&_compatibles_(Standard)"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 4.8,
+     "params": [
+      1.0,
+      0.9916962452626032,
+      0.0522404604411257,
+      -0.0590418104126213,
+      0.0151051047088923,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 5.5,
+     "params": [
+      1.0,
+      0.9950068468187039,
+      0.0356794326344223,
+      -0.0404126502555069,
+      0.0097263708023807,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 6.1,
+     "params": [
+      1.0,
+      0.9997949651489058,
+      0.0157982485686123,
+      -0.0210447640238848,
+      0.00545155030636666,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 6.9,
+     "params": [
+      1.0,
+      0.9997949651489058,
+      0.0157982485686123,
+      -0.0210447640238848,
+      0.00545155030636666,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 8.2,
+     "params": [
+      1.0,
+      1.0024401229309274,
+      -0.00902488977450724,
+      0.00406258888297525,
+      0.00252217796060456,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 8.2,
+     "params": [
+      1.0,
+      0.9979721973399694,
+      0.0125418235034799,
+      -0.0241186263472487,
+      0.0136046055037993,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 9.0,
+     "params": [
+      1.0,
+      0.9952804233629652,
+      0.0160544859044301,
+      -0.0250948730402496,
+      0.0137599637728544,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 11.9,
+     "params": [
+      1.0,
+      0.9995652683937997,
+      -0.00994856944375364,
+      0.0100459086335183,
+      0.000337392416435729,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 14.4,
+     "params": [
+      1.0,
+      1.000980077678,
+      -0.00686539554143091,
+      0.00515254826530127,
+      0.000732769598129668,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 14.9,
+     "params": [
+      1.0,
+      0.9949749930522886,
+      0.0100244102797433,
+      -0.0108398840906803,
+      0.00584048075864842,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 20.8,
+     "params": [
+      1.0,
+      1.0001733383259481,
+      -0.0011265790621693,
+      0.000670293694980388,
+      0.00028294704124076,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 25.2,
+     "params": [
+      1.0,
+      1.0037586798157851,
+      -0.0091582160365622,
+      0.00799923834974951,
+      -0.00259970212897242,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "compact-panasonic.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

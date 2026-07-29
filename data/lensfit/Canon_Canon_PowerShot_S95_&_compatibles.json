@@ -1,0 +1,208 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Canon",
+  "model": "Canon PowerShot S95 & compatibles",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "canonS95"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Canon_Canon_PowerShot_S95_&_compatibles"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 6.0,
+     "params": [
+      1.0,
+      1.06919,
+      0.00128,
+      -0.08833,
+      0.01786,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 7.5,
+     "params": [
+      1.0,
+      1.02063,
+      0.05441,
+      -0.09282,
+      0.01778,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 9.6,
+     "params": [
+      1.0,
+      1.00623,
+      0.0346,
+      -0.04712,
+      0.00629,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.8,
+     "params": [
+      1.0,
+      1.01177,
+      0.0,
+      -0.01177,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 22.5,
+     "params": [
+      1.0,
+      1.0028,
+      0.0,
+      -0.0028,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 6.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.000128,
+      0.0,
+      0.9999715
+     ],
+     "tca_b": [
+      -0.0004378,
+      0.0,
+      1.0008838
+     ]
+    },
+    {
+     "focal": 7.5,
+     "source_model": "poly3",
+     "tca_r": [
+      9.93e-05,
+      0.0,
+      0.9999354
+     ],
+     "tca_b": [
+      -0.000305,
+      0.0,
+      1.0007215
+     ]
+    },
+    {
+     "focal": 9.6,
+     "source_model": "poly3",
+     "tca_r": [
+      8.7e-05,
+      0.0,
+      0.9999529
+     ],
+     "tca_b": [
+      -0.0001707,
+      0.0,
+      1.0005589
+     ]
+    },
+    {
+     "focal": 12.8,
+     "source_model": "poly3",
+     "tca_r": [
+      5.14e-05,
+      0.0,
+      0.9999909
+     ],
+     "tca_b": [
+      -0.0001475,
+      0.0,
+      1.0004201
+     ]
+    },
+    {
+     "focal": 18.2,
+     "source_model": "poly3",
+     "tca_r": [
+      1.2e-05,
+      0.0,
+      1.000081
+     ],
+     "tca_b": [
+      -3.87e-05,
+      0.0,
+      1.000196
+     ]
+    },
+    {
+     "focal": 22.5,
+     "source_model": "poly3",
+     "tca_r": [
+      -5.7e-06,
+      0.0,
+      1.0001253
+     ],
+     "tca_b": [
+      4.3e-06,
+      0.0,
+      1.0000429
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "compact-canon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 2.220446049250313e-16,
+  "unrepresentable": []
+ }
+}

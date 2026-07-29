@@ -1,0 +1,305 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Nikon",
+  "model": "E990 & compatibles (Standard)",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "nikon990"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Nikon_E990_&_compatibles_(Standard)"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 8.2,
+     "params": [
+      1.0,
+      1.026691,
+      0.0,
+      -0.036014,
+      0.009323,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 8.8,
+     "params": [
+      1.0,
+      1.021415,
+      0.0,
+      -0.028396,
+      0.006981,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 9.9,
+     "params": [
+      1.0,
+      1.016415,
+      0.0,
+      -0.023481,
+      0.007066,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 10.7,
+     "params": [
+      1.0,
+      1.012371,
+      0.0,
+      -0.017212,
+      0.004841,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 11.6,
+     "params": [
+      1.0,
+      1.0041069999999999,
+      0.0,
+      -0.003458,
+      -0.000649,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.7,
+     "params": [
+      1.0,
+      1.003765,
+      0.0,
+      -0.005998,
+      0.002233,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 13.5,
+     "params": [
+      1.0,
+      1.002126,
+      0.0,
+      -0.004391,
+      0.002265,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 14.6,
+     "params": [
+      1.0,
+      1.002038,
+      0.0,
+      -0.006345,
+      0.004307,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 15.5,
+     "params": [
+      1.0,
+      1.00069,
+      0.0,
+      -0.003799,
+      0.003109,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 16.3,
+     "params": [
+      1.0,
+      0.9969129999999999,
+      0.0,
+      0.001325,
+      0.001762,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 17.4,
+     "params": [
+      1.0,
+      0.9977079999999999,
+      0.0,
+      -0.000226,
+      0.002518,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 18.2,
+     "params": [
+      1.0,
+      0.994676,
+      0.0,
+      0.004015,
+      0.001309,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 19.1,
+     "params": [
+      1.0,
+      0.993467,
+      0.0,
+      0.005566,
+      0.000967,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 20.2,
+     "params": [
+      1.0,
+      0.993937,
+      0.0,
+      0.004291,
+      0.001772,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 21.0,
+     "params": [
+      1.0,
+      0.9919819999999999,
+      0.0,
+      0.007835,
+      0.000183,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 21.6,
+     "params": [
+      1.0,
+      0.993236,
+      0.0,
+      0.004132,
+      0.002632,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 22.2,
+     "params": [
+      1.0,
+      0.990417,
+      0.0,
+      0.009482,
+      0.000101,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 22.8,
+     "params": [
+      1.0,
+      0.989055,
+      0.0,
+      0.012402,
+      -0.001457,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 23.4,
+     "params": [
+      1.0,
+      0.990459,
+      0.0,
+      0.009522,
+      1.9e-05,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "compact-nikon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

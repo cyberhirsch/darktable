@@ -1,0 +1,227 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Leica Camera AG",
+  "model": "Summicron TL 1:2 23 ASPH.",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Leica L"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Leica_Camera_AG_Summicron_TL_1_2_23_ASPH."
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 23.0,
+     "params": [
+      1.0,
+      1.0119999999999998,
+      -0.001,
+      -0.01,
+      -0.001,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 23.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0002789,
+      0.0002358,
+      1.0005565
+     ],
+     "tca_b": [
+      0.0002195,
+      -0.0001105,
+      0.9997527
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": [
+     {
+      "k": [
+       -0.8977,
+       0.5099,
+       -0.1328
+      ],
+      "ellipticity": 1.0,
+      "focal": 23.0,
+      "aperture": 2.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.8977,
+       0.5099,
+       -0.1328
+      ],
+      "ellipticity": 1.0,
+      "focal": 23.0,
+      "aperture": 2.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.0957,
+       -0.5515,
+       0.3349
+      ],
+      "ellipticity": 1.0,
+      "focal": 23.0,
+      "aperture": 2.8,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.0957,
+       -0.5515,
+       0.3349
+      ],
+      "ellipticity": 1.0,
+      "focal": 23.0,
+      "aperture": 2.8,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2689,
+       0.0332,
+       -0.0713
+      ],
+      "ellipticity": 1.0,
+      "focal": 23.0,
+      "aperture": 4.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2689,
+       0.0332,
+       -0.0713
+      ],
+      "ellipticity": 1.0,
+      "focal": 23.0,
+      "aperture": 4.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2602,
+       -0.0747,
+       0.0728
+      ],
+      "ellipticity": 1.0,
+      "focal": 23.0,
+      "aperture": 5.6,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2602,
+       -0.0747,
+       0.0728
+      ],
+      "ellipticity": 1.0,
+      "focal": 23.0,
+      "aperture": 5.6,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.283,
+       -0.0433,
+       0.0513
+      ],
+      "ellipticity": 1.0,
+      "focal": 23.0,
+      "aperture": 16.0,
+      "focus_distance": 10.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.283,
+       -0.0433,
+       0.0513
+      ],
+      "ellipticity": 1.0,
+      "focal": 23.0,
+      "aperture": 16.0,
+      "focus_distance": 1000.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     }
+    ]
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-leica.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

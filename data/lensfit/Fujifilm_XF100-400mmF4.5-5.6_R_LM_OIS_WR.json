@@ -1,0 +1,194 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Fujifilm",
+  "model": "XF100-400mmF4.5-5.6 R LM OIS WR",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Fujifilm X"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Fujifilm_XF100-400mmF4.5-5.6_R_LM_OIS_WR"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 100.0,
+     "params": [
+      1.0,
+      0.99087925,
+      0.0,
+      0.00912075,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 132.9,
+     "params": [
+      1.0,
+      0.988801,
+      0.0,
+      0.011199,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 196.6,
+     "params": [
+      1.0,
+      0.9885762,
+      0.0,
+      0.0114238,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 290.6,
+     "params": [
+      1.0,
+      0.9883251,
+      0.0,
+      0.0116749,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 400.0,
+     "params": [
+      1.0,
+      0.9891246,
+      0.0,
+      0.0108754,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 100.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0003
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    },
+    {
+     "focal": 132.9,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0001
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    },
+    {
+     "focal": 196.6,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9999
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999
+     ]
+    },
+    {
+     "focal": 290.6,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9997
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999
+     ]
+    },
+    {
+     "focal": 400.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9995
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9998
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-fujifilm.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 0.0,
+  "unrepresentable": []
+ }
+}

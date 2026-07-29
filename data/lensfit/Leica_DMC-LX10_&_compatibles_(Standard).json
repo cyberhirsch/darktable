@@ -1,0 +1,221 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Leica",
+  "model": "DMC-LX10 & compatibles (Standard)",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "panasonicLX10"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Leica_DMC-LX10_&_compatibles_(Standard)"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 8.8,
+     "params": [
+      1.0,
+      1.0836464410951938,
+      -0.00478327940864424,
+      -0.112939517866333,
+      0.0340763561797834,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 10.2,
+     "params": [
+      1.0,
+      1.0721232131589682,
+      -0.0280698750494415,
+      -0.0612924484780965,
+      0.0172391103685697,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.8,
+     "params": [
+      1.0,
+      1.04819709947647,
+      -0.0276457898618932,
+      -0.0292113310751692,
+      0.00866002146059237,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 18.3,
+     "params": [
+      1.0,
+      1.0264657401470096,
+      -0.0276992702354011,
+      0.000517766734734218,
+      0.000715763353657251,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 25.6,
+     "params": [
+      1.0,
+      1.0182477593234627,
+      -0.0302661402940034,
+      0.0155946441949497,
+      -0.00357626322440886,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 26.4,
+     "params": [
+      1.0,
+      1.0168712704721092,
+      -0.0191184894423543,
+      0.00373506993924256,
+      -0.00148785096899753,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 8.8,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0007508,
+      0.0011385,
+      1.0003461
+     ],
+     "tca_b": [
+      0.0006617,
+      -0.0008369,
+      1.000215
+     ]
+    },
+    {
+     "focal": 10.2,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0005722,
+      0.0009598,
+      1.000268
+     ],
+     "tca_b": [
+      0.000456,
+      -0.0007134,
+      1.0002805
+     ]
+    },
+    {
+     "focal": 12.8,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0004294,
+      0.0006552,
+      1.0002534
+     ],
+     "tca_b": [
+      0.0003048,
+      -0.0004001,
+      1.0001558
+     ]
+    },
+    {
+     "focal": 18.3,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0003976,
+      0.0006771,
+      1.0000344
+     ],
+     "tca_b": [
+      0.0003645,
+      -0.0005774,
+      1.0002434
+     ]
+    },
+    {
+     "focal": 25.6,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0002063,
+      0.0003743,
+      1.000038
+     ],
+     "tca_b": [
+      0.0001243,
+      -0.0002521,
+      1.0001199
+     ]
+    },
+    {
+     "focal": 26.4,
+     "source_model": "poly3",
+     "tca_r": [
+      -0.0001359,
+      0.0002246,
+      1.000067
+     ],
+     "tca_b": [
+      0.0001583,
+      -0.0003384,
+      1.0001865
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "compact-panasonic.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

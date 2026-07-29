@@ -52,7 +52,8 @@ dt_view_type_flags_t views(dt_lib_module_t *self)
     | DT_VIEW_DARKROOM
     | DT_VIEW_TETHERING
     | DT_VIEW_MAP
-    | DT_VIEW_PRINT;
+    | DT_VIEW_PRINT
+    | DT_VIEW_LENS_CALIB;
 }
 
 uint32_t container(dt_lib_module_t *self)

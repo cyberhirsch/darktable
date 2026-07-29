@@ -1,0 +1,223 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Sony",
+  "model": "FE 24-70mm f/4 ZA OSS",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Sony E"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Sony_FE_24-70mm_f_4_ZA_OSS__1"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 24.0,
+     "params": [
+      1.0,
+      1.01854,
+      0.04487,
+      -0.09138,
+      0.02797,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 33.0,
+     "params": [
+      1.0,
+      0.9961099999999999,
+      0.02297,
+      -0.03649,
+      0.01741,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 50.0,
+     "params": [
+      1.0,
+      0.98665,
+      0.0103,
+      -0.0102,
+      0.01325,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 70.0,
+     "params": [
+      1.0,
+      0.9768899999999999,
+      0.02605,
+      -0.01629,
+      0.01335,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 24.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.000162,
+      0.0,
+      1.0002925
+     ],
+     "tca_b": [
+      -5.92e-05,
+      0.0,
+      1.0000445
+     ]
+    },
+    {
+     "focal": 29.0,
+     "source_model": "poly3",
+     "tca_r": [
+      5.2e-05,
+      0.0,
+      1.0002717
+     ],
+     "tca_b": [
+      2e-07,
+      0.0,
+      1.0000786
+     ]
+    },
+    {
+     "focal": 33.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -3.76e-05,
+      0.0,
+      1.0003144
+     ],
+     "tca_b": [
+      3.09e-05,
+      0.0,
+      1.0000261
+     ]
+    },
+    {
+     "focal": 41.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -7.45e-05,
+      0.0,
+      1.0002363
+     ],
+     "tca_b": [
+      3e-05,
+      0.0,
+      1.0000301
+     ]
+    },
+    {
+     "focal": 50.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -7.21e-05,
+      0.0,
+      1.0001897
+     ],
+     "tca_b": [
+      3.68e-05,
+      0.0,
+      1.0000075
+     ]
+    },
+    {
+     "focal": 56.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -5.72e-05,
+      0.0,
+      1.0000988
+     ],
+     "tca_b": [
+      6.58e-05,
+      0.0,
+      0.9999804
+     ]
+    },
+    {
+     "focal": 62.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -6.71e-05,
+      0.0,
+      1.0001204
+     ],
+     "tca_b": [
+      7.28e-05,
+      0.0,
+      0.9999172
+     ]
+    },
+    {
+     "focal": 70.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -5.63e-05,
+      0.0,
+      1.0001062
+     ],
+     "tca_b": [
+      5.83e-05,
+      0.0,
+      0.9998954
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-sony.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

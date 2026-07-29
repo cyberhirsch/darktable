@@ -1,0 +1,248 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Sony",
+  "model": "Sony RX10II & compatibles",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "sonyRX10II"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Sony_Sony_RX10II_&_compatibles"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 8.8,
+     "params": [
+      1.0,
+      0.99873,
+      0.1059,
+      -0.14223,
+      0.0376,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 9.9,
+     "params": [
+      1.0,
+      0.98977,
+      0.08589,
+      -0.10439,
+      0.02873,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 10.9,
+     "params": [
+      1.0,
+      0.9811999999999999,
+      0.07298,
+      -0.07335,
+      0.01917,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 13.1,
+     "params": [
+      1.0,
+      0.96224,
+      0.05952,
+      -0.02653,
+      0.00477,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 18.2,
+     "params": [
+      1.0,
+      0.98177,
+      -0.00945,
+      0.03433,
+      -0.00665,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 25.2,
+     "params": [
+      1.0,
+      0.96374,
+      0.0052,
+      0.03994,
+      -0.00888,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 73.2,
+     "params": [
+      1.0,
+      0.9557499999999999,
+      0.01609,
+      0.03659,
+      -0.00843,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 8.8,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0006418
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000433
+     ]
+    },
+    {
+     "focal": 9.9,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0001893
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000506
+     ]
+    },
+    {
+     "focal": 10.9,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0001793
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000381
+     ]
+    },
+    {
+     "focal": 13.1,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0005385
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000273
+     ]
+    },
+    {
+     "focal": 18.2,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0004791
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000114
+     ]
+    },
+    {
+     "focal": 25.2,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0003735
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999717
+     ]
+    },
+    {
+     "focal": 73.2,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9998839
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9999304
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "compact-sony.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

@@ -1,0 +1,333 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Sigma",
+  "model": "Sigma 17-70mm f/2.8-4.5 DC Macro",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Sigma SA",
+   "Canon EF",
+   "Minolta AF",
+   "Nikon F AF",
+   "Pentax KAF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Sigma_Sigma_17-70mm_f_2.8-4.5_DC_Macro__1"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 17.0,
+     "params": [
+      1.0,
+      1.0108219999999999,
+      0.047399,
+      -0.089484,
+      0.031263,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 18.0,
+     "params": [
+      1.0,
+      1.016468,
+      0.014054,
+      -0.048197,
+      0.017675,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 20.0,
+     "params": [
+      1.0,
+      1.012911,
+      0.012628,
+      -0.040264,
+      0.014725,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 24.0,
+     "params": [
+      1.0,
+      1.005183,
+      0.009412,
+      -0.023096,
+      0.008501,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 28.0,
+     "params": [
+      1.0,
+      0.998168,
+      0.008709,
+      -0.010545,
+      0.003668,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 35.0,
+     "params": [
+      1.0,
+      1.000426,
+      -0.008335,
+      0.009906,
+      -0.001997,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 40.0,
+     "params": [
+      1.0,
+      0.9907300000000001,
+      0.014824,
+      -0.008959,
+      0.003405,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 55.0,
+     "params": [
+      1.0,
+      0.989618,
+      0.019375,
+      -0.01365,
+      0.004657,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 60.0,
+     "params": [
+      1.0,
+      0.988906,
+      0.021181,
+      -0.014984,
+      0.004897,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 70.0,
+     "params": [
+      1.0,
+      0.9929479999999999,
+      0.010103,
+      -0.006018,
+      0.002967,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 17.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.94e-05,
+      0.0,
+      1.0004094
+     ],
+     "tca_b": [
+      3.36e-05,
+      0.0,
+      1.0001121
+     ]
+    },
+    {
+     "focal": 18.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -5.91e-05,
+      0.0,
+      1.000447
+     ],
+     "tca_b": [
+      -2.43e-05,
+      0.0,
+      1.0001583
+     ]
+    },
+    {
+     "focal": 20.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.66e-05,
+      0.0,
+      1.0003825
+     ],
+     "tca_b": [
+      -1.32e-05,
+      0.0,
+      1.0001103
+     ]
+    },
+    {
+     "focal": 24.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -4.26e-05,
+      0.0,
+      1.0003567
+     ],
+     "tca_b": [
+      -2.48e-05,
+      0.0,
+      1.0001072
+     ]
+    },
+    {
+     "focal": 28.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.37e-05,
+      0.0,
+      1.0002523
+     ],
+     "tca_b": [
+      -3.25e-05,
+      0.0,
+      1.0000912
+     ]
+    },
+    {
+     "focal": 35.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.49e-05,
+      0.0,
+      1.0001652
+     ],
+     "tca_b": [
+      -5.19e-05,
+      0.0,
+      1.0000952
+     ]
+    },
+    {
+     "focal": 40.0,
+     "source_model": "poly3",
+     "tca_r": [
+      4.1e-06,
+      0.0,
+      1.0000439
+     ],
+     "tca_b": [
+      -4.61e-05,
+      0.0,
+      1.0000461
+     ]
+    },
+    {
+     "focal": 55.0,
+     "source_model": "poly3",
+     "tca_r": [
+      8.6e-06,
+      0.0,
+      0.9999241
+     ],
+     "tca_b": [
+      -3.32e-05,
+      0.0,
+      1.0000037
+     ]
+    },
+    {
+     "focal": 60.0,
+     "source_model": "poly3",
+     "tca_r": [
+      2.1e-06,
+      0.0,
+      0.999837
+     ],
+     "tca_b": [
+      -4.42e-05,
+      0.0,
+      1.0000019
+     ]
+    },
+    {
+     "focal": 70.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.29e-05,
+      0.0,
+      0.9997803
+     ],
+     "tca_b": [
+      -3.32e-05,
+      0.0,
+      0.9999803
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-sigma.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 6.661338147750939e-16,
+  "unrepresentable": []
+ }
+}

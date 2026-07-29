@@ -1447,7 +1447,14 @@ static gboolean _event_button_press(GtkWidget *widget,
           break;
 
         case DT_THUMBTABLE_MODE_FILMSTRIP:
-          if(dt_view_get_current() == DT_VIEW_DARKROOM)
+        {
+          /* Any view that edits one image at a time and shows a filmstrip to
+             pick it with. This used to name darkroom alone, which left the
+             lens calibration view listening for an activation signal that
+             the filmstrip would never send -- the strip was there and
+             double clicking it did nothing at all. */
+          const dt_view_type_flags_t cur = dt_view_get_current();
+          if(cur == DT_VIEW_DARKROOM || cur == DT_VIEW_LENS_CALIB)
           {
             if(table->sel_single_cb != 0)
             {
@@ -1456,13 +1463,18 @@ static gboolean _event_button_press(GtkWidget *widget,
             }
             // disable next BUTTON_RELEASE event (see _event_motion_release)
             table->to_selid = -1;
-            // unselect currently edited picture, select new one
-            dt_selection_deselect(darktable.selection,
-                                  darktable.develop->image_storage.id);
+            /* Deselecting the image being edited only makes sense where
+               there is one: outside darkroom `develop` holds whatever was
+               last opened there, and clearing that from here would reach
+               into another view's state. */
+            if(cur == DT_VIEW_DARKROOM)
+              dt_selection_deselect(darktable.selection,
+                                    darktable.develop->image_storage.id);
             dt_selection_select(darktable.selection, id);
             DT_CONTROL_SIGNAL_RAISE(DT_SIGNAL_VIEWMANAGER_THUMBTABLE_ACTIVATE, id);
             return FALSE;
           }
+        }
         default:
           break;
       }

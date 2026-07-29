@@ -1,0 +1,259 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Sigma",
+  "model": "Sigma 50-150mm f/2.8 APO EX DC HSM II",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Sigma SA",
+   "Nikon F AF",
+   "Sony Alpha",
+   "Pentax KAF2",
+   "Canon EF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Sigma_Sigma_50-150mm_f_2.8_APO_EX_DC_HSM_II"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 50.0,
+     "params": [
+      1.0,
+      1.00199,
+      0.00788,
+      -0.0113,
+      0.00143,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 75.0,
+     "params": [
+      1.0,
+      0.99792,
+      0.0052,
+      -0.00519,
+      0.00207,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 105.0,
+     "params": [
+      1.0,
+      0.9958899999999999,
+      0.00031,
+      0.00265,
+      0.00115,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 150.0,
+     "params": [
+      1.0,
+      0.9936999999999999,
+      -0.00073,
+      0.00631,
+      0.00072,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": [
+     {
+      "k": [
+       -0.3469,
+       0.34748,
+       -0.2902
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 2.8,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.0702,
+       0.38516,
+       -0.44561
+      ],
+      "ellipticity": 1.0,
+      "focal": 50.0,
+      "aperture": 4.0,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.2858,
+       0.29719,
+       -0.25336
+      ],
+      "ellipticity": 1.0,
+      "focal": 75.0,
+      "aperture": 2.8,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.10172,
+       -0.3325,
+       0.10147
+      ],
+      "ellipticity": 1.0,
+      "focal": 105.0,
+      "aperture": 2.8,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       0.06624,
+       -0.05579,
+       -0.20602
+      ],
+      "ellipticity": 1.0,
+      "focal": 105.0,
+      "aperture": 4.0,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.0853,
+       0.40954,
+       -0.44304
+      ],
+      "ellipticity": 1.0,
+      "focal": 105.0,
+      "aperture": 5.6,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.65999,
+       0.58565,
+       -0.31284
+      ],
+      "ellipticity": 1.0,
+      "focal": 150.0,
+      "aperture": 2.8,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       0.10953,
+       -0.77165,
+       0.45448
+      ],
+      "ellipticity": 1.0,
+      "focal": 150.0,
+      "aperture": 4.0,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.0087,
+       0.12197,
+       -0.29994
+      ],
+      "ellipticity": 1.0,
+      "focal": 150.0,
+      "aperture": 5.6,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.0864,
+       0.39283,
+       -0.41541
+      ],
+      "ellipticity": 1.0,
+      "focal": 150.0,
+      "aperture": 8.0,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     }
+    ]
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-sigma.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": [
+   "vignetting: vignetting gain falls 0.01702 below its peak (0.024 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.0142 below its peak (0.020 stops) -- the curve turns over",
+   "vignetting: vignetting gain falls 0.01279 below its peak (0.018 stops) -- the curve turns over"
+  ]
+ }
+}

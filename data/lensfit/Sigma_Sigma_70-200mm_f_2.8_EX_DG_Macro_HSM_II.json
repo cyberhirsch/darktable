@@ -1,0 +1,199 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Sigma",
+  "model": "Sigma 70-200mm f/2.8 EX DG Macro HSM II",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "4/3 System",
+   "Sigma SA",
+   "Nikon F AF",
+   "Sony Alpha",
+   "Pentax KAF2",
+   "Canon EF"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Sigma_Sigma_70-200mm_f_2.8_EX_DG_Macro_HSM_II"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 70.0,
+     "params": [
+      1.0,
+      1.00323,
+      0.0,
+      -0.00323,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 88.0,
+     "params": [
+      1.0,
+      1.00161,
+      0.0,
+      -0.00161,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 105.0,
+     "params": [
+      1.0,
+      1.00007,
+      0.0,
+      -7e-05,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 135.0,
+     "params": [
+      1.0,
+      0.99716,
+      0.0,
+      0.00284,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 200.0,
+     "params": [
+      1.0,
+      0.99483,
+      0.0,
+      0.00517,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 70.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2e-05,
+      0.0,
+      1.0001748
+     ],
+     "tca_b": [
+      4.9e-06,
+      0.0,
+      0.9999277
+     ]
+    },
+    {
+     "focal": 88.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.62e-05,
+      0.0,
+      1.0000776
+     ],
+     "tca_b": [
+      -1e-07,
+      0.0,
+      0.9999852
+     ]
+    },
+    {
+     "focal": 105.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -4.3e-06,
+      0.0,
+      0.9999509
+     ],
+     "tca_b": [
+      -5e-07,
+      0.0,
+      1.000026
+     ]
+    },
+    {
+     "focal": 135.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -3.8e-06,
+      0.0,
+      0.9997666
+     ],
+     "tca_b": [
+      -2.37e-05,
+      0.0,
+      1.0000597
+     ]
+    },
+    {
+     "focal": 200.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -4.67e-05,
+      0.0,
+      0.999696
+     ],
+     "tca_b": [
+      -2.1e-06,
+      0.0,
+      0.9999433
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-sigma.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 0.0,
+  "unrepresentable": []
+ }
+}

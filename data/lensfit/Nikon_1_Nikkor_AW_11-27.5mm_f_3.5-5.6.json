@@ -1,0 +1,248 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Nikon",
+  "model": "1 Nikkor AW 11-27.5mm f/3.5-5.6",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Nikon CX"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Nikon_1_Nikkor_AW_11-27.5mm_f_3.5-5.6"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 11.0,
+     "params": [
+      1.0,
+      1.0161399999999998,
+      0.01672,
+      -0.04366,
+      0.0108,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 14.0,
+     "params": [
+      1.0,
+      1.00521,
+      0.01789,
+      -0.03017,
+      0.00707,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 16.1,
+     "params": [
+      1.0,
+      1.0041499999999999,
+      0.01041,
+      -0.01878,
+      0.00422,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 18.2,
+     "params": [
+      1.0,
+      0.99976,
+      0.00993,
+      -0.01145,
+      0.00176,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 21.0,
+     "params": [
+      1.0,
+      0.9968600000000001,
+      0.01183,
+      -0.01094,
+      0.00225,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 23.6,
+     "params": [
+      1.0,
+      1.0001099999999998,
+      0.00367,
+      -0.00499,
+      0.00121,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 27.5,
+     "params": [
+      1.0,
+      0.9994999999999999,
+      0.00483,
+      -0.00591,
+      0.00158,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 11.0,
+     "source_model": "poly3",
+     "tca_r": [
+      5.4e-06,
+      0.0,
+      1.0002237
+     ],
+     "tca_b": [
+      9.2e-06,
+      0.0,
+      1.0000626
+     ]
+    },
+    {
+     "focal": 14.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -7.44e-05,
+      0.0,
+      1.0002354
+     ],
+     "tca_b": [
+      5.8e-06,
+      0.0,
+      1.0000739
+     ]
+    },
+    {
+     "focal": 16.1,
+     "source_model": "poly3",
+     "tca_r": [
+      -5.01e-05,
+      0.0,
+      1.0001925
+     ],
+     "tca_b": [
+      5.7e-06,
+      0.0,
+      1.000079
+     ]
+    },
+    {
+     "focal": 18.2,
+     "source_model": "poly3",
+     "tca_r": [
+      -5.41e-05,
+      0.0,
+      1.0001661
+     ],
+     "tca_b": [
+      -1e-05,
+      0.0,
+      1.0000806
+     ]
+    },
+    {
+     "focal": 21.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -3e-05,
+      0.0,
+      1.0001514
+     ],
+     "tca_b": [
+      5.1e-06,
+      0.0,
+      1.0000838
+     ]
+    },
+    {
+     "focal": 23.6,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.36e-05,
+      0.0,
+      1.0001017
+     ],
+     "tca_b": [
+      1e-07,
+      0.0,
+      1.0000574
+     ]
+    },
+    {
+     "focal": 27.5,
+     "source_model": "poly3",
+     "tca_r": [
+      -3.39e-05,
+      0.0,
+      1.0001351
+     ],
+     "tca_b": [
+      -1.1e-06,
+      0.0,
+      1.0000496
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-nikon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

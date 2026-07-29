@@ -1,0 +1,250 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Tamron",
+  "model": "Tamron AF 18-270mm F/3.5-6.3 Di II VC PZD",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Nikon F AF",
+   "Canon EF",
+   "Sony Alpha"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Tamron_Tamron_AF_18-270mm_F_3.5-6.3_Di_II_VC_PZD"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 18.0,
+     "params": [
+      1.0,
+      1.0271100000000002,
+      0.03527,
+      -0.09352,
+      0.03114,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 35.0,
+     "params": [
+      1.0,
+      0.9855600000000001,
+      0.01978,
+      -0.0183,
+      0.01296,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 55.0,
+     "params": [
+      1.0,
+      0.98128,
+      0.01783,
+      -0.00726,
+      0.00815,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 70.0,
+     "params": [
+      1.0,
+      0.98391,
+      0.00346,
+      0.01086,
+      0.00177,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 100.0,
+     "params": [
+      1.0,
+      0.9532499999999999,
+      0.07965,
+      -0.04948,
+      0.01658,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 220.0,
+     "params": [
+      1.0,
+      0.9534799999999999,
+      0.08114,
+      -0.04874,
+      0.01412,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 270.0,
+     "params": [
+      1.0,
+      0.9958199999999999,
+      -0.01023,
+      0.01576,
+      -0.00135,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 18.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -5.35e-05,
+      0.0,
+      1.0006285
+     ],
+     "tca_b": [
+      -5e-06,
+      0.0,
+      1.0001994
+     ]
+    },
+    {
+     "focal": 35.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.5e-06,
+      0.0,
+      1.0001518
+     ],
+     "tca_b": [
+      -6.8e-06,
+      0.0,
+      1.0001214
+     ]
+    },
+    {
+     "focal": 55.0,
+     "source_model": "poly3",
+     "tca_r": [
+      2e-07,
+      0.0,
+      1.0000913
+     ],
+     "tca_b": [
+      -3.34e-05,
+      0.0,
+      1.0001062
+     ]
+    },
+    {
+     "focal": 70.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -2.25e-05,
+      0.0,
+      1.000063
+     ],
+     "tca_b": [
+      -1.55e-05,
+      0.0,
+      1.0000248
+     ]
+    },
+    {
+     "focal": 100.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -1.12e-05,
+      0.0,
+      1.0000312
+     ],
+     "tca_b": [
+      -9.18e-05,
+      0.0,
+      0.9999776
+     ]
+    },
+    {
+     "focal": 220.0,
+     "source_model": "poly3",
+     "tca_r": [
+      -3.9e-06,
+      0.0,
+      0.9998904
+     ],
+     "tca_b": [
+      -0.0001444,
+      0.0,
+      0.9993302
+     ]
+    },
+    {
+     "focal": 270.0,
+     "source_model": "poly3",
+     "tca_r": [
+      2.7e-05,
+      0.0,
+      0.9997897
+     ],
+     "tca_b": [
+      0.0001235,
+      0.0,
+      0.9986236
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-tamron.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

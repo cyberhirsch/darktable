@@ -1,0 +1,253 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Canon",
+  "model": "Canon PowerShot G15 & compatibles (Standard)",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "canonG15"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Canon_Canon_PowerShot_G15_&_compatibles_(Standard)"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 6.1,
+     "params": [
+      1.0,
+      1.047376,
+      0.011077,
+      -0.081031,
+      0.022578,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 6.8,
+     "params": [
+      1.0,
+      1.035798,
+      0.008729,
+      -0.060546,
+      0.016019,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 6.9,
+     "params": [
+      1.0,
+      1.0353999999999999,
+      0.003986,
+      -0.051294,
+      0.011908,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 8.0,
+     "params": [
+      1.0,
+      1.0217779999999999,
+      0.003748,
+      -0.032045,
+      0.006519,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 8.2,
+     "params": [
+      1.0,
+      1.0205899999999999,
+      0.001562,
+      -0.027978,
+      0.005826,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 9.4,
+     "params": [
+      1.0,
+      1.011728,
+      0.000956,
+      -0.01566,
+      0.002976,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 10.0,
+     "params": [
+      1.0,
+      1.0079509999999998,
+      0.006355,
+      -0.018882,
+      0.004576,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.1,
+     "params": [
+      1.0,
+      1.001832,
+      0.004608,
+      -0.009651,
+      0.003211,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 12.3,
+     "params": [
+      1.0,
+      1.002265,
+      0.0,
+      -0.002265,
+      0.0,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 15.0,
+     "params": [
+      1.0,
+      0.999155,
+      0.002442,
+      -0.00215,
+      0.000553,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 16.6,
+     "params": [
+      1.0,
+      1.000763,
+      -0.00218,
+      0.001992,
+      -0.000575,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 19.7,
+     "params": [
+      1.0,
+      1.000597,
+      -0.001722,
+      0.001545,
+      -0.00042,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 22.1,
+     "params": [
+      1.0,
+      0.999761,
+      0.00094,
+      -0.001009,
+      0.000308,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 27.8,
+     "params": [
+      1.0,
+      1.000321,
+      -0.000847,
+      0.000728,
+      -0.000202,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 30.5,
+     "params": [
+      1.0,
+      0.9996600000000001,
+      0.0012,
+      -0.00121,
+      0.00035,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "compact-canon.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

@@ -1,0 +1,248 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Samsung",
+  "model": "Samsung NX 50-200mm f/4-5.6",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Samsung NX"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Samsung_Samsung_NX_50-200mm_f_4-5.6"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 50.0,
+     "params": [
+      1.0,
+      1.0083657000000001,
+      0.0014847,
+      -0.0128545,
+      0.0030041,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 64.0,
+     "params": [
+      1.0,
+      1.0044224000000002,
+      -0.0085143,
+      0.0073899,
+      -0.003298,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 75.0,
+     "params": [
+      1.0,
+      0.9916957999999999,
+      0.0205798,
+      -0.0154045,
+      0.0031289,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 100.0,
+     "params": [
+      1.0,
+      0.9974194000000001,
+      -0.0014004,
+      0.004895,
+      -0.000914,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 130.0,
+     "params": [
+      1.0,
+      0.9971110999999999,
+      0.000511,
+      0.0024253,
+      -4.74e-05,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 145.0,
+     "params": [
+      1.0,
+      1.0138969000000002,
+      -0.0350007,
+      0.0265495,
+      -0.0054457,
+      0.0
+     ],
+     "source_model": "ptlens"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 200.0,
+     "params": [
+      1.0,
+      0.9890259,
+      0.0340849,
+      -0.0362638,
+      0.013153,
+      0.0
+     ],
+     "source_model": "ptlens"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 50.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.000376
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9998868
+     ]
+    },
+    {
+     "focal": 64.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      1.0000945
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000069
+     ]
+    },
+    {
+     "focal": 75.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9999506
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000683
+     ]
+    },
+    {
+     "focal": 100.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9996197
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0002286
+     ]
+    },
+    {
+     "focal": 130.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9993261
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0002074
+     ]
+    },
+    {
+     "focal": 145.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9992505
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      1.0000822
+     ]
+    },
+    {
+     "focal": 200.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0,
+      0.0,
+      0.9992397
+     ],
+     "tca_b": [
+      0.0,
+      0.0,
+      0.9997616
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": []
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "mil-samsung.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 4.440892098500626e-16,
+  "unrepresentable": []
+ }
+}

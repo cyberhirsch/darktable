@@ -1,0 +1,265 @@
+{
+ "format": "lensfit",
+ "version": 2,
+ "conventions": {
+  "coordinates": "normalized_half_diagonal",
+  "origin": "frame_centre",
+  "angles": "radians",
+  "warp_direction": "observed_to_corrected",
+  "map_direction": "destination_to_source",
+  "vignetting": "correction_gain"
+ },
+ "imaging_system": {
+  "manufacturer": "Pentax",
+  "model": "smc Pentax-DA 12-24mm f/4 ED AL IF",
+  "camera_type": "monocular",
+  "channel_count": 1,
+  "mounts": [
+   "Pentax KAF2"
+  ],
+  "crop_factor": 1.0,
+  "aspect_ratio": null,
+  "id": "Pentax_smc_Pentax-DA_12-24mm_f_4_ED_AL_IF"
+ },
+ "channels": [
+  {
+   "channel_id": 0,
+   "lens_intrinsics": {
+    "projection_model": "rectilinear",
+    "cx": 0.0,
+    "cy": 0.0,
+    "scale_x": 1.0,
+    "scale_y": 1.0,
+    "skew": 0.0,
+    "radial_normalization": "half_diagonal"
+   },
+   "distortion": [
+    {
+     "model": "radial_poly",
+     "focal": 12.0,
+     "params": [
+      1.0,
+      1.01919,
+      0.0,
+      -0.01919,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 15.0,
+     "params": [
+      1.0,
+      1.00774,
+      0.0,
+      -0.00774,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 18.0,
+     "params": [
+      1.0,
+      1.00345,
+      0.0,
+      -0.00345,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 21.0,
+     "params": [
+      1.0,
+      1.00199,
+      0.0,
+      -0.00199,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    },
+    {
+     "model": "radial_poly",
+     "focal": 24.0,
+     "params": [
+      1.0,
+      0.99939,
+      0.0,
+      0.00061,
+      0.0,
+      0.0
+     ],
+     "source_model": "poly3"
+    }
+   ],
+   "tca": [
+    {
+     "focal": 12.0,
+     "source_model": "poly3",
+     "tca_r": [
+      9.16e-05,
+      0.0,
+      0.9999904
+     ],
+     "tca_b": [
+      -0.0002397,
+      0.0,
+      1.000649
+     ]
+    },
+    {
+     "focal": 15.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001253,
+      0.0,
+      0.9999184
+     ],
+     "tca_b": [
+      -0.0002858,
+      0.0,
+      1.0008241
+     ]
+    },
+    {
+     "focal": 18.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001204,
+      0.0,
+      0.9999075
+     ],
+     "tca_b": [
+      -0.000199,
+      0.0,
+      1.0006258
+     ]
+    },
+    {
+     "focal": 21.0,
+     "source_model": "poly3",
+     "tca_r": [
+      0.0001063,
+      0.0,
+      0.9999562
+     ],
+     "tca_b": [
+      -0.0001477,
+      0.0,
+      1.0005692
+     ]
+    },
+    {
+     "focal": 24.0,
+     "source_model": "poly3",
+     "tca_r": [
+      9.82e-05,
+      0.0,
+      1.0000005
+     ],
+     "tca_b": [
+      -0.0001137,
+      0.0,
+      1.0004136
+     ]
+    }
+   ],
+   "photometric": {
+    "vignetting": [
+     {
+      "k": [
+       -0.19267,
+       0.09379,
+       -0.38938
+      ],
+      "ellipticity": 1.0,
+      "focal": 12.0,
+      "aperture": 4.5,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.08756,
+       -0.28192,
+       0.06908
+      ],
+      "ellipticity": 1.0,
+      "focal": 15.0,
+      "aperture": 4.5,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.05982,
+       -0.45748,
+       0.25039
+      ],
+      "ellipticity": 1.0,
+      "focal": 18.0,
+      "aperture": 4.5,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.28874,
+       -0.06687,
+       0.09488
+      ],
+      "ellipticity": 1.0,
+      "focal": 21.0,
+      "aperture": 4.5,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     },
+     {
+      "k": [
+       -0.44227,
+       0.2599,
+       -0.09436
+      ],
+      "ellipticity": 1.0,
+      "focal": 24.0,
+      "aperture": 4.5,
+      "focus_distance": 100.0,
+      "convention": "transmission_divide",
+      "radius_normalization": "half_diagonal",
+      "source_model": "pa"
+     }
+    ]
+   }
+  }
+ ],
+ "provenance": {
+  "source": "lensfun",
+  "source_file": "slr-pentax.xml",
+  "measured": false,
+  "estimated_fields": [
+   "scale_x",
+   "scale_y",
+   "skew"
+  ],
+  "license": "CC-BY-SA-3.0 (Lensfun database)",
+  "converter": "lensfun_to_lensfit.py",
+  "max_model_error": 0.0,
+  "unrepresentable": []
+ }
+}

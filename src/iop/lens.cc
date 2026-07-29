@@ -29,6 +29,7 @@
 #include "bauhaus/bauhaus.h"
 #include "common/interpolation.h"
 #include "common/file_location.h"
+#include "common/lens_warp.h"
 #include "common/imagebuf.h"
 #include "common/opencl.h"
 #include "common/utility.h"
@@ -67,12 +68,16 @@ G_BEGIN_DECLS
 #error Lensfun 0.3.95 and later development snapshots are not supported.
 #endif
 
-DT_MODULE_INTROSPECTION(11, dt_iop_lens_params_t)
+DT_MODULE_INTROSPECTION(13, dt_iop_lens_params_t)
 
 typedef enum dt_iop_lens_method_t
 {
+  /* Declaration order sets the order of the combo box; the explicit values
+     are what gets stored, so Lensfit can sit next to Lensfun in the list
+     without renumbering anything already written into a history stack. */
   DT_IOP_LENS_METHOD_EMBEDDED_METADATA = 0, // $DESCRIPTION: "embedded metadata"
   DT_IOP_LENS_METHOD_LENSFUN = 1, // $DESCRIPTION: "Lensfun database"
+  DT_IOP_LENS_METHOD_PROFILE = 4, // $DESCRIPTION: "Lensfit database"
   DT_IOP_LENS_METHOD_ONLYVIGNETTE = 2, // $DESCRIPTION: "only manual vignette"
   DT_IOP_LENS_METHOD_MANUAL = 3 // $DESCRIPTION: "manual"
 } dt_iop_lens_method_t;
@@ -168,7 +173,11 @@ typedef struct dt_iop_lens_params_t
   float scale_md;  // $DEFAULT: 1 $MIN: 0.1 $MAX: 2.0 $DESCRIPTION: "image scale"
   // whether the params have already been computed
   gboolean has_been_set;
-  float v_strength; // $DEFAULT: 0.0 $MIN: 0.0 $MAX: 1.0 $DESCRIPTION: "strength"
+  /* How much of whichever vignetting correction applies to actually apply.
+     One means the measurement in full, which is the useful default for a
+     profile that carries one; two overcorrects deliberately, zero leaves
+     brightness alone. */
+  float v_strength; // $DEFAULT: 1.0 $MIN: 0.0 $MAX: 2.0 $DESCRIPTION: "strength"
   float v_radius; // $DEFAULT: 0.5 $MIN: 0.0 $MAX: 1.0 $DESCRIPTION: "radius"
   float v_steepness; // $DEFAULT: 0.5 $MIN: 0.0 $MAX: 1.0 $DESCRIPTION: "steepness"
 
@@ -182,6 +191,23 @@ typedef struct dt_iop_lens_params_t
   float man_scale; // $DEFAULT: 1.0 $MIN: 0.1 $MAX: 2.0 $DESCRIPTION: "image scale"
 
   float reserved[2];
+
+  /* calibration profile method parameters.
+     Appended after `reserved` rather than consuming it, so that everything
+     up to this point stays byte identical to version 11 and the upgrade is
+     a straight copy of the prefix. */
+  char prof_name[128];
+  float prof_scale; // $DEFAULT: 1.0 $MIN: 0.1 $MAX: 2.0 $DESCRIPTION: "image scale"
+  float prof_focal; // $DEFAULT: 0.0 $MIN: 0.0 $MAX: 2000.0 $DESCRIPTION: "focal length"
+
+  /* Whether the shape of the correction is dialled in by hand or taken from
+     the profile. Only the shape: `v_strength` and `ca_strength` above scale
+     whichever one is in use, because how much of a correction to apply is a
+     judgement either way, while radius and steepness are a *substitute* for a
+     measurement rather than an adjustment to one. */
+  gboolean v_manual;  // $DEFAULT: FALSE $DESCRIPTION: "manual"
+  gboolean ca_manual; // $DEFAULT: FALSE $DESCRIPTION: "manual"
+  float ca_strength;  // $DEFAULT: 1.0 $MIN: 0.0 $MAX: 2.0 $DESCRIPTION: "strength"
 } dt_iop_lens_params_t;
 
 typedef struct dt_iop_lens_gui_modifier_t
@@ -207,6 +233,30 @@ typedef struct dt_iop_lens_gui_data_t
   GtkWidget *v_strength, *v_radius, *v_steepness;
   GtkWidget *man_detail, *man_k1, *man_k2, *man_k3;
   GtkWidget *man_tca_r, *man_tca_b, *man_scale;
+  GtkWidget *prof_maker, *prof_name, *prof_scale, *prof_focal, *prof_info;
+  /* prof_name is a model-only picker, filtered by the maker selected in
+     prof_maker; this is the parallel array of actual profile names (the
+     file-stem identifiers p->prof_name is stored as) so the combobox can
+     show a friendly "model" string while still resolving back to the
+     right profile on selection. Index 0 of prof_name is always "none",
+     which has no entry here -- look up index i>0 at prof_model_ids[i-1].
+     NULL-terminated, owned, rebuilt (g_strfreev'd first) on every
+     maker change or full refresh. */
+  gchar **prof_model_ids;
+  /* full (name, maker, model) listing behind the cascading pickers above,
+     and the unique maker keys the prof_maker combobox entries (index 1..N)
+     resolve to -- "" for the "(other)" bucket. Rebuilt only on a full
+     refresh; the maker-change handler re-filters from this cache instead
+     of re-scanning disk. */
+  gchar **prof_all_names, **prof_all_makers, **prof_all_models;
+  gchar **prof_maker_keys;
+  GtkWidget *v_manual, *ca_manual, *ca_strength, *ca_r, *ca_b;
+  dt_gui_collapsible_section_t chroma;
+
+  /* The two ends of the useful scale range, read from the selected profile.
+     Cached here because the arrow buttons need them at click time and
+     re-reading the whole profile for a button press would be silly. */
+  float prof_overscan, prof_underscan;
   dt_gui_collapsible_section_t fine_tune, vignette;
   GtkLabel *message;
   GtkBox *hbox1;
@@ -265,10 +315,38 @@ typedef struct dt_iop_lens_data_t
   float v_strength;
   float v_radius;
   float v_steepness;
+  gboolean v_manual;
+  gboolean ca_manual;
+  float ca_strength;
+  float man_tca_r, man_tca_b;
   float reserved[2];
   float vigspline[VIGSPLINES];
   dt_hash_t vighash;
+
+  /* calibration profile data */
+  dt_lens_warp_t warp;
+  gboolean have_warp;
+  float scale_prof;
+
+  /* Inverse map lookup table.
+   *
+   * The warp is defined observed -> corrected, and the pixel pipe needs
+   * the other direction, which for a general 2D warp means iterating. Per
+   * pixel that is merely slow for the polynomial backends and completely
+   * impractical for the spline one, where a single evaluation touches
+   * every control point. Since the field is smooth, sampling the inverse
+   * on a grid once and interpolating is both far quicker and accurate to
+   * a small fraction of a pixel.
+   */
+  float *inv_lut;
+  int lut_n;
 } dt_iop_lens_data_t;
+
+// the lut covers normalized coordinates in [-LUT_MAX, LUT_MAX] on both
+// axes; a frame corner sits at radius 1, so this leaves room for the
+// image scale control to pull the frame outwards
+#define DT_IOP_LENS_LUT_MAX 1.5f
+#define DT_IOP_LENS_LUT_N 513
 
 
 const char *name()
@@ -399,12 +477,16 @@ static dt_iop_lens_lenstype_t _lenstype_from_lensfun_lenstype(lfLensType lt)
   }
 }
 
-int legacy_params(dt_iop_module_t *self,
-                  const void *const old_params,
-                  const int old_version,
-                  void **new_params,
-                  int32_t *new_params_size,
-                  int *new_version)
+/* Everything older than version 11 is brought up to 11 here, and the
+   wrapper below takes it the last step to 12. Splitting it that way keeps
+   the seven historical conversions untouched: they all predate the
+   calibration profile method and have nothing to say about it. */
+static int _legacy_params_to_v11(dt_iop_module_t *self,
+                                 const void *const old_params,
+                                 const int old_version,
+                                 void **new_params,
+                                 int32_t *new_params_size,
+                                 int *new_version)
 {
   typedef struct _iop_lens_params_v11_t
   {
@@ -1056,6 +1138,82 @@ int legacy_params(dt_iop_module_t *self,
   }
 
   return 1;
+}
+
+int legacy_params(dt_iop_module_t *self,
+                  const void *const old_params,
+                  const int old_version,
+                  void **new_params,
+                  int32_t *new_params_size,
+                  int *new_version)
+{
+  /* The version 11 layout is the version 12 layout minus the fields
+     appended for the calibration profile method, so the upgrade is a copy
+     of the shared prefix plus neutral defaults for the rest. */
+  const size_t v11_size =
+    offsetof(dt_iop_lens_params_t, prof_name);
+
+  /* Version 12 is version 13 minus the fields appended for the split between
+     manual and measured corrections, so that upgrade is a longer prefix
+     copy. Each version has only ever appended, which is what keeps these
+     migrations a memcpy and a few defaults rather than a field-by-field
+     translation. */
+  const size_t v12_size = offsetof(dt_iop_lens_params_t, v_manual);
+
+  const void *src = old_params;
+  void *intermediate = NULL;
+  size_t prefix = v11_size;
+
+  if(old_version < 11)
+  {
+    int32_t mid_size = 0;
+    int mid_version = 0;
+    if(_legacy_params_to_v11(self, old_params, old_version, &intermediate,
+                             &mid_size, &mid_version))
+      return 1;
+    src = intermediate;
+  }
+  else if(old_version == 12)
+    prefix = v12_size;
+  else if(old_version != 11)
+    return 1;
+
+  dt_iop_lens_params_t *n =
+    (dt_iop_lens_params_t *)calloc(1, sizeof(dt_iop_lens_params_t));
+  if(!n)
+  {
+    free(intermediate);
+    return 1;
+  }
+
+  memcpy(n, src, prefix);
+  free(intermediate);
+
+  if(prefix == v11_size)
+  {
+    // new in v12: no profile selected, so the method is simply unavailable
+    n->prof_name[0] = '\0';
+    n->prof_scale = 1.0f;
+    n->prof_focal = 0.0f;
+  }
+
+  /* New in v13. Before it, the radius/steepness model was the only vignetting
+     control there was, so every older edit means the manual one -- and its
+     stored strength is carried across untouched, which keeps an old render
+     identical. The default for a *new* edit is the opposite, because a
+     profile that carries a measurement should use it.
+
+     Chromatic aberration gets the same pair, inert here: the profile method
+     did not exist before v12 and had no CA control before v13, so full
+     strength from the profile is what these params would have meant. */
+  n->v_manual = TRUE;
+  n->ca_manual = FALSE;
+  n->ca_strength = 1.0f;
+
+  *new_params = n;
+  *new_params_size = sizeof(dt_iop_lens_params_t);
+  *new_version = 13;
+  return 0;
 }
 
 /* Lensfun processing start */
@@ -3188,6 +3346,483 @@ static void _modify_roi_in_md(dt_iop_module_t *self,
   roi_in->height = CLAMP(roi_in->height, 1, (int)floorf(orig_h) - roi_in->y);
 }
 
+/* ------------------- calibration profile method ------------------- */
+
+static void _prof_free_lut(dt_iop_lens_data_t *d)
+{
+  dt_free_align(d->inv_lut);
+  d->inv_lut = NULL;
+  d->lut_n = 0;
+}
+
+static gboolean _prof_build_lut(dt_iop_lens_data_t *d)
+{
+  _prof_free_lut(d);
+
+  const int n = DT_IOP_LENS_LUT_N;
+  float *lut = dt_alloc_align_float((size_t)2 * n * n);
+  if(!lut) return FALSE;
+
+  const float step = 2.0f * DT_IOP_LENS_LUT_MAX / (float)(n - 1);
+
+  DT_OMP_FOR()
+  for(int j = 0; j < n; j++)
+  {
+    const float v = -DT_IOP_LENS_LUT_MAX + j * step;
+    for(int i = 0; i < n; i++)
+    {
+      const float u = -DT_IOP_LENS_LUT_MAX + i * step;
+      float su, sv;
+      dt_lens_warp_invert(&d->warp, u, v, &su, &sv);
+      lut[2 * ((size_t)j * n + i)] = su;
+      lut[2 * ((size_t)j * n + i) + 1] = sv;
+    }
+  }
+
+  d->inv_lut = lut;
+  d->lut_n = n;
+  return TRUE;
+}
+
+/* Look up the inverse warp, falling back to the iterative solve outside
+   the tabulated area rather than clamping -- clamping would fold the
+   whole outside onto the border and look like a smear. */
+/* The squeeze the profile desqueezes by, and with it the fact that the
+   corrected frame is not the same shape as the recorded one.
+ *
+ * A 1.6x anamorphic records a scene 1.6 times wider than the frame shape
+ * suggests, so correcting it has to *widen the output*, not redistribute
+ * pixels inside the original rectangle. Rendering into the source frame would
+ * put the squeeze straight back and crop the sides while doing it. Every
+ * coordinate function below therefore uses the input half-width to normalise
+ * (the warp is defined on the recorded frame) and the output half-width to
+ * place the result. */
+static inline float _prof_squeeze(const dt_iop_lens_data_t *d)
+{
+  return (d->have_warp && d->warp.squeeze > 0.01f) ? d->warp.squeeze : 1.0f;
+}
+
+static inline void _prof_invert(const dt_iop_lens_data_t *d,
+                                const float u,
+                                const float v,
+                                float *ou,
+                                float *ov)
+{
+  if(!d->inv_lut
+     || fabsf(u) >= DT_IOP_LENS_LUT_MAX
+     || fabsf(v) >= DT_IOP_LENS_LUT_MAX)
+  {
+    dt_lens_warp_invert(&d->warp, u, v, ou, ov);
+    return;
+  }
+
+  const int n = d->lut_n;
+  const float scale = (float)(n - 1) / (2.0f * DT_IOP_LENS_LUT_MAX);
+  const float fx = (u + DT_IOP_LENS_LUT_MAX) * scale;
+  const float fy = (v + DT_IOP_LENS_LUT_MAX) * scale;
+
+  const int x0 = CLAMP((int)fx, 0, n - 2);
+  const int y0 = CLAMP((int)fy, 0, n - 2);
+  const float tx = fx - x0;
+  const float ty = fy - y0;
+
+  const float *const a = d->inv_lut + 2 * ((size_t)y0 * n + x0);
+  const float *const b = d->inv_lut + 2 * ((size_t)(y0 + 1) * n + x0);
+
+  for(int c = 0; c < 2; c++)
+  {
+    const float top = a[c] + tx * (a[2 + c] - a[c]);
+    const float bot = b[c] + tx * (b[2 + c] - b[c]);
+    (c == 0 ? *ou : *ov) = top + ty * (bot - top);
+  }
+}
+
+static void _commit_params_prof(dt_iop_module_t *self,
+                                dt_iop_lens_params_t *p,
+                                dt_dev_pixelpipe_t *pipe,
+                                dt_dev_pixelpipe_iop_t *piece)
+{
+  dt_iop_lens_data_t *d = (dt_iop_lens_data_t *)piece->data;
+
+  dt_lens_warp_cleanup(&d->warp);
+  _prof_free_lut(d);
+  d->have_warp = FALSE;
+  d->scale_prof = MAX(0.1f, p->prof_scale);
+
+  // a general 2D warp has no OpenCL kernel; keep it on the cpu path
+  piece->process_cl_ready = FALSE;
+
+  if(!p->prof_name[0]) return;
+
+  gchar *path = dt_lens_profile_find(p->prof_name);
+  if(!path) return;
+
+  /* dt_lens_profile_load leaves `prof` valid whether or not it succeeds,
+     so the cleanup below is unconditional once we get here. */
+  dt_lens_profile_t prof;
+  if(dt_lens_profile_load(&prof, path))
+  {
+    /* Zero means "whatever the frame was shot at", which is the useful
+       default for a zoom: the profile interpolates to the exif focal
+       length without the user restating it. */
+    const float focal = (p->prof_focal > 0.0f)
+      ? p->prof_focal
+      : (self->dev ? self->dev->image_storage.exif_focal_length : 0.0f);
+
+    /* Aperture and focus distance come from the frame and are not offered as
+       overrides: they select which vignetting measurement applies, and a
+       vignetting curve measured at f/2.8 is simply the wrong curve for an f/8
+       frame -- not a starting point to adjust. Zero means the exif did not say,
+       which the profile handles by falling back to nearest. */
+    const float aperture =
+      self->dev ? self->dev->image_storage.exif_aperture : 0.0f;
+    const float distance =
+      self->dev ? self->dev->image_storage.exif_focus_distance : 0.0f;
+
+    d->have_warp =
+      dt_lens_profile_eval_at(&prof, focal, aperture, distance, &d->warp);
+  }
+  dt_lens_profile_cleanup(&prof);
+  g_free(path);
+
+  if(d->have_warp && !_prof_build_lut(d))
+    dt_print(DT_DEBUG_ALWAYS,
+             "[lens] could not allocate the inverse map;"
+             " falling back to solving it per pixel");
+}
+
+static void _process_prof(dt_iop_module_t *self,
+                          dt_dev_pixelpipe_iop_t *piece,
+                          const void *const ivoid,
+                          void *const ovoid,
+                          const dt_iop_roi_t *const roi_in,
+                          const dt_iop_roi_t *const roi_out)
+{
+  dt_iop_lens_data_t *d = (dt_iop_lens_data_t *)piece->data;
+
+  if(!d->have_warp || d->modify_flags == DT_IOP_LENS_MODFLAG_NONE)
+    return dt_iop_copy_image_roi((float *)ovoid, (float *)ivoid, 4,
+                                 roi_in, roi_out);
+
+  const float inv_scale = 1.0f / d->scale_prof;
+  const float w2 = 0.5f * roi_in->scale * piece->buf_in.width;
+  const float h2 = 0.5f * roi_in->scale * piece->buf_in.height;
+  const float r = 1.0f / dt_fast_hypotf(w2, h2);
+  const float inv_r = 1.0f / r;
+
+  /* Output centre. The corrected frame is wider than the recorded one by the
+     squeeze, so a corrected pixel is placed against the *output* half width
+     while the warp is still normalised against the input one. */
+  const float ow2 = w2 * _prof_squeeze(d);
+  const float oh2 = h2;
+
+  const float ca_strength = CLAMPF(d->ca_strength, 0.0f, 2.0f);
+  const gboolean do_tca = ca_strength > 0.0f;
+  const gboolean pass_mode =
+    piece->pipe->mask_display == DT_DEV_PIXELPIPE_DISPLAY_PASSTHRU;
+
+  /* The TCA scale is a polynomial in radius now, not a constant, because
+     Lensfun's poly3 model is and a constant cannot hold it. So it is evaluated
+     per pixel rather than hoisted out of the loop. */
+
+  /* Vignetting is undone at the position the light actually landed on the
+     sensor, which is the *observed* coordinate -- so the gain is evaluated
+     after the inverse warp, not before it. Doing it in corrected space would
+     put the falloff pattern through the distortion and smear the correction
+     relative to the thing it is correcting.
+   *
+   * The strength is the same parameter the manual vignette uses, and it
+   * defaults to zero. A profile that happens to carry a falloff measurement
+   * should not start altering brightness the moment it is selected -- the
+   * geometry is what was asked for. Radius and steepness stay manual-only:
+   * for a measured profile they are not settings, they are the measurement.
+   */
+  const float vig_strength = CLAMPF(d->v_strength, 0.0f, 2.0f);
+  const gboolean do_vig = d->warp.have_vig && !pass_mode
+    && !d->v_manual && vig_strength > 0.0f;
+
+  const float limw = roi_in->width - 1;
+  const float limh = roi_in->height - 1;
+  const float *const in = (const float *)ivoid;
+  float *const out = (float *)ovoid;
+
+  const dt_interpolation_t *interpolation =
+    dt_interpolation_new(DT_INTERPOLATION_USERPREF_WARP);
+
+  DT_OMP_FOR(collapse(2))
+  for(int y = 0; y < roi_out->height; y++)
+  {
+    for(int x = 0; x < roi_out->width; x++)
+    {
+      const size_t odx = 4 * ((size_t)y * roi_out->width + x);
+
+      const float cx = (roi_out->x + x - ow2) * inv_scale;
+      const float cy = (roi_out->y + y - oh2) * inv_scale;
+
+      float su, sv;
+      _prof_invert(d, cx * r, cy * r, &su, &sv);
+
+      /* Strength interpolates in stops rather than linearly: half strength
+         should mean half the correction as the eye reckons it, and a gain is
+         a ratio. powf(g, 0.5) is one stop where powf(g, 1) is two. */
+      float gain = 1.0f;
+      if(do_vig)
+      {
+        const float g_full = dt_lens_vignette_gain(&d->warp, su, sv);
+        gain = (vig_strength >= 1.0f) ? g_full : powf(g_full, vig_strength);
+      }
+
+      /* A non-finite source coordinate would sail through CLAMP below --
+         every comparison against a NaN is false, so it is returned
+         unchanged -- and poison the interpolation kernel. Write black and
+         move on, the same way the lensfun path does. */
+      if(!isfinite(su) || !isfinite(sv))
+      {
+        for(int c = 0; c < 4; c++) out[odx + c] = 0.0f;
+        continue;
+      }
+
+      const float tdu = su - d->warp.cx;
+      const float tdv = sv - d->warp.cy;
+      const float tr = dt_fast_hypotf(tdu, tdv);
+
+      /* Plain loop, not for_each_channel: that macro carries an omp simd
+         pragma, and this body calls out to the interpolator and branches on
+         the channel index. Neither belongs inside a simd region. */
+      for(int c = 0; c < 4; c++)
+      {
+        /* Lateral chromatic aberration is a per channel radial scaling
+           about the optical centre, not the frame centre -- the same
+           point the distortion is expanded about. */
+        /* Either the profile's measured TCA or the hand-set pair, scaled by
+           strength. Scaling is about one rather than about zero: a TCA term
+           is a ratio near unity, so half strength means half the *deviation*
+           from unity, not half the scale -- which would collapse the channel
+           into the centre. */
+        float t = 1.0f;
+        if(!pass_mode && do_tca && c <= 2)
+        {
+          const float full = d->ca_manual
+            ? (c == 0 ? d->man_tca_r : (c == 2 ? d->man_tca_b : 1.0f))
+            : dt_lens_tca_scale(&d->warp, c, tr);
+          t = 1.0f + (full - 1.0f) * ca_strength;
+        }
+        const float mu = d->warp.cx + (su - d->warp.cx) * t;
+        const float mv = d->warp.cy + (sv - d->warp.cy) * t;
+
+        const float xs = CLAMP(mu * inv_r + w2 - roi_in->x, 0.0f, limw);
+        const float ys = CLAMP(mv * inv_r + h2 - roi_in->y, 0.0f, limh);
+
+        out[odx + c] =
+          gain * dt_interpolation_compute_sample(interpolation, in + c, xs, ys,
+                                                 roi_in->width, roi_in->height,
+                                                 4, 4 * roi_in->width);
+      }
+    }
+  }
+}
+
+static void _distort_mask_prof(dt_iop_module_t *self,
+                               dt_dev_pixelpipe_iop_t *piece,
+                               const float *const in,
+                               float *const out,
+                               const dt_iop_roi_t *const roi_in,
+                               const dt_iop_roi_t *const roi_out)
+{
+  dt_iop_lens_data_t *d = (dt_iop_lens_data_t *)piece->data;
+
+  if(!d->have_warp || d->modify_flags == DT_IOP_LENS_MODFLAG_NONE)
+    return dt_iop_image_copy_by_size(out, in, roi_out->width,
+                                     roi_out->height, 1);
+
+  const float inv_scale = 1.0f / d->scale_prof;
+  const float w2 = 0.5f * roi_in->scale * piece->buf_in.width;
+  const float h2 = 0.5f * roi_in->scale * piece->buf_in.height;
+  const float r = 1.0f / dt_fast_hypotf(w2, h2);
+  const float inv_r = 1.0f / r;
+
+  /* Output centre. The corrected frame is wider than the recorded one by the
+     squeeze, so a corrected pixel is placed against the *output* half width
+     while the warp is still normalised against the input one. */
+  const float ow2 = w2 * _prof_squeeze(d);
+  const float oh2 = h2;
+
+  const float limw = roi_in->width - 1;
+  const float limh = roi_in->height - 1;
+
+  const dt_interpolation_t *interpolation =
+    dt_interpolation_new(DT_INTERPOLATION_USERPREF_WARP);
+
+  // the mask follows the green channel, as everywhere else in this module
+  DT_OMP_FOR(collapse(2))
+  for(int y = 0; y < roi_out->height; y++)
+  {
+    for(int x = 0; x < roi_out->width; x++)
+    {
+      const float cx = (roi_out->x + x - ow2) * inv_scale;
+      const float cy = (roi_out->y + y - oh2) * inv_scale;
+
+      float su, sv;
+      _prof_invert(d, cx * r, cy * r, &su, &sv);
+
+      const float xs = CLAMP(su * inv_r + w2 - roi_in->x, 0.0f, limw);
+      const float ys = CLAMP(sv * inv_r + h2 - roi_in->y, 0.0f, limh);
+
+      out[(size_t)y * roi_out->width + x] =
+        CLIP(dt_interpolation_compute_sample(interpolation, in, xs, ys,
+                                             roi_in->width, roi_in->height,
+                                             1, roi_in->width));
+    }
+  }
+}
+
+static gboolean _distort_transform_prof(dt_iop_module_t *self,
+                                        dt_dev_pixelpipe_iop_t *piece,
+                                        float *points,
+                                        const size_t points_count)
+{
+  dt_iop_lens_data_t *d = (dt_iop_lens_data_t *)piece->data;
+
+  if(!d->have_warp || d->modify_flags == DT_IOP_LENS_MODFLAG_NONE)
+    return FALSE;
+
+  const float w2 = 0.5f * piece->buf_in.width;
+  const float h2 = 0.5f * piece->buf_in.height;
+  const float r = 1.0f / dt_fast_hypotf(w2, h2);
+  const float inv_r = 1.0f / r;
+
+  /* Observed to corrected, which is the direction the model is defined
+     in, so unlike the metadata method this needs no iteration. */
+  for(size_t i = 0; i < 2 * points_count; i += 2)
+  {
+    float ou, ov;
+    dt_lens_warp_apply(&d->warp, (points[i] - w2) * r,
+                       (points[i + 1] - h2) * r, &ou, &ov);
+
+    points[i] = ou * inv_r * d->scale_prof + w2 * _prof_squeeze(d);
+    points[i + 1] = ov * inv_r * d->scale_prof + h2;
+  }
+
+  return TRUE;
+}
+
+static gboolean _distort_backtransform_prof(dt_iop_module_t *self,
+                                            dt_dev_pixelpipe_iop_t *piece,
+                                            float *points,
+                                            const size_t points_count)
+{
+  dt_iop_lens_data_t *d = (dt_iop_lens_data_t *)piece->data;
+
+  if(!d->have_warp || d->modify_flags == DT_IOP_LENS_MODFLAG_NONE)
+    return FALSE;
+
+  const float w2 = 0.5f * piece->buf_in.width;
+  const float h2 = 0.5f * piece->buf_in.height;
+  const float r = 1.0f / dt_fast_hypotf(w2, h2);
+  const float inv_r = 1.0f / r;
+  const float inv_scale = 1.0f / d->scale_prof;
+
+  for(size_t i = 0; i < 2 * points_count; i += 2)
+  {
+    float su, sv;
+    _prof_invert(d, (points[i] - w2 * _prof_squeeze(d)) * inv_scale * r,
+                 (points[i + 1] - h2) * inv_scale * r, &su, &sv);
+
+    points[i] = su * inv_r + w2;
+    points[i + 1] = sv * inv_r + h2;
+  }
+
+  return TRUE;
+}
+
+static void _modify_roi_in_prof(dt_iop_module_t *self,
+                                dt_dev_pixelpipe_iop_t *piece,
+                                const dt_iop_roi_t *const roi_out,
+                                dt_iop_roi_t *roi_in)
+{
+  dt_iop_lens_data_t *d = (dt_iop_lens_data_t *)piece->data;
+
+  *roi_in = *roi_out;
+
+  if(!d->have_warp || d->modify_flags == DT_IOP_LENS_MODFLAG_NONE)
+    return;
+
+  const float inv_scale = 1.0f / d->scale_prof;
+  const float w2 = 0.5f * roi_in->scale * piece->buf_in.width;
+  const float h2 = 0.5f * roi_in->scale * piece->buf_in.height;
+  const float r = 1.0f / dt_fast_hypotf(w2, h2);
+  const float inv_r = 1.0f / r;
+
+  const gboolean do_tca =
+    (d->modify_flags & DT_IOP_LENS_MODIFY_FLAG_TCA) != 0;
+  /* Largest TCA scale anywhere in the frame. With a polynomial it is no longer
+     simply the coefficient, so it is sampled across the radius -- and the
+     radius has to run past 1, because the frame corner sits at 1 in these
+     units and the ROI may need to reach beyond it. */
+  float tmax = 1.0f;
+  if(do_tca)
+    for(int i = 0; i <= 16; i++)
+    {
+      const float rr = 1.2f * i / 16.0f;
+      tmax = MAX(tmax, MAX(dt_lens_tca_scale(&d->warp, 0, rr),
+                           dt_lens_tca_scale(&d->warp, 2, rr)));
+    }
+
+  float xm = FLT_MAX, xM = -FLT_MAX, ym = FLT_MAX, yM = -FLT_MAX;
+
+  /* Walk the border of the output region. The warp is monotone enough
+     that its image of a rectangle is bounded by the image of the
+     rectangle's edge, and sampling the interior as well would cost far
+     more for no extra coverage. */
+  const int width = roi_in->width, height = roi_in->height;
+
+  for(int pass = 0; pass < 2; pass++)
+  {
+    const int n = pass ? height : width;
+    for(int i = 0; i < n; i++)
+    {
+      for(int side = 0; side < 2; side++)
+      {
+        const int px = pass ? (side ? width - 1 : 0) : i;
+        const int py = pass ? i : (side ? height - 1 : 0);
+
+        const float cx = (roi_in->x + px - w2 * _prof_squeeze(d)) * inv_scale;
+        const float cy = (roi_in->y + py - h2) * inv_scale;
+
+        float su, sv;
+        _prof_invert(d, cx * r, cy * r, &su, &sv);
+
+        // widen by the largest channel scaling, so tca cannot reach
+        // outside the region we ask for
+        const float mu = d->warp.cx + (su - d->warp.cx) * tmax;
+        const float mv = d->warp.cy + (sv - d->warp.cy) * tmax;
+
+        const float xs = mu * inv_r + w2;
+        const float ys = mv * inv_r + h2;
+
+        xm = MIN(xm, xs);
+        xM = MAX(xM, xs);
+        ym = MIN(ym, ys);
+        yM = MAX(yM, ys);
+      }
+    }
+  }
+
+  const dt_interpolation_t *interpolation =
+    dt_interpolation_new(DT_INTERPOLATION_USERPREF_WARP);
+  const float iw = interpolation->width;
+
+  roi_in->x = fmaxf(0.0f, xm - iw);
+  roi_in->y = fmaxf(0.0f, ym - iw);
+  roi_in->width = fminf(ceilf(roi_in->scale * piece->buf_in.width) - roi_in->x,
+                        xM - roi_in->x + iw);
+  roi_in->height = fminf(ceilf(roi_in->scale * piece->buf_in.height) - roi_in->y,
+                         yM - roi_in->y + iw);
+
+  roi_in->width = MAX(1, roi_in->width);
+  roi_in->height = MAX(1, roi_in->height);
+}
+
 static void _modify_roi_in_vg(dt_iop_module_t *self,
                               dt_dev_pixelpipe_iop_t *piece,
                               const dt_iop_roi_t *const roi_out,
@@ -3212,7 +3847,13 @@ void process(dt_iop_module_t *self,
   dt_iop_lens_data_t *d = (dt_iop_lens_data_t *)piece->data;
   dt_iop_lens_gui_data_t *g = (dt_iop_lens_gui_data_t *)self->gui_data;
   const gboolean mask = g && g->vig_masking && dt_pipe_is_full(piece->pipe);
-  const gboolean pre_vignette = mask || (d->v_strength > 0.0f);
+  /* The strength slider means different things to different methods: for
+     Lensfit it scales the *measured* falloff inside _process_prof, so the
+     manual radius/steepness model must not also run -- that would apply two
+     vignette corrections and call it one. */
+  const gboolean pre_vignette =
+    mask || (d->v_strength > 0.0f
+             && (d->method != DT_IOP_LENS_METHOD_PROFILE || d->v_manual));
   const gboolean pass_mode = piece->pipe->mask_display == DT_DEV_PIXELPIPE_DISPLAY_PASSTHRU;
   float *data = (float *)ivoid;
 
@@ -3235,6 +3876,10 @@ void process(dt_iop_module_t *self,
   else if(_method_is_spline(d->method))
   {
     _process_md(self, piece, data, ovoid, roi_in, roi_out, pre_vignette);
+  }
+  else if(d->method == DT_IOP_LENS_METHOD_PROFILE)
+  {
+    _process_prof(self, piece, data, ovoid, roi_in, roi_out);
   }
   else
     dt_iop_copy_image_roi((float *)ovoid, data, 4, roi_in, roi_out);
@@ -3291,7 +3936,13 @@ int process_cl(dt_iop_module_t *self,
   dt_iop_lens_data_t *d = (dt_iop_lens_data_t *)piece->data;
   dt_iop_lens_gui_data_t *g = (dt_iop_lens_gui_data_t *)self->gui_data;
   const gboolean mask = g && g->vig_masking && dt_pipe_is_full(piece->pipe);
-  const gboolean pre_vignette = mask || (d->v_strength > 0.0f);
+  /* The strength slider means different things to different methods: for
+     Lensfit it scales the *measured* falloff inside _process_prof, so the
+     manual radius/steepness model must not also run -- that would apply two
+     vignette corrections and call it one. */
+  const gboolean pre_vignette =
+    mask || (d->v_strength > 0.0f
+             && (d->method != DT_IOP_LENS_METHOD_PROFILE || d->v_manual));
   const gboolean pass_mode = piece->pipe->mask_display == DT_DEV_PIXELPIPE_DISPLAY_PASSTHRU;
 
   if(mask)
@@ -3326,9 +3977,11 @@ int process_cl(dt_iop_module_t *self,
   }
   else
   {
-    const size_t region[2] = { (size_t)roi_in->width, (size_t)roi_in->height };
-    err = dt_opencl_enqueue_copy_image(piece->pipe->devid, data,
-                                       dev_out, CLIMG_ORIGIN, CLIMG_ORIGIN, region);
+    /* Lensfit has no GPU kernel yet. Copying the input through would be
+       silently wrong -- it drops the correction entirely, and with a squeeze
+       the output is not even the same size as the input. Hand the tile back
+       so the pixelpipe falls through to the CPU path, which is complete. */
+    err = DT_OPENCL_PROCESS_CL;
   }
 
   if(data != dev_in)
@@ -3349,7 +4002,8 @@ void tiling_callback(dt_iop_module_t *self,
   {
     _tiling_callback_lf(self, piece, roi_in, roi_out, tiling);
   }
-  else if(_method_is_spline(d->method))
+  else if(_method_is_spline(d->method)
+          || d->method == DT_IOP_LENS_METHOD_PROFILE)
   {
     _tiling_callback_md(self, piece, roi_in, roi_out, tiling);
   }
@@ -3372,6 +4026,10 @@ gboolean distort_transform(dt_iop_module_t *self,
   {
     return _distort_transform_md(self, piece, points, points_count);
   }
+  else if(d->method == DT_IOP_LENS_METHOD_PROFILE)
+  {
+    return _distort_transform_prof(self, piece, points, points_count);
+  }
   return FALSE;
 }
 
@@ -3389,6 +4047,10 @@ gboolean distort_backtransform(dt_iop_module_t *self,
   else if(_method_is_spline(d->method))
   {
     return _distort_backtransform_md(self, piece, points, points_count);
+  }
+  else if(d->method == DT_IOP_LENS_METHOD_PROFILE)
+  {
+    return _distort_backtransform_prof(self, piece, points, points_count);
   }
   return FALSE;
 }
@@ -3410,8 +4072,41 @@ void distort_mask(dt_iop_module_t *self,
   {
     _distort_mask_md(self, piece, in, out, roi_in, roi_out);
   }
+  else if(d->method == DT_IOP_LENS_METHOD_PROFILE)
+  {
+    _distort_mask_prof(self, piece, in, out, roi_in, roi_out);
+  }
   else
     dt_iop_copy_image_roi(out, in, 1, roi_in, roi_out);
+}
+
+/* An anamorphic correction changes the shape of the frame, not just the
+ * arrangement of pixels inside it.
+ *
+ * A 1.6x lens records a scene 1.6 times wider than the frame's proportions
+ * suggest; undoing that has to produce a wider frame. Leaving the output the
+ * same size would re-apply the squeeze at the last moment and crop the sides
+ * while doing it -- the picture would look corrected in the middle and be
+ * wrong at every edge.
+ *
+ * Only the profile method does this, and only when the profile actually
+ * carries a squeeze; a spherical lens leaves the frame alone.
+ */
+void modify_roi_out(dt_iop_module_t *self,
+                    dt_dev_pixelpipe_iop_t *piece,
+                    dt_iop_roi_t *roi_out,
+                    const dt_iop_roi_t *const roi_in)
+{
+  const dt_iop_lens_data_t *d = (dt_iop_lens_data_t *)piece->data;
+
+  *roi_out = *roi_in;
+
+  if(!d || d->method != DT_IOP_LENS_METHOD_PROFILE || !d->have_warp) return;
+
+  const float sq = _prof_squeeze(d);
+  if(fabsf(sq - 1.0f) < 1e-4f) return;
+
+  roi_out->width = MAX(1, (int)roundf(roi_in->width * sq));
 }
 
 void modify_roi_in(dt_iop_module_t *self,
@@ -3428,6 +4123,10 @@ void modify_roi_in(dt_iop_module_t *self,
   else if(_method_is_spline(d->method))
   {
     _modify_roi_in_md(self, piece, roi_out, roi_in);
+  }
+  else if(d->method == DT_IOP_LENS_METHOD_PROFILE)
+  {
+    _modify_roi_in_prof(self, piece, roi_out, roi_in);
   }
   else
     _modify_roi_in_vg(self, piece, roi_out, roi_in);
@@ -3481,6 +4180,11 @@ void commit_params(dt_iop_module_t *self,
     d->modify_flags &= ~DT_IOP_LENS_MODIFY_FLAG_TCA;
 
   d->v_strength = p->v_strength;
+  d->v_manual = p->v_manual;
+  d->ca_manual = p->ca_manual;
+  d->ca_strength = p->ca_strength;
+  d->man_tca_r = p->man_tca_r;
+  d->man_tca_b = p->man_tca_b;
   d->v_radius = p->v_radius;
   d->v_steepness = p->v_steepness;
 
@@ -3497,6 +4201,10 @@ void commit_params(dt_iop_module_t *self,
   else if(d->method == DT_IOP_LENS_METHOD_MANUAL)
   {
     _commit_params_man(self, p, pipe, piece);
+  }
+  else if(d->method == DT_IOP_LENS_METHOD_PROFILE)
+  {
+    _commit_params_prof(self, p, pipe, piece);
   }
   else
    _commit_params_vig(self, p, pipe, piece);
@@ -3520,6 +4228,9 @@ void cleanup_pipe(dt_iop_module_t *self,
     delete d->lens;
     d->lens = NULL;
   }
+
+  dt_lens_warp_cleanup(&d->warp);
+  _prof_free_lut(d);
 
   free(piece->data);
   piece->data = NULL;
@@ -3678,6 +4389,13 @@ void reload_defaults(dt_iop_module_t *self)
     if(*c == ' ')
       if(++cnt == 2) *c = '\0';
 
+  // Lensfun's own Maker string for whatever lens it matched below, if any
+  // -- kept separate from img->exif_maker (the *camera's* EXIF Make tag,
+  // e.g. "SONY" all caps) because the two are not reliably the same
+  // string, and the manifest lookup below needs Lensfun's own spelling to
+  // reproduce the name the converter generated from it.
+  char lf_lens_maker[128] = { 0 };
+
   if(img->exif_maker[0] || model[0])
   {
     dt_iop_lens_global_data_t *gd =
@@ -3742,6 +4460,8 @@ void reload_defaults(dt_iop_module_t *self)
         }
 
         d->target_geom = _lenstype_from_lensfun_lenstype(lens[lens_i]->Type);
+        if(lens[lens_i]->Maker)
+          g_strlcpy(lf_lens_maker, lens[lens_i]->Maker, sizeof(lf_lens_maker));
         lf_free(lens);
       }
 
@@ -3750,6 +4470,45 @@ void reload_defaults(dt_iop_module_t *self)
 
       lf_free(cam);
     }
+  }
+
+  /* Auto-match a lensfit profile from the same EXIF, independently of the
+   * Lensfun matching above -- this only fills prof_name, the manual
+   * picker's own field, it does not change which correction method is
+   * selected. A user still chooses "lensfit profile" from the method
+   * dropdown; this just means the field is not empty when they do.
+   *
+   * Three strategies tried in order, each conservative on purpose -- a
+   * wrong-but-plausible auto-match that looks corrected is worse than
+   * leaving prof_name blank:
+   *   1. the user's own saved profiles, which must always win over a
+   *      converted one for the same lens
+   *   2. an exact lookup by the name Lensfun's own maker/model would
+   *      generate, reusing whatever `d->lens` ended up holding above
+   *   3. a fuzzy match of raw EXIF against the shipped database's index,
+   *      for a machine with no Lensfun match or no Lensfun database
+   * Falling through all three leaves prof_name exactly as it was --
+   * unlike the Lensfun matching above, there is no partial credit here.
+   */
+  {
+    char matched[128] = { 0 };
+    const gboolean have_match =
+      dt_lens_profile_match_user(img->exif_maker, img->exif_lens,
+                                 matched, sizeof(matched))
+      // Lensfun's own maker for its own matched lens -- NOT
+      // img->exif_maker, which is the camera's EXIF Make tag and is not
+      // reliably spelled the same way ("SONY" vs. Lensfun's "Sony"). The
+      // exact lookup below is a case-sensitive hash lookup by construction
+      // (it has to reproduce the converter's generated name exactly), so
+      // this distinction is not cosmetic -- it is the whole reason step 2
+      // was failing to find a lens that was actually in the database.
+      || (d->lens[0] && lf_lens_maker[0]
+          && dt_lens_profile_manifest_lookup(lf_lens_maker, d->lens,
+                                             matched, sizeof(matched)))
+      || dt_lens_profile_manifest_match(img->exif_maker, img->exif_lens,
+                                        matched, sizeof(matched));
+    if(have_match)
+      dt_strlcpy_to_fixed(d->prof_name, matched, sizeof(d->prof_name));
   }
 
   d->method = DT_IOP_LENS_METHOD_LENSFUN;
@@ -4590,6 +5349,256 @@ static void _display_errors(dt_iop_module_t *self)
   gtk_widget_queue_draw(self->widget);
 }
 
+/* Describe the selected profile in a line, so the user can tell at a
+   glance which of several similarly named calibrations is loaded. */
+static void _prof_update_info(dt_iop_module_t *self)
+{
+  dt_iop_lens_params_t *p = (dt_iop_lens_params_t *)self->params;
+  dt_iop_lens_gui_data_t *g = (dt_iop_lens_gui_data_t *)self->gui_data;
+  if(!g || !g->prof_info) return;
+
+  if(!p->prof_name[0])
+  {
+    gtk_label_set_text(GTK_LABEL(g->prof_info),
+                       _("no profile selected"));
+    return;
+  }
+
+  gchar *path = dt_lens_profile_find(p->prof_name);
+  gchar *text = NULL;
+
+  if(path)
+  {
+    dt_lens_profile_t prof;
+    if(dt_lens_profile_load(&prof, path) && prof.warps->len)
+    {
+      const dt_lens_warp_t *w =
+        &g_array_index(prof.warps, dt_lens_warp_t, 0);
+
+      if(prof.warps->len > 1)
+      {
+        const dt_lens_warp_t *last =
+          &g_array_index(prof.warps, dt_lens_warp_t, prof.warps->len - 1);
+        text = g_strdup_printf(_("%s, %u focal lengths %g-%gmm, squeeze %.3f"),
+                               dt_lens_warp_kind_name(w->kind),
+                               prof.warps->len, w->focal, last->focal,
+                               w->squeeze);
+      }
+      else
+        text = g_strdup_printf(_("%s, %gmm, squeeze %.3f"),
+                               dt_lens_warp_kind_name(w->kind),
+                               w->focal, w->squeeze);
+
+      /* Remember the scan factors for the two arrows beside the scale
+         slider. Taken from the first geometry entry rather than averaged:
+         they differ across a zoom range, and an average of the two ends is a
+         value that applies at neither. */
+      g->prof_overscan = (w->overscan >= 1.0f) ? w->overscan : 1.0f;
+      g->prof_underscan =
+        (w->underscan > 0.0f && w->underscan <= 1.0f) ? w->underscan : 1.0f;
+    }
+    dt_lens_profile_cleanup(&prof);
+  }
+
+  if(!text) text = g_strdup(_("profile could not be read"));
+  g_free(path);
+
+  gtk_label_set_text(GTK_LABEL(g->prof_info), text);
+  g_free(text);
+}
+
+/* Rebuilds the model dropdown from the cached full listing (g->prof_all_*),
+   filtered to whatever maker is currently selected in g->prof_maker, and
+   selects `preferred_name` if it is present under that filter (NULL/empty
+   means select "none"). Does not touch g->prof_maker itself. */
+static void _prof_rebuild_models(dt_iop_module_t *self,
+                                 const char *preferred_name)
+{
+  dt_iop_lens_gui_data_t *g = (dt_iop_lens_gui_data_t *)self->gui_data;
+
+  const int maker_idx = dt_bauhaus_combobox_get(g->prof_maker);
+  const char *key = (maker_idx > 0 && g->prof_maker_keys)
+    ? g->prof_maker_keys[maker_idx - 1] : NULL; // NULL == no filter, "(all)"
+
+  ++darktable.gui->reset;
+
+  dt_bauhaus_combobox_clear(g->prof_name);
+  dt_bauhaus_combobox_add_aligned(g->prof_name, _("none"),
+                                  DT_BAUHAUS_COMBOBOX_ALIGN_LEFT);
+
+  g_strfreev(g->prof_model_ids);
+  GPtrArray *ids = g_ptr_array_new();
+  int selected = 0;
+
+  for(int i = 0; g->prof_all_names && g->prof_all_names[i]; i++)
+  {
+    // case-insensitive: the source data spells the same vendor
+    // differently across entries often enough ("Leica Camera AG" vs.
+    // "LEICA CAMERA AG") that an exact-case filter would silently split
+    // one vendor into several buckets
+    if(key && g_ascii_strcasecmp(g->prof_all_makers[i], key)) continue;
+
+    dt_bauhaus_combobox_add_aligned(g->prof_name, g->prof_all_models[i],
+                                    DT_BAUHAUS_COMBOBOX_ALIGN_LEFT);
+    g_ptr_array_add(ids, g_strdup(g->prof_all_names[i]));
+    if(preferred_name && !g_strcmp0(g->prof_all_names[i], preferred_name))
+      selected = ids->len;
+  }
+
+  /* A profile named in the history but no longer matching the current
+     filter (or no longer on disk at all) would silently become "none"
+     here, which would look like the correction had been turned off.
+     Keep the name visible instead. */
+  if(!selected && preferred_name && *preferred_name)
+  {
+    dt_bauhaus_combobox_add_aligned(g->prof_name, preferred_name,
+                                    DT_BAUHAUS_COMBOBOX_ALIGN_LEFT);
+    g_ptr_array_add(ids, g_strdup(preferred_name));
+    selected = ids->len;
+  }
+
+  g_ptr_array_add(ids, NULL);
+  g->prof_model_ids = (gchar **)g_ptr_array_free(ids, FALSE);
+
+  dt_bauhaus_combobox_set(g->prof_name, selected);
+
+  --darktable.gui->reset;
+}
+
+/* The list is whatever is on disk right now, so it is rebuilt every time
+   the page is shown rather than once at startup -- a calibration made in
+   the lens tab has to appear here without a restart. */
+static void _prof_refresh_list(dt_iop_module_t *self)
+{
+  dt_iop_lens_params_t *p = (dt_iop_lens_params_t *)self->params;
+  dt_iop_lens_gui_data_t *g = (dt_iop_lens_gui_data_t *)self->gui_data;
+  if(!g || !g->prof_name || !g->prof_maker) return;
+
+  ++darktable.gui->reset;
+
+  g_strfreev(g->prof_all_names);
+  g_strfreev(g->prof_all_makers);
+  g_strfreev(g->prof_all_models);
+  dt_lens_profile_list_full(&g->prof_all_names, &g->prof_all_makers,
+                            &g->prof_all_models);
+
+  // unique maker keys -- the full listing is already sorted by (maker,
+  // model), so identical makers are always adjacent
+  g_strfreev(g->prof_maker_keys);
+  GPtrArray *keys = g_ptr_array_new();
+  const char *last = NULL;
+  for(int i = 0; g->prof_all_names[i]; i++)
+  {
+    if(!last || g_ascii_strcasecmp(last, g->prof_all_makers[i]))
+    {
+      last = g->prof_all_makers[i];
+      g_ptr_array_add(keys, g_strdup(last));
+    }
+  }
+  g_ptr_array_add(keys, NULL);
+  g->prof_maker_keys = (gchar **)g_ptr_array_free(keys, FALSE);
+
+  dt_bauhaus_combobox_clear(g->prof_maker);
+  dt_bauhaus_combobox_add_aligned(g->prof_maker, _("(all)"),
+                                  DT_BAUHAUS_COMBOBOX_ALIGN_LEFT);
+  for(int i = 0; g->prof_maker_keys[i]; i++)
+    dt_bauhaus_combobox_add_aligned
+      (g->prof_maker, g->prof_maker_keys[i][0] ? g->prof_maker_keys[i]
+                                               : _("(other)"),
+       DT_BAUHAUS_COMBOBOX_ALIGN_LEFT);
+
+  // preselect the vendor the current profile actually belongs to, so
+  // reopening an image with a profile already set shows the right filter
+  // rather than resetting to "(all)"
+  int maker_idx = 0;
+  if(p->prof_name[0])
+  {
+    const char *cur_maker = NULL;
+    for(int i = 0; g->prof_all_names[i]; i++)
+      if(!g_strcmp0(g->prof_all_names[i], p->prof_name))
+      {
+        cur_maker = g->prof_all_makers[i];
+        break;
+      }
+    if(cur_maker)
+      for(int j = 0; g->prof_maker_keys[j]; j++)
+        if(!g_ascii_strcasecmp(g->prof_maker_keys[j], cur_maker))
+        {
+          maker_idx = j + 1;
+          break;
+        }
+  }
+  dt_bauhaus_combobox_set(g->prof_maker, maker_idx);
+
+  _prof_rebuild_models(self, p->prof_name[0] ? p->prof_name : NULL);
+
+  --darktable.gui->reset;
+
+  _prof_update_info(self);
+}
+
+static void _prof_maker_changed(GtkWidget *w, dt_iop_module_t *self)
+{
+  if(darktable.gui->reset) return;
+
+  dt_iop_lens_params_t *p = (dt_iop_lens_params_t *)self->params;
+
+  _prof_rebuild_models(self, NULL);
+  p->prof_name[0] = '\0';
+  p->has_been_set = TRUE;
+  _prof_update_info(self);
+
+  dt_dev_add_history_item(darktable.develop, self, TRUE);
+}
+
+/* The two ends of the scale range, as the profile measured them.
+ *
+ * `overscan` is how much larger the frame would have to be to keep every
+ * recorded pixel; since we cannot enlarge it here, showing everything means
+ * scaling *down* by that factor, which leaves empty corners. `underscan` is
+ * the largest centred crop that contains no empty edge, so filling the frame
+ * means scaling *up* by its reciprocal. They are the two honest endpoints and
+ * anything between them is a trade the user makes.
+ */
+static void _prof_scale_min_pressed(GtkWidget *button, dt_iop_module_t *self)
+{
+  dt_iop_lens_gui_data_t *g = (dt_iop_lens_gui_data_t *)self->gui_data;
+  const float os = (g->prof_overscan >= 1.0f) ? g->prof_overscan : 1.0f;
+  dt_bauhaus_slider_set(g->prof_scale, 1.0f / os);
+}
+
+static void _prof_scale_max_pressed(GtkWidget *button, dt_iop_module_t *self)
+{
+  dt_iop_lens_gui_data_t *g = (dt_iop_lens_gui_data_t *)self->gui_data;
+  const float us = (g->prof_underscan > 0.0f && g->prof_underscan <= 1.0f)
+    ? g->prof_underscan : 1.0f;
+  dt_bauhaus_slider_set(g->prof_scale, 1.0f / us);
+}
+
+static void _prof_name_changed(GtkWidget *w, dt_iop_module_t *self)
+{
+  if(darktable.gui->reset) return;
+
+  dt_iop_lens_params_t *p = (dt_iop_lens_params_t *)self->params;
+  dt_iop_lens_gui_data_t *g = (dt_iop_lens_gui_data_t *)self->gui_data;
+
+  // the combobox shows the "model" text, but what gets stored is the
+  // actual profile name (file stem) at the matching index in
+  // prof_model_ids -- see the field comment for why
+  const int idx = dt_bauhaus_combobox_get(w);
+  const char *id = (idx > 0 && g->prof_model_ids) ? g->prof_model_ids[idx - 1] : NULL;
+
+  if(!id)
+    p->prof_name[0] = '\0';
+  else
+    g_strlcpy(p->prof_name, id, sizeof(p->prof_name));
+
+  p->has_been_set = TRUE;
+  _prof_update_info(self);
+
+  dt_dev_add_history_item(darktable.develop, self, TRUE);
+}
+
 void gui_changed(dt_iop_module_t *self, GtkWidget *w, void *previous)
 {
   dt_iop_lens_params_t *p = (dt_iop_lens_params_t *)self->params;
@@ -4666,9 +5675,17 @@ void gui_changed(dt_iop_module_t *self, GtkWidget *w, void *previous)
 
     gtk_widget_set_visible(g->man_k2, advanced);
     gtk_widget_set_visible(g->man_k3, advanced);
-    gtk_widget_set_visible(g->man_tca_r, !raw_monochrome);
-    gtk_widget_set_visible(g->man_tca_b, !raw_monochrome);
+    (void)raw_monochrome;
 
+    gtk_widget_set_sensitive(GTK_WIDGET(g->message), TRUE);
+  }
+  else if(p->method == DT_IOP_LENS_METHOD_PROFILE)
+  {
+    gtk_stack_set_visible_child_name(GTK_STACK(g->methods), "profile");
+
+    _prof_refresh_list(self);
+
+    gtk_widget_set_sensitive(GTK_WIDGET(g->modflags), TRUE);
     gtk_widget_set_sensitive(GTK_WIDGET(g->message), TRUE);
   }
   else
@@ -4679,8 +5696,31 @@ void gui_changed(dt_iop_module_t *self, GtkWidget *w, void *previous)
   }
   const gboolean onlyvig = p->method == DT_IOP_LENS_METHOD_ONLYVIGNETTE;
   const gboolean manual = p->method == DT_IOP_LENS_METHOD_MANUAL;
-  // in manual mode the detail selector takes the modflags slot
-  gtk_widget_set_visible(GTK_WIDGET(g->modflags), !onlyvig && !manual);
+  const gboolean profile = p->method == DT_IOP_LENS_METHOD_PROFILE;
+
+  /* In manual mode the detail selector takes the modflags slot. Lensfit has
+     no corrections selector at all: a profile holds only what was actually
+     measured, so there is nothing to switch off that is not already absent --
+     and the vignetting strength below is a better control than a checkbox,
+     because it can be set to a fraction. */
+  gtk_widget_set_visible(GTK_WIDGET(g->modflags),
+                         !onlyvig && !manual && !profile);
+
+  /* Only a profile can supply a measured shape, so everywhere else the manual
+     one is not a choice -- the switch is hidden and its dials are simply
+     shown, rather than offering a setting with one possible value. */
+  const gboolean raw_mono =
+    self->dev && dt_image_is_monochrome(&self->dev->image_storage);
+
+  gtk_widget_set_visible(g->v_manual, profile);
+  gtk_widget_set_visible(g->v_radius, !profile || p->v_manual);
+  gtk_widget_set_visible(g->v_steepness, !profile || p->v_manual);
+
+  gtk_widget_set_visible(GTK_WIDGET(g->chroma.expander), !raw_mono);
+  gtk_widget_set_visible(g->ca_manual, profile && !raw_mono);
+  gtk_widget_set_visible(g->ca_strength, !raw_mono);
+  gtk_widget_set_visible(g->ca_r, (!profile || p->ca_manual) && !raw_mono);
+  gtk_widget_set_visible(g->ca_b, (!profile || p->ca_manual) && !raw_mono);
   gtk_widget_set_visible(GTK_WIDGET(g->man_detail), manual);
   gtk_widget_set_visible(GTK_WIDGET(g->hbox1), !onlyvig);
 
@@ -4873,15 +5913,10 @@ void gui_init(dt_iop_module_t *self)
   gtk_widget_set_tooltip_text(g->man_k3,
                               _("6th order term of the distortion polynomial"));
 
-  g->man_tca_r = dt_bauhaus_slider_from_params(self, "man_tca_r");
-  dt_bauhaus_slider_set_digits(g->man_tca_r, 5);
-  gtk_widget_set_tooltip_text(g->man_tca_r,
-                              _("transversal chromatic aberration red"));
-
-  g->man_tca_b = dt_bauhaus_slider_from_params(self, "man_tca_b");
-  dt_bauhaus_slider_set_digits(g->man_tca_b, 5);
-  gtk_widget_set_tooltip_text(g->man_tca_b,
-                              _("transversal chromatic aberration blue"));
+  /* The manual TCA sliders used to live here, one copy per method. They are
+     now in the chromatic aberration section below, where every method reaches
+     the same pair -- a parameter bound to two widgets is a parameter with two
+     opinions about its value. */
 
   // the scale slider is flanked by the two ends of the range the
   // distortion spans: keep the whole frame, or fill it completely
@@ -4913,6 +5948,88 @@ void gui_init(dt_iop_module_t *self)
 
   self->widget = box_man;
   dt_gui_box_add(self->widget, scale_row);
+
+  /* calibration profile widgets */
+  GtkWidget *box_prof = self->widget = dt_gui_vbox();
+
+  /* The profile list is a plain combo box rather than a params combo:
+     its entries are whatever json files happen to be in the profile
+     directory, which introspection has no way to know about. The
+     selection is stored by name, so a profile keeps working when the
+     list around it changes. */
+  /* the shipped database alone is well over a thousand entries -- picking
+     a lens vendor first narrows the model list to something browsable */
+  g->prof_maker = dt_bauhaus_combobox_new(self);
+  dt_bauhaus_widget_set_label(g->prof_maker, NULL, N_("lens vendor"));
+  dt_bauhaus_combobox_set_selected_text_align(g->prof_maker,
+                                              DT_BAUHAUS_COMBOBOX_ALIGN_LEFT);
+  gtk_widget_set_tooltip_text
+    (g->prof_maker, _("narrows the model list below to one vendor"));
+  g_signal_connect(G_OBJECT(g->prof_maker), "value-changed",
+                   G_CALLBACK(_prof_maker_changed), self);
+  dt_gui_box_add(self->widget, g->prof_maker);
+
+  g->prof_name = dt_bauhaus_combobox_new(self);
+  dt_bauhaus_widget_set_label(g->prof_name, NULL, N_("model"));
+  dt_bauhaus_combobox_set_selected_text_align(g->prof_name,
+                                              DT_BAUHAUS_COMBOBOX_ALIGN_LEFT);
+  gtk_widget_set_tooltip_text
+    (g->prof_name,
+     _("a lens from Lensfit, measured in the lens tab, or matched\n"
+       "from the shipped database.\n"
+       "unlike the other methods this applies a full two dimensional\n"
+       "warp, so it can correct an anamorphic lens, which a radial\n"
+       "model cannot express"));
+  g_signal_connect(G_OBJECT(g->prof_name), "value-changed",
+                   G_CALLBACK(_prof_name_changed), self);
+  dt_gui_box_add(self->widget, g->prof_name);
+
+  g->prof_focal = dt_bauhaus_slider_from_params(self, "prof_focal");
+  dt_bauhaus_slider_set_digits(g->prof_focal, 1);
+  dt_bauhaus_slider_set_soft_range(g->prof_focal, 0.0f, 200.0f);
+  gtk_widget_set_tooltip_text
+    (g->prof_focal,
+     _("focal length to interpolate the profile at.\n"
+       "zero uses the focal length recorded with the image"));
+
+  /* The scale slider is flanked by the two ends of the range the correction
+     spans, the same idiom as manual mode -- except that here the endpoints
+     are measured and stored in the profile rather than searched for. */
+  GtkWidget *prof_scale_row = self->widget = dt_gui_hbox();
+
+  GtkWidget *prof_min_btn = dtgtk_button_new(dtgtk_cairo_paint_solid_arrow,
+                                             CPF_DIRECTION_LEFT, NULL);
+  gtk_widget_set_tooltip_text
+    (prof_min_btn,
+     _("overscan: scale so every recorded pixel survives.\n"
+       "crops nothing, may leave empty areas at the border"));
+  g_signal_connect(G_OBJECT(prof_min_btn), "clicked",
+                   G_CALLBACK(_prof_scale_min_pressed), self);
+  dt_gui_box_add(self->widget, prof_min_btn);
+
+  g->prof_scale = dt_gui_expand(dt_bauhaus_slider_from_params(self, "prof_scale"));
+  dt_bauhaus_slider_set_digits(g->prof_scale, 4);
+  gtk_widget_set_tooltip_text(g->prof_scale, _("image scaling"));
+
+  GtkWidget *prof_max_btn = dtgtk_button_new(dtgtk_cairo_paint_solid_arrow,
+                                             CPF_DIRECTION_RIGHT, NULL);
+  gtk_widget_set_tooltip_text
+    (prof_max_btn,
+     _("underscan: scale until no empty area is left.\n"
+       "leaves no empty areas, crops the border"));
+  g_signal_connect(G_OBJECT(prof_max_btn), "clicked",
+                   G_CALLBACK(_prof_scale_max_pressed), self);
+  dt_gui_box_add(self->widget, prof_max_btn);
+
+  self->widget = box_prof;
+  dt_gui_box_add(self->widget, prof_scale_row);
+
+  g->prof_info = gtk_label_new("");
+  gtk_widget_set_halign(g->prof_info, GTK_ALIGN_START);
+  gtk_label_set_ellipsize(GTK_LABEL(g->prof_info), PANGO_ELLIPSIZE_END);
+  dt_gui_box_add(self->widget, g->prof_info);
+
+  self->widget = box_prof;
 
   /* embedded metadata widgets */
   g->use_latest_md_algo =
@@ -4977,7 +6094,9 @@ void gui_init(dt_iop_module_t *self)
        " a) data and algorithms provided by the Lensfun project\n"
        " b) embedded metadata provided by the camera or software vendor\n"
        " c) your own manually dialled-in correction, for lenses\n"
-       "    neither the database nor the camera knows about"));
+       "    neither the database nor the camera knows about\n"
+       " d) a calibration profile measured in the lens tab, which\n"
+       "    unlike the others is not restricted to radial models"));
 
   // selector for correction type (modflags): one or more out of
   // distortion, TCA, vignetting
@@ -5013,28 +6132,44 @@ void gui_init(dt_iop_module_t *self)
   gtk_stack_add_named(GTK_STACK(g->methods), box_lf, "lensfun");
   gtk_stack_add_named(GTK_STACK(g->methods), box_md, "metadata");
   gtk_stack_add_named(GTK_STACK(g->methods), box_man, "manual");
+  gtk_stack_add_named(GTK_STACK(g->methods), box_prof, "profile");
   gtk_stack_add_named(GTK_STACK(g->methods), only_vig, "onlyvig");
 
-  // widget for extra manual vignette correction, FIXME manual reference
+  /* Vignette and chromatic aberration each get a section of their own, both
+     open by default, and both laid out the same way: how much, then whether
+     the shape is measured or dialled in, then the dials.
+   *
+     The order says what the controls are for. Strength applies to whichever
+     shape is in use, because deciding how much of a correction to apply is a
+     judgement either way. The dials below the switch are a *substitute* for a
+     measurement, not an adjustment to one, which is why they sit under it
+     rather than beside the strength. */
   dt_gui_new_collapsible_section
     (&g->vignette,
      "plugins/darkroom/lens/expand_vignette",
-     _("manual vignette correction"),
+     _("vignette"),
      GTK_BOX(self->widget),
      DT_ACTION(self));
   gtk_widget_set_tooltip_text(g->vignette.expander,
-      _("additional manually controlled optical vignetting correction"));
+      _("brightness falloff towards the corners"));
 
   sect_mod.widget = GTK_WIDGET(g->vignette.container);
   sect_mod.data = (gpointer)N_("vignette");
 
   g->v_strength = dt_bauhaus_slider_from_params(sect, "v_strength");
   gtk_widget_set_tooltip_text(g->v_strength,
-      _("amount of the applied optical vignetting correction"));
+      _("how much of the falloff correction to apply.\n"
+        "one applies the profile's measurement in full, zero leaves\n"
+        "brightness alone, and two overcorrects deliberately"));
   dt_bauhaus_slider_set_format(g->v_strength, "%");
   dt_bauhaus_slider_set_digits(g->v_strength, 1);
   dt_bauhaus_widget_set_quad(g->v_strength, self, dtgtk_cairo_paint_showmask, TRUE, _visualize_callback,
                              _("show applied optical vignette correction mask"));
+
+  g->v_manual = dt_bauhaus_toggle_from_params(sect, "v_manual");
+  gtk_widget_set_tooltip_text(g->v_manual,
+      _("shape the falloff by hand instead of using the profile's\n"
+        "measurement. required when no profile carries one"));
 
   g->v_radius = dt_bauhaus_slider_from_params(sect, "v_radius");
   gtk_widget_set_tooltip_text(g->v_radius,
@@ -5047,6 +6182,38 @@ void gui_init(dt_iop_module_t *self)
       _("steepness of the correction effect outside of radius"));
   dt_bauhaus_slider_set_format(g->v_steepness, "%");
   dt_bauhaus_slider_set_digits(g->v_steepness, 1);
+
+  dt_gui_new_collapsible_section
+    (&g->chroma,
+     "plugins/darkroom/lens/expand_chroma",
+     _("chromatic aberration"),
+     GTK_BOX(self->widget),
+     DT_ACTION(self));
+  gtk_widget_set_tooltip_text(g->chroma.expander,
+      _("colour fringing towards the corners, from the channels\n"
+        "being focused at slightly different scales"));
+
+  sect_mod.widget = GTK_WIDGET(g->chroma.container);
+  sect_mod.data = (gpointer)N_("chromatic aberration");
+
+  g->ca_strength = dt_bauhaus_slider_from_params(sect, "ca_strength");
+  gtk_widget_set_tooltip_text(g->ca_strength,
+      _("how much of the lateral chromatic aberration correction to apply"));
+  dt_bauhaus_slider_set_format(g->ca_strength, "%");
+  dt_bauhaus_slider_set_digits(g->ca_strength, 1);
+
+  g->ca_manual = dt_bauhaus_toggle_from_params(sect, "ca_manual");
+  gtk_widget_set_tooltip_text(g->ca_manual,
+      _("set the per channel scaling by hand instead of using the\n"
+        "profile's measurement"));
+
+  g->ca_r = dt_bauhaus_slider_from_params(sect, "man_tca_r");
+  dt_bauhaus_slider_set_digits(g->ca_r, 5);
+  gtk_widget_set_tooltip_text(g->ca_r, _("red channel scaling"));
+
+  g->ca_b = dt_bauhaus_slider_from_params(sect, "man_tca_b");
+  dt_bauhaus_slider_set_digits(g->ca_b, 5);
+  gtk_widget_set_tooltip_text(g->ca_b, _("blue channel scaling"));
 
   /* add signal handler for preview pipe finish to update message on
      corrections done */
