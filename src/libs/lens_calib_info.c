@@ -32,6 +32,13 @@
  * <datadir>/charts alongside the shipped lens database. Opened with
  * whatever the system already uses for a PDF rather than rendered here --
  * there is no reason to carry a PDF viewer for something this occasional.
+ *
+ * One sheet, not one per ratio: the grid is sized for 16:9, with a dashed
+ * guide printed on it for every other common ratio, nested about the same
+ * centre -- narrower ratios crop width, wider ones crop height, since
+ * nothing can extend past the sheet's own edge. Whichever guide is framed
+ * edge to edge in the viewfinder gets the same corner coverage a chart
+ * shaped just for that ratio would.
  */
 
 #include "common/darktable.h"
@@ -45,15 +52,6 @@
 #include "views/view.h"
 
 DT_MODULE(1)
-
-// name, aspect ratio label as shown to the user
-static const char *const _charts[][2] = {
-  { "1x1",    "1:1" },
-  { "4x3",    "4:3" },
-  { "3x2",    "3:2" },
-  { "16x9",   "16:9" },
-  { "2.39x1", "2.39:1 (scope)" },
-};
 
 const char *name(dt_lib_module_t *self)
 {
@@ -79,13 +77,11 @@ int position(const dt_lib_module_t *self)
 
 static void _chart_clicked(GtkWidget *w, dt_lib_module_t *self)
 {
-  const char *stem = g_object_get_data(G_OBJECT(w), "chart-stem");
-  if(!stem) return;
-
   char datadir[PATH_MAX] = { 0 };
   dt_loc_get_datadir(datadir, sizeof(datadir));
 
-  gchar *path = g_build_filename(datadir, "charts", stem, NULL);
+  gchar *path = g_build_filename(datadir, "charts",
+                                 "lensfit-chart-unified.pdf", NULL);
 
   if(!g_file_test(path, G_FILE_TEST_IS_REGULAR))
   {
@@ -111,31 +107,21 @@ void gui_init(dt_lib_module_t *self)
 
   GtkWidget *blurb = gtk_label_new(
     _("a printed grid to photograph for the chart panel above.\n"
-      "any of these works at any focal length or sensor size -- pick\n"
-      "the one shaped closest to what you are shooting, so it fills\n"
-      "the frame edge to edge. print at any size: only the proportions\n"
-      "matter, not the physical dimensions."));
+      "one sheet covers every common ratio: it is sized for 16:9, with a\n"
+      "dashed guide on it for each other ratio, all sharing the same\n"
+      "centre. frame so the guide matching your sensor fills the\n"
+      "viewfinder edge to edge -- the rest of the sheet does not need to\n"
+      "be in shot. print at any size: only the proportions matter, not\n"
+      "the physical dimensions."));
   gtk_label_set_line_wrap(GTK_LABEL(blurb), TRUE);
   gtk_label_set_xalign(GTK_LABEL(blurb), 0.0);
   dt_gui_box_add(self->widget, blurb);
 
-  for(size_t i = 0; i < G_N_ELEMENTS(_charts); i++)
-  {
-    const char *stem = _charts[i][0];
-    const char *label = _charts[i][1];
-
-    gchar *filename = g_strdup_printf("lensfit-chart-%s.pdf", stem);
-    gchar *button_label = g_strdup_printf(_("chart %s"), label);
-
-    GtkWidget *btn = dt_action_button_new
-      (self, button_label, _chart_clicked, self,
-       _("open this chart with your PDF viewer, to print it"), 0,
-       (GdkModifierType)0);
-    g_object_set_data_full(G_OBJECT(btn), "chart-stem", filename, g_free);
-    dt_gui_box_add(self->widget, btn);
-
-    g_free(button_label);
-  }
+  GtkWidget *btn = dt_action_button_new
+    (self, _("open chart"), _chart_clicked, self,
+     _("open the calibration chart with your PDF viewer, to print it"), 0,
+     (GdkModifierType)0);
+  dt_gui_box_add(self->widget, btn);
 }
 
 void gui_cleanup(dt_lib_module_t *self)
