@@ -6,10 +6,10 @@ endobj
 << /Type /Pages /Kids [3 0 R] /Count 1 >>
 endobj
 3 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 1080.00 699.43] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 1230.00 699.43] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>
 endobj
 4 0 obj
-<< /Length 2085 >>
+<< /Length 2573 >>
 stream
 1.00 w
 0 G
@@ -49,8 +49,8 @@ stream
 40.00 564.19 m 1040.00 564.19 l S
 40.00 611.81 m 1040.00 611.81 l S
 40.00 659.43 m 1040.00 659.43 l S
-1.30 w
-0.45 G
+0.50 w
+0.80 G
 [4 3] 0 d
 182.86 88.00 m 182.86 659.43 l S
 897.14 88.00 m 897.14 659.43 l S
@@ -66,6 +66,9 @@ stream
 40.00 586.48 m 1040.00 586.48 l S
 40.00 192.55 m 1040.00 192.55 l S
 40.00 554.87 m 1040.00 554.87 l S
+[] 0 d
+528.00 373.71 m 552.00 373.71 l S
+540.00 361.71 m 540.00 385.71 l S
 0 G
 BT
 /F1 14 Tf
@@ -75,7 +78,47 @@ ET
 BT
 /F1 10 Tf
 40.00 40.00 Td
-(dashed guides, narrowest to widest, nested about the centre \(narrower crops width, wider crops height\): 5:4, 4:3, 3:2, 16:10, 16:9 [base], 1.85:1, 2.35:1 \(scope\), 2.76:1 \(ultra panavision\). frame so your ratio's guide fills the viewfinder.) Tj
+(faint dashed guides, nested about the centre mark: frame so your ratio \(labelled at right\) fills the viewfinder edge to edge.) Tj
+ET
+BT
+/F1 10 Tf
+1060.00 429.71 Td
+(5:4  \(crops width\)) Tj
+ET
+BT
+/F1 10 Tf
+1060.00 413.71 Td
+(4:3  \(crops width\)) Tj
+ET
+BT
+/F1 10 Tf
+1060.00 397.71 Td
+(3:2  \(crops width\)) Tj
+ET
+BT
+/F1 10 Tf
+1060.00 381.71 Td
+(16:10  \(crops width\)) Tj
+ET
+BT
+/F1 10 Tf
+1060.00 365.71 Td
+(16:9  \(base, outer edge\)) Tj
+ET
+BT
+/F1 10 Tf
+1060.00 349.71 Td
+(1.85:1  \(crops height\)) Tj
+ET
+BT
+/F1 10 Tf
+1060.00 333.71 Td
+(2.35:1 \(scope\)  \(crops height\)) Tj
+ET
+BT
+/F1 10 Tf
+1060.00 317.71 Td
+(2.76:1 \(ultra panavision\)  \(crops height\)) Tj
 ET
 endstream
 endobj
@@ -89,9 +132,9 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000248 00000 n 
-0000002385 00000 n 
+0000002873 00000 n 
 trailer
 << /Size 6 /Root 1 0 R >>
 startxref
-2455
+2943
 %%EOF
