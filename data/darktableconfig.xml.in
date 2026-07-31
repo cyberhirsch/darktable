@@ -684,9 +684,9 @@
   <dtconfig>
     <name>plugins/lensfit/endpoint</name>
     <type>string</type>
-    <default>https://lensfit-api.sebhirsch.com/submit</default>
+    <default/>
     <shortdescription>lensfit collection service</shortdescription>
-    <longdescription>a service that submits on your behalf, for anyone who does not have a GitHub account. when set, a shared profile is posted here first; if this is empty, or the service does not accept it, the browser pull request is used instead.</longdescription>
+    <longdescription>an optional service that submits on your behalf, for anyone who does not have a GitHub account. empty by default, so a stock install never contacts anything on its own -- sharing opens a GitHub pull request in your browser instead. set this to a collection service you trust (for example one you run yourself) to skip that step; if it is set but does not accept the submission, the browser pull request is used as a fallback.</longdescription>
   </dtconfig>
   <dtconfig>
     <name>plugins/lensfit/repo</name>

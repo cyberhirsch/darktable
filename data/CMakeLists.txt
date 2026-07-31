@@ -180,18 +180,30 @@ endif(USE_AI)
 #
 # `dt_lens_profile_find()` (src/common/lens_warp.c) looks for individual
 # profiles in ${DARKTABLE_DATADIR}/lensfit, falling back there only after
-# the user's own directory. This just needs somewhere to look; *what* goes
-# in data/lensfit -- the whole converted Lensfun set, a curated subset, or
-# nothing until the first release -- is still open (see task.md 1.1). Wrapped
-# in an existence check so an empty tree does not break the build meanwhile.
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lensfit")
-  FILE(GLOB LENSFIT_PROFILES "lensfit/*.json")
+# the user's own directory. The converted profiles themselves live in the
+# lensfit project (github.com/cyberhirsch/lensfit), pulled in here as a
+# submodule at data/lensfit-db rather than vendored inline -- that keeps
+# this repo's own history from carrying the database's blobs while a plain
+# `git clone --recurse-submodules` (or `git submodule update --init`) still
+# gets the full, buildable, reviewable feature with no separate step or
+# network fetch at build/run time. Wrapped in existence checks so a clone
+# that skipped the submodule fails quietly rather than breaking the build.
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lensfit-db/db")
+  FILE(GLOB LENSFIT_PROFILES "lensfit-db/db/*.json")
   if(LENSFIT_PROFILES)
     FILE(COPY ${LENSFIT_PROFILES} DESTINATION "${DARKTABLE_DATADIR}/lensfit")
     install(FILES ${LENSFIT_PROFILES}
             DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/darktable/lensfit
             COMPONENT DTApplication)
+  else()
+    message(WARNING "data/lensfit-db/db is empty -- run "
+                     "'git submodule update --init' to get the lensfit "
+                     "database, or the shipped lens list will be empty.")
   endif()
+else()
+  message(WARNING "data/lensfit-db submodule not checked out -- run "
+                   "'git submodule update --init' to get the lensfit "
+                   "database, or the shipped lens list will be empty.")
 endif()
 
 #
