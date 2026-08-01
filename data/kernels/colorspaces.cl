@@ -108,8 +108,11 @@ colorspaces_transform_gamma(read_only image2d_t in,
   if(x >= width || y >= height) return;
 
   float4 pixel = Areadpixel(in, x, y);
-  // sanitize and fix NaN as we do for CPU
-  pixel = select(fmax(pixel, -1e6f), (float4)(0.0f), isnan(pixel));
+  /* sanitize and fix NaN as we do for CPU. The floor must be zero: pow() of
+     a negative base with a fractional exponent is NaN, and the resampler
+     between the two passes is unclamped, so a high contrast edge arrives
+     here undershot below zero. */
+  pixel = select(fmax(pixel, 0.0f), (float4)(0.0f), isnan(pixel));
 
   pixel = dtcl_pow(pixel, gamma);
   write_imagef(out, (int2)(x, y), pixel);
