@@ -188,6 +188,50 @@ endif(USE_AI)
 # gets the full, buildable, reviewable feature with no separate step or
 # network fetch at build/run time. Wrapped in existence checks so a clone
 # that skipped the submodule fails quietly rather than breaking the build.
+#
+# LENSFIT_DB_REPO / LENSFIT_DB_TAG let a distro or fork point the submodule
+# at their own mirror instead of editing .gitmodules -- e.g. so an official
+# build isn't stuck depending on one person's personal repo staying up.
+# Both are empty by default, which leaves the submodule exactly as `git
+# submodule update --init` left it.
+set(LENSFIT_DB_REPO "" CACHE STRING
+    "Git URL to fetch the lensfit database from, overriding data/lensfit-db's pinned remote. Empty uses the default.")
+set(LENSFIT_DB_TAG "" CACHE STRING
+    "Git ref (branch, tag, or commit) to check out in the lensfit database, overriding the pinned commit. Empty uses the default.")
+
+if(LENSFIT_DB_REPO OR LENSFIT_DB_TAG)
+  find_package(Git QUIET)
+  if(GIT_FOUND)
+    if(LENSFIT_DB_REPO)
+      execute_process(
+        COMMAND ${GIT_EXECUTABLE} submodule set-url -- data/lensfit-db ${LENSFIT_DB_REPO}
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        RESULT_VARIABLE _lensfit_db_seturl_result)
+      if(NOT _lensfit_db_seturl_result EQUAL 0)
+        message(WARNING "Failed to point the data/lensfit-db submodule at LENSFIT_DB_REPO (${LENSFIT_DB_REPO})")
+      endif()
+    endif()
+    execute_process(
+      COMMAND ${GIT_EXECUTABLE} submodule update --init data/lensfit-db
+      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+      RESULT_VARIABLE _lensfit_db_update_result)
+    if(NOT _lensfit_db_update_result EQUAL 0)
+      message(WARNING "Failed to update the data/lensfit-db submodule")
+    endif()
+    if(LENSFIT_DB_TAG)
+      execute_process(
+        COMMAND ${GIT_EXECUTABLE} checkout ${LENSFIT_DB_TAG}
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/data/lensfit-db
+        RESULT_VARIABLE _lensfit_db_checkout_result)
+      if(NOT _lensfit_db_checkout_result EQUAL 0)
+        message(WARNING "Failed to check out LENSFIT_DB_TAG ('${LENSFIT_DB_TAG}') in the data/lensfit-db submodule")
+      endif()
+    endif()
+  else()
+    message(WARNING "LENSFIT_DB_REPO or LENSFIT_DB_TAG is set but git was not found -- ignoring both")
+  endif()
+endif()
+
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lensfit-db/db")
   FILE(GLOB LENSFIT_PROFILES "lensfit-db/db/*.json")
   if(LENSFIT_PROFILES)
